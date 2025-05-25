@@ -1,0 +1,253 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\assets\\resume.pdf",
+      "PackagePath": "staticwebassets\\assets\\resume.pdf"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\AI\\ArtficialIntelligence.png",
+      "PackagePath": "staticwebassets\\images\\AI\\ArtficialIntelligence.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\AI\\BusinessIntelligenceBI.png",
+      "PackagePath": "staticwebassets\\images\\AI\\BusinessIntelligenceBI.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\AI\\DataAnlytics.png",
+      "PackagePath": "staticwebassets\\images\\AI\\DataAnlytics.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\AI\\DataVisualization.png",
+      "PackagePath": "staticwebassets\\images\\AI\\DataVisualization.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Academic\\AcademicCertificate.png",
+      "PackagePath": "staticwebassets\\images\\Academic\\AcademicCertificate.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Courses\\UC-f5a42b04-5c04-467f-a3fe-031283c5b2f5.jpg",
+      "PackagePath": "staticwebassets\\images\\Courses\\UC-f5a42b04-5c04-467f-a3fe-031283c5b2f5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\DotNetCoreMvc.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\DotNetCoreMvc.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\EntityFrameWork.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\EntityFrameWork.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\LINQ.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\LINQ.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\api.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\api.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\blazor.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\blazor.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\c.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\c.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\clean.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\clean.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\DotNetCourses\\oop.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\oop.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\AddAmenity.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddAmenity.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\AddVillNumber.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddVillNumber.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\AddVilla.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddVilla.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\Booking.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Booking.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\CustomerMangement.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\CustomerMangement.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\Dashboard.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Dashboard.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\Detials.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Detials.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\Login.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Login.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\Register.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Register.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\checkout.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\checkout.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\invoice.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\invoice.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\payments.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\payments.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bookly\\poerpoint.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\poerpoint.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\3.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\3.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\4.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\4.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\5.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\5.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\6.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\6.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\Bulky\\7.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\7.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\3.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\3.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\4.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\4.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\5.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\5.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\6.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\6.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\7.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\7.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\YumBlazor\\8.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\8.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\goDelivery\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\goDelivery\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\Projects\\realstate\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\realstate\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\SocialMedia\\GitHub_logo.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\GitHub_logo.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\SocialMedia\\logo-linkedin-icon-4096.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\logo-linkedin-icon-4096.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\SocialMedia\\whatsapp-icon.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\whatsapp-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\english\\english.png",
+      "PackagePath": "staticwebassets\\images\\english\\english.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\profile\\logo.png",
+      "PackagePath": "staticwebassets\\images\\profile\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\profile\\logoface.png",
+      "PackagePath": "staticwebassets\\images\\profile\\logoface.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\profile\\myProfileImage.png",
+      "PackagePath": "staticwebassets\\images\\profile\\myProfileImage.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\images\\profile\\personal.jpg",
+      "PackagePath": "staticwebassets\\images\\profile\\personal.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\scripts\\main.js",
+      "PackagePath": "staticwebassets\\scripts\\main.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\All_Portfolios\\Portfolio_V1\\Portfolio_V1\\wwwroot\\styles\\main.css",
+      "PackagePath": "staticwebassets\\styles\\main.css"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Portfolio_V1.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Portfolio_V1.props",
+      "PackagePath": "build\\Portfolio_V1.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Portfolio_V1.props",
+      "PackagePath": "buildMultiTargeting\\Portfolio_V1.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Portfolio_V1.props",
+      "PackagePath": "buildTransitive\\Portfolio_V1.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
