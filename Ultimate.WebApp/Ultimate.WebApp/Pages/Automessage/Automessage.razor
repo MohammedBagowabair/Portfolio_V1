@@ -1,0 +1,907 @@
+﻿@page "/automessage/{botId:int}"
+@using System.ComponentModel.DataAnnotations;
+@inject IEventsService _eventsService
+@inject ITextService textService
+@inherits EventsComponent
+@inject IReportCollectionServices reportCollectionServices
+@using Microsoft.Extensions.Localization;
+@using Ultimate.Bot.Application.DTO
+@using Ultimate.WebApp.Pages.Bot
+@using Ultimate.Bot.Core.Model
+@using Ultimate.WebApp.Shared.ResourceFiles;
+@inject IStringLocalizer<Resource> _localizer
+@inject IAutomessageService AutomessageService
+@*@inject IBotService BotService*@
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+<style>
+    .mud-divider-light {
+        border-color: #ffffffcc;
+    }
+
+    hr {
+        margin: 1rem 0;
+        color: inherit;
+        background-color: currentColor;
+        border: 0;
+        opacity: .25;
+        color: white;
+    }
+
+    .mud-input-control > .mud-input-control-input-container > .mud-input-label-inputcontrol {
+        color: var(--mud-palette-text-secondary);
+        padding: 0;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: .00938em;
+        z-index: 0;
+        pointer-events: none;
+        color: #a6a3a3;
+    }
+
+    .mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol {
+        /* color: var(--mud-palette-text-primary);*/
+        color: aquamarine;
+    }
+
+   /* .mud-icon-root.mud-svg-icon {
+        fill: currentColor;
+        color: darkgray;
+    }*/
+
+    .mud-application-layout-rtl .mud-input-label-filled.mud-input-label-margin-dense {
+        transform: translate(-12px,17px) scale(1);
+        color: #898989;
+    }
+
+    .mud-table-container {
+        width: 100%;
+        overflow-y: auto;
+        background-color: #396254;
+    }
+
+
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+        color: white;
+    @font_Content
+    }
+
+    .response .text {
+        background-color: #e3effd !important;
+    }
+
+    .photo {
+        display: block;
+        width: 45px;
+        height: 45px;
+        background: #E6E7ED;
+        -moz-border-radius: 50px;
+        -webkit-border-radius: 50px;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .header-chat {
+        background-color: #4aa47e;
+        height: 90px;
+    }
+
+    .online {
+        position: relative;
+        top: 30px;
+    @right_left width: 13px;
+        height: 13px;
+        background-color: #8BC34A;
+        border-radius: 13px;
+        border: 3px solid #FAFAFA;
+    }
+
+    .step-wizard {
+        /* height: 100vh;*/
+        width: 100%;
+        display: flex;
+        justify-content: start;
+    }
+
+    .jus {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+@if (auto != null)
+{
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    @if (auto.Content.Count == 0 && isAuto == false)
+    {
+        <MudPaper Elevation="0" Class="d-flex flex-column overflow-scroll pa-5" Style="background-color:#424242;" Square Height="300px">
+            <div class="pt-15">
+                <MudText Class="fontContent" Align="Align.Center" Typo="Typo.h5">@_localizer["lbl_WelcomeToTheAutoMessage"]</MudText>
+                <MudText Align="Align.Center">
+                    <MudButton Color="Color.Primary" Class="mt-1 fontContent" Variant="Variant.Filled" OnClick="()=>showIntiDialog(0)">@_localizer["lbl_AddInitiMsg"]</MudButton>
+                    <MudButton Color="Color.Primary" Class="mt-1 fontContent" Variant="Variant.Filled" OnClick="()=>IsAuto()">@_localizer["lbl_MoveToAutomessage"]</MudButton>
+                </MudText>
+            </div>
+        </MudPaper>
+    }
+    else if (isAuto = true)
+    {
+        <MudGrid Spacing="0" Justify="Justify.Center">
+            <MudItem sm="12" xs="12" md="12">
+                <MudPaper Elevation="2" Style="width:100%" Class="header-chat d-flex align-center">
+                    @if (auto.Content.Count == 0)
+                    {
+                        <MudButton Color="Color.Tertiary" Class="mx-3 fontContent" Variant="Variant.Filled" OnClick="()=>showIntiDialog(0)">@_localizer["lbl_AddInitiMsg"]</MudButton>
+                    }
+                    else if (auto.Content.Count != 0)
+                    {
+                        @foreach (AutoMessageModel items in auto.Content)
+                        {
+                            if (items.MsgType == "0")
+                            {
+                                isAddAuto = false;
+                                <MudTable Items="auto.Content" Hover="true" Dense=true Elevation="5" Breakpoint="Breakpoint.Xs" Style="width:100%; background-color:#343535">
+                                    <HeaderContent>
+                                        <MudTh Style="color:#c8cacd" Class="fontContent"><b>@_localizer["lbl_initMsg"]</b></MudTh>
+                                        <MudTh Style="color:#c8cacd" Class="fontContent"><b>@_localizer["lbl_Event"]</b></MudTh>
+                                        <MudTh Style="color:#c8cacd" Class="fontContent"></MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        @if (context.MsgType == "0")
+                                        {
+                                            <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_initMsg"]">@context.Message</MudTd>
+                                            @if (context.Actionn != null)
+                                            {
+                                                if (context.Actionn == "S^T^Q^1000")
+                                                {
+                                                    <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                        @_localizer["lbl_Text"] &nbsp;@_localizer["lbl_balanceText"]
+                                                    </MudTd>
+
+                                                }
+                                                else
+                                                {
+                                                    var a = context.Actionn.ToString().Substring(0, 6);
+
+                                                    if (a == "N^M^S^")
+                                                    {
+                                                        int menusId = Convert.ToInt32(context.Actionn.ToString().Substring(6));
+
+                                                        @foreach (var items_S in menus_S)
+                                                        {
+                                                            if (items_S.Id == menusId)
+                                                            {
+                                                                menusId = items_S.Id;
+                                                                string menusname = @items_S.MenuName;
+                                                                <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                                    @_localizer["lbl_Menu"] &nbsp;
+
+                                                                    <MudLink Underline="Underline.None" OnClick="()=>showMenu_s(menusId,menusname,items_S.structureType)">
+                                                                        <b style="color:#c8cacd" class="fontContent"> @items_S.MenuName</b>
+
+                                                                    </MudLink>
+                                                                </MudTd>
+                                                            }
+                                                        }
+
+                                                    }
+                                                    if (a == "N^M^Q^")
+                                                    {
+                                                        int menusId = Convert.ToInt32(context.Actionn.ToString().Substring(6));
+                                                        <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                            @_localizer["lbl_Menu"] &nbsp;
+
+                                                            @foreach (var items_Q in menus_Q)
+                                                            {
+                                                                if (items_Q.Id == menusId)
+                                                                {
+                                                                    menusId = items_Q.Id;
+                                                                    string menusname = @items_Q.MenuName;
+                                                                    <MudLink Underline="Underline.None" OnClick="()=>showMenu_q(menusId,menusname,items_Q.structureType)">
+                                                                        <b style="color:#c8cacd" class="fontContent"> @items_Q.MenuName</b>
+                                                                    </MudLink>
+                                                                }
+                                                            }
+
+                                                        </MudTd>
+                                                    }
+                                                    if (a == "N^M^R^")
+                                                    {
+                                                        int reportG_Id = Convert.ToInt32(context.Actionn.ToString().Substring(6));
+                                                        <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                            @_localizer["lbl_GroupReports"] &nbsp;
+
+                                                            @foreach (var items_G in reports_G)
+                                                            {
+                                                                if (items_G.id == reportG_Id)
+                                                                {
+                                                                    reportG_Id = items_G.id;
+                                                                    string menusname = @items_G.name;
+                                                                    <MudLink Underline="Underline.None">
+                                                                        <b class="fontContent" style=""> @items_G.name</b>
+                                                                    </MudLink>
+                                                                }
+                                                            }
+
+                                                        </MudTd>
+                                                    }
+                                                    if (a == "S^T^S^")
+                                                    {
+                                                        <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                            @_localizer["lbl_Text"] &nbsp;
+
+                                                            @context.Actionn.ToString().Substring(6)
+                                                        </MudTd>
+                                                    }
+                                                    if (a == "S^T^Q^")
+                                                    {
+                                                        int txtId = Convert.ToInt32(context.Actionn.ToString().Substring(6));
+
+                                                        @foreach (var items_txtQ in text_Q)
+                                                        {
+                                                            if (items_txtQ.id == txtId)
+                                                            {
+                                                                txtId = items_txtQ.id;
+                                                                string menusname = @items_txtQ.name;
+                                                                <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                                    @_localizer["lbl_Text"] &nbsp;
+
+                                                                    <MudLink Underline="Underline.None">
+                                                                        <b style="color:#c8cacd" class="fontContent"> @items_txtQ.name</b>
+
+                                                                    </MudLink>
+                                                                </MudTd>
+                                                            }
+                                                        }
+
+                                                    }
+                                                    if (a == "S^M^Q^")
+                                                    {
+                                                        <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                            @_localizer["lbl_Media"] &nbsp;
+                                                            @_localizer["lbl_AccountStatement"]
+                                                        </MudTd>
+                                                    }
+                                                    if (a == "S^M^S^")
+                                                    {
+                                                        int ImageId = Convert.ToInt32(context.Actionn.ToString().Substring(6));
+
+                                                        <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_Event"]">
+                                                            <MudLink Style="color:#c8cacd" Class="fontContent" Color="Color.Secondary" Underline="Underline.None" OnClick="()=>showImage(ImageId)">
+                                                                @_localizer["lbl_Media"] &nbsp;
+                                                                <MudIcon Icon="@Icons.Material.Outlined.InsertPhoto" />
+                                                            </MudLink>
+                                                        </MudTd>
+                                                    }
+                                                    else
+                                                    {
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <MudTd Style="color:#c8cacd" Class="fontContent" DataLabel="@_localizer["lbl_RequestDate"]">@_localizer["lbl_NoItem"]</MudTd>
+                                            }
+                                            <MudTd DataLabel="">
+                                                <MudIconButton Icon="@Icons.Outlined.Delete" Color="Color.Primary" OnClick="()=>DeletAutomessage(context.MsgType,context.Id)" />
+                                                <MudIconButton Icon="@Icons.Outlined.Edit" Color="Color.Primary" OnClick="(()=>showIntiDialog(context.Id))" />
+                                            </MudTd>
+                                        }
+                                    </RowTemplate>
+                                </MudTable>
+                            }
+                        }
+                    }
+                    @if (isAddAuto == true && auto.Content.Count != 0)
+                    {
+                        <MudButton Color="Color.Tertiary" Style="color:#c8cacd" Class="mx-3 fontContent" Variant="Variant.Filled" OnClick="()=>showIntiDialog(0)">@_localizer["lbl_AddInitiMsg"]</MudButton>
+                    }
+                </MudPaper>
+            </MudItem>
+            <MudItem sm="12" xs="12" md="12">
+                <MudPaper Elevation="1" Class="d-flex flex-column overflow-scroll pa-5" Style="background-image:url(img/1.jpg)" Square Height="300px">
+                    <MudGrid Spacing="0">
+                        @foreach (AutoMessageModel item in auto.Content)
+                        {
+                            if (item.MsgType != "0")
+                            {
+                                <MudItem sm="12" xs="12" md="12">
+                                    <MudGrid Spacing="0" Justify="Justify.FlexEnd">
+                                        @*---------------------------------edited------------------------------*@
+                                        <MudBadge Color="Color.Primary" Overlap="true" Bordered="false" Icon="@BadgeIcon" OnClick="()=>DeletAutomessage(item.MsgType,item.Id)" Class="pa-2">
+                                            <MudPaper Class="mud-table-container d-inline-flex justify-start px-6 py-2" Style="background-color:#4aa47e;margin-bottom:9px;border-radius: 12px;">
+
+                                                <MudLink OnClick="(()=>edit(item))" Underline="Underline.None">
+                                                    <MudText Class="fontContent" Style="color:white">
+                                                        @*<b>@_localizer["lbl_Client"]</b>&nbsp;*@
+                                                        <div style="color:white">
+                                                            @item.ClientMessage
+                                                        </div>
+
+                                                    </MudText>
+                                                </MudLink>
+                                            </MudPaper>
+
+                                        </MudBadge>
+
+                                    </MudGrid>
+                                </MudItem>
+                                <MudItem sm="12" xs="12" md="12">
+                                    @if (item.Actionn != null || item.Message != null)
+                                    {
+                                        <div class="photo" style="background-image:url('img/Chat bot-pana.png')">
+
+                                            <div class="online"></div>
+                                        </div>
+                                        <div style="@top_lr">
+                                            <MudPaper Class="d-inline-flex pa-2 px-6 py-2" Style="border-radius: 12px;background-color:#343535;margin-bottom:9px">
+
+                                                <MudCard Elevation="0" Style="background-color:#343535">
+
+                                                    <MudLink Class="fontContent" OnClick="(()=>edit(item))" Underline="Underline.None" Color="Color.Secondary">
+                                                        @*<b>@_localizer["lbl_System"]&nbsp;</b>*@
+                                                        @item.Message
+                                                    </MudLink>
+                                                    @if (item.Actionn != null)
+                                                    {
+                                                        if (item.Actionn == "S^T^Q^1000")
+                                                        {
+                                                            <MudDivider Class="my-2" Light />
+                                                            <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+
+                                                                @_localizer["lbl_Text"] &nbsp;
+                                                                @_localizer["lbl_balanceText"]
+                                                            </MudText>
+                                                        }
+                                                        else
+                                                        {
+                                                            var a = item.Actionn.ToString().Substring(0, 6);
+
+                                                            if (a == "N^M^S^")
+                                                            {
+                                                                int menusId = Convert.ToInt32(item.Actionn.ToString().Substring(6));
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+                                                                    @_localizer["lbl_Menu"] &nbsp;
+
+                                                                    @foreach (var items_S in menus_S)
+                                                                    {
+                                                                        if (items_S.Id == menusId)
+                                                                        {
+                                                                            menusId = items_S.Id;
+                                                                            string menusname = @items_S.MenuName;
+                                                                            <MudLink Underline="Underline.None" OnClick="()=>showMenu_s(menusId,menusname,items_S.structureType)">
+                                                                                <b class="fontContent" style=""> @items_S.MenuName</b>
+                                                                            </MudLink>
+                                                                        }
+                                                                    }
+
+                                                                </MudText>
+                                                            }
+                                                            if (a == "N^M^Q^")
+                                                            {
+                                                                int menusId = Convert.ToInt32(item.Actionn.ToString().Substring(6));
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+                                                                    @_localizer["lbl_Menu"] &nbsp;
+
+                                                                    @foreach (var items_Q in menus_Q)
+                                                                    {
+                                                                        if (items_Q.Id == menusId)
+                                                                        {
+                                                                            menusId = items_Q.Id;
+                                                                            string menusname = @items_Q.MenuName;
+                                                                            <MudLink Underline="Underline.None" OnClick="()=>showMenu_q(menusId,menusname,items_Q.structureType)">
+                                                                                <b class="fontContent" style=""> @items_Q.MenuName</b>
+                                                                            </MudLink>
+                                                                        }
+                                                                    }
+
+                                                                </MudText>
+                                                            }
+                                                            if (a == "N^M^R^")
+                                                            {
+                                                                int reportsG_Id = Convert.ToInt32(item.Actionn.ToString().Substring(6));
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+                                                                    @_localizer["lbl_GroupReports"] &nbsp;
+
+                                                                    @foreach (var items_G in reports_G)
+                                                                    {
+                                                                        if (items_G.id == reportsG_Id)
+                                                                        {
+                                                                            reportsG_Id = items_G.id;
+                                                                            string menusname = @items_G.name;
+                                                                            <MudLink Underline="Underline.None">
+                                                                                <b class="fontContent" style=""> @items_G.name</b>
+                                                                            </MudLink>
+                                                                        }
+                                                                    }
+
+                                                                </MudText>
+                                                            }
+                                                            if (a == "S^T^Q^")
+                                                            {
+                                                                int txtId = Convert.ToInt32(item.Actionn.ToString().Substring(6));
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+                                                                    @_localizer["lbl_Text"] &nbsp;
+
+                                                                    @foreach (var items_txtQ in text_Q)
+                                                                    {
+                                                                        if (items_txtQ.id == txtId)
+                                                                        {
+                                                                            txtId = items_txtQ.id;
+                                                                            string txtname = items_txtQ.name;
+                                                                            <MudLink Underline="Underline.None">
+                                                                                <b class="fontContent" style=""> @items_txtQ.name</b>
+                                                                            </MudLink>
+                                                                        }
+                                                                    }
+
+                                                                </MudText>
+                                                            }
+                                                            if (a == "S^T^S^")
+                                                            {
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+
+                                                                    @_localizer["lbl_Text"] &nbsp;
+                                                                    @item.Actionn.ToString().Substring(6)
+                                                                </MudText>
+                                                            }
+                                                            if (a == "S^M^Q^")
+                                                            {
+                                                                <MudDivider Class="my-2" Light />
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+
+                                                                    @_localizer["lbl_Media"] &nbsp;
+                                                                    @_localizer["lbl_AccountStatement"]
+                                                                </MudText>
+                                                            }
+                                                            if (a == "S^M^S^")
+                                                            {
+                                                                <MudDivider Class="my-2" Light />
+                                                                int ImageId = Convert.ToInt32(item.Actionn.ToString().Substring(6));
+                                                                <MudText Class="fontContent" Typo="Typo.subtitle2" Style="">
+                                                                    @_localizer["lbl_Media"] &nbsp;
+                                                                    <MudLink Color="Color.Transparent" Underline="Underline.None" OnClick="()=>showImage(ImageId)">
+                                                                        <MudIcon Style="" Icon="@Icons.Material.Outlined.InsertPhoto" />
+                                                                    </MudLink>
+                                                                </MudText>
+                                                            }
+                                                            else { }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    }
+                                                </MudCard>
+                                            </MudPaper>
+                                        </div>
+                                    }
+                                    else if (item.Actionn == null || item.Message == null) { }
+                                </MudItem>
+                            }
+                        }
+
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+            <MudItem sm="12" xs="12" md="12">
+                <MudDivider />
+                <MudPaper>
+                    <EditForm Model="autoMessageModel" OnValidSubmit="HandelSubment">
+                        <DataAnnotationsValidator />
+                        <MudGrid Justify="Justify.Center">
+                            <MudItem sm="5" xs="11" md="5">
+                                @*<MudPaper Class="pa-2 rounded-pill" Style="background-color:#343535; margin-top:10px" Height="65%">*@
+                                <MudTextField Class="px-2 fontContent" @bind-Value="@autoMessageModel.Message"
+                                      For="@(() => autoMessageModel.Message)" Placeholder="@_localizer["lbl_Smessage"]"
+                                      Margin="Margin.Dense" Variant="Variant.Filled"
+                                      Style="color:#c8cacd" ErrorText="@_localizer["msg_Required"]" />
+                                @*</MudPaper>*@
+                            </MudItem>
+                            <MudItem sm="5" xs="11" md="5">
+                                @*<MudPaper Class="pa-2 rounded-pill" Style="background-color:#343535; margin-top:10px" Height="65%">*@
+                                <MudTextField Class="px-2 fontContent" @bind-Value="@autoMessageModel.ClientMessage"
+                                      For="@(() => autoMessageModel.ClientMessage)" Placeholder="@_localizer["lbl_Cmessage"]"
+                                      Margin="Margin.Dense" Variant="Variant.Filled" ErrorText="@_localizer["msg_Required"]"
+                                      Style="color:#c8cacd" />
+                                @*</MudPaper>*@
+                            </MudItem>
+                            @*////////////ACTION/////////*@
+                            <MudItem sm="10" xs="8" md="10">
+                                <Events @ref="_events" botId="@botId" name_btns="@name_btn" keyses="@autoMessageModel.Actionn"> </Events>
+                            </MudItem>
+                            @*////////////ACTION/////////*@
+                            <MudItem sm="3" xs="5" md="3">
+                                <div class="d-flex justify-center align-center">
+                                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth Class="mx-1 mt-1 fontContent"
+                                       Size="Size.Large" Color="Color.Primary" Style="font-size:18px;color:#c8cacd">
+                                        <b>@name_btn</b>
+                                    </MudButton>
+                                </div>
+                            </MudItem>
+                            <MudItem sm="2" xs="3" md="2">
+                                <div class="d-flex justify-center align-center @btnCancle">
+
+                                    <MudButton Variant="Variant.Filled" FullWidth Class="mt-1 fontContent"
+                                       Size="Size.Large" Color="Color.Secondary" Style="font-size:18px" OnClick="HandelCancleAuto">
+                                        <b>@_localizer["lbl_Cancelbtn"]</b>
+                                    </MudButton>
+                                </div>
+                            </MudItem>
+                            <MudItem sm="7" xs="4" md="7"></MudItem>
+                        </MudGrid>
+                    </EditForm>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    }
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Class="d-flex mx-auto" Indeterminate="true" />
+}
+
+@code {
+    [Parameter]
+    public int botId { get; set; }
+    public int menuId { get; set; }
+    //public int autoId { get; set; }
+    public string menuname { get; set; }
+    public string right_left { get; set; }
+    private bool isVisible;
+    private bool isAuto;
+    bool isAddAuto = true;
+    //bool show1=true;
+    //bool show2=false;
+    string btnCancle = "invisible";
+    ResponseModel<AutoMessageModel> auto;
+    AutoMessageModel autoMessageModel = new AutoMessageModel();
+    AutoMessageDto autoMessageDto = new AutoMessageDto();
+    Events _events;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    //string name_btn = _localizer["lbl_BtnSave"];
+    public string BadgeIcon { get; set; } = @Icons.Material.Filled.Clear;
+    public string name_btn { get; set; }
+    ResponsGeneric<BotFileModel> responsGenericImage;
+    string name_btnInit;
+    string btnCancleInit = "invisible";
+    public string msgalert { get; set; }
+    public string top_lr { get; set; }
+    public List<MenuModel> menus_S { get; set; }
+    public List<MenuModel> menus_Q { get; set; }
+    public List<TextModel> text_Q { get; set; }
+    public List<ReportCollectionModel> reports_G { get; set; }
+
+    async void showImage(int id)
+    {
+        //isVisible = true;
+        //Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        //Snackbar.Configuration.ShowCloseIcon = false;
+        //await Task.Delay(1000);
+        //try
+        //{
+        var parameters = new DialogParameters();
+        var options = new DialogOptions { CloseButton = true };
+        parameters.Add("id", id);
+        DialogService.Show<ShowImages>(null, parameters, options);
+        //isVisible = false;
+        //}
+        //catch (Exception e)
+        //{
+        //    Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        //    isVisible = false;
+        //    Snackbar.Add("تعذر عرض الصورة", Severity.Error);
+        //}
+    }
+    string font_Title;
+    string font_Content;
+    protected override async Task OnParametersSetAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            right_left = " left: 35px;";
+            top_lr = "margin-top:7px;margin-left:22px;";
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            right_left = " right: 35px;";
+            top_lr = "margin-top:7px;margin-right:22px;";
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        name_btn = _localizer["lbl_BtnSave"];
+        name_btnInit = _localizer["lbl_BtnSave"];
+        try{
+            ResponseModel<MenuModel> response_S = await _eventsService.GetMenu(botId, "s");
+            ResponseModel<MenuModel> response_Q = await _eventsService.GetMenu(botId, "Q");
+            ResponseModel<ReportCollectionModel> response_G = await reportCollectionServices.GetReportCollectionBybotId(botId);
+            menus_S = response_S.Content;
+            menus_Q = response_Q.Content;
+            reports_G = response_G.Content;
+            ResponseModel<TextModel> response_txtG = await textService.GetByBotId(botId);
+            text_Q = response_txtG.Content;
+            auto = await AutomessageService.GetById(botId);
+            if (auto.Content.Count == 0)
+            {
+                isAuto = false;
+            }
+            else
+            {
+                isAuto = true;
+            }
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    async Task DeletedAuto()
+    {
+        try{
+            auto = await AutomessageService.GetById(botId);
+            isAddAuto = true;
+            StateHasChanged();
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    public async void DeletAutomessage(string init, int automessageId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteAutoMessage"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeleteAuto"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", automessageId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedAuto));
+
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+
+    }
+
+    public void HandelCancleInit()
+    {
+        name_btnInit = _localizer["lbl_BtnSave"];
+        btnCancleInit = "invisible";
+        autoMessageModel = new AutoMessageModel();
+        StateHasChanged();
+    }
+    public void HandelCancleAuto()
+    {
+        name_btn = _localizer["lbl_BtnSave"];
+        btnCancle = "invisible";
+        autoMessageModel = new AutoMessageModel();
+        StateHasChanged();
+    }
+    //public void showAuto() {
+    //    show2 = true;
+    //    show1 = false;
+    //}
+    async Task ShowAuto()
+    {
+        try{
+            auto = await AutomessageService.GetById(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    async Task IsAuto()
+    {
+        isAuto = true;
+        StateHasChanged();
+    }
+    public async Task showIntiDialog(int AutoId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("botId", botId);
+        parameters.Add("AutoId", AutoId);
+
+        parameters.Add("OnShow", EventCallback.Factory.Create(this, ShowAuto));
+        if (AutoId == 0)
+        {
+            parameters.Add("name_btn", _localizer["lbl_BtnSave"].ToString());
+            parameters.Add("title", _localizer["lbl_Add"].ToString() + " " + _localizer["lbl_initMsg"].ToString());
+        }
+        else
+        {
+            parameters.Add("name_btn", _localizer["lbl_BtnEdit"].ToString());
+            parameters.Add("title", _localizer["lbl_Edit"].ToString() + " " + _localizer["lbl_initMsg"].ToString());
+        }
+
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<ShowIntiDialog>(null, parameters, options);
+    }
+    public async void HandelSubment()
+    {
+        isVisible = true;
+        autoMessageModel.BotId = botId;
+        autoMessageModel.MsgType = "1";
+        autoMessageModel.Actionn = _events.getAction();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            ResponsePost<AutoMessageModel> autos;
+            try
+            {
+                Console.WriteLine(autoMessageModel.Actionn);
+                autos = await AutomessageService.Create(autoMessageModel);
+                Console.WriteLine("pppppppp: "+ autos.Code);
+                if (autos.Code == 0 )
+                {
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertSaved"];
+                    Snackbar.Add(msgalert, Severity.Success);
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else if(autos.Code == 3003){
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertSavedandUpdate"];
+                    Snackbar.Add(msgalert, Severity.Success);
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else if(autos.Code == 4004){
+                    isVisible = false;
+                    msgalert = _localizer["msg_FSavePackageExpired"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else{
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertFSaved"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    auto = await AutomessageService.GetById(botId);
+                    //autoMessageModel = new AutoMessageModel();
+                    Console.WriteLine($"status code:{autos.Code},response:{autos.Message}");
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFSaved"];
+                Snackbar.Add(msgalert, Severity.Error);
+                auto = await AutomessageService.GetById(botId);
+                //autoMessageModel = new AutoMessageModel();
+                StateHasChanged();
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+
+        }
+        else
+        {
+            try
+            {
+                Console.WriteLine(autoMessageModel.Actionn);
+                var res=await AutomessageService.Update(autoMessageModel);
+                if (res.Code == 0)
+                {
+                    //Console.WriteLine("xxxxxxxxxxxxxx: " + x);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    btnCancle = "invisible";
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertModified"];
+                    Snackbar.Add(msgalert, Severity.Success);
+                    //showCallAlert = false;
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else if (res.Code == 3003)
+                {
+                    //Console.WriteLine("xxxxxxxxxxxxxx: " + x);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    btnCancle = "invisible";
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertModifiedandUpdate"];
+                    Snackbar.Add(msgalert, Severity.Success);
+                    //showCallAlert = false;
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else if (res.Code == 4004)
+                {
+                    //Console.WriteLine("xxxxxxxxxxxxxx: " + x);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    btnCancle = "invisible";
+                    isVisible = false;
+                    msgalert = _localizer["msg_FModifiedPackageExpired"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    //showCallAlert = false;
+                    autoMessageModel = new AutoMessageModel();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else{
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertFModified"];
+                    auto = await AutomessageService.GetById(botId);
+                    Snackbar.Add(msgalert, Severity.Error);
+                    Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFModified"];
+                auto = await AutomessageService.GetById(botId);
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"eeeeeeeeeeeee99e: {e.Message}, {e.StackTrace}");
+            }
+        }
+
+    }
+
+    MenuModel menu = new MenuModel();
+    private void editInit(AutoMessageModel autoMessageDtos)
+    {
+        autoMessageDto.Id = autoMessageDtos.Id;
+        autoMessageDto.initMsg = autoMessageDtos.InitMsg;
+        btnCancleInit = "visible";
+        name_btnInit = _localizer["lbl_BtnEdit"];
+    }
+    private void edit(AutoMessageModel autoMessageModelss)
+    {
+        autoMessageModel = autoMessageModelss;
+        btnCancle = "visible";
+        name_btn = _localizer["lbl_BtnEdit"];
+    }
+    public async Task showMenu_s(int x, string menusname, string str)
+    {
+        menuId = x;
+        menuname = menusname;
+        Console.WriteLine("menuId: ", menuId);
+        var parameters = new DialogParameters();
+        parameters.Add("menuId", menuId);
+        parameters.Add("menuname", menuname);
+        parameters.Add("botId", botId);
+        parameters.Add("str", str);
+        parameters.Add("name_btn", _localizer["lbl_Ok"].ToString());
+        parameters.Add("menus", menus_S);
+        parameters.Add("title", _localizer["lbl_ContentMenu"].ToString());
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<ShowMenu>(null, parameters, options);
+
+    }
+    public async Task showMenu_q(int x, string menusname, string str)
+    {
+        menuId = x;
+        menuname = menusname;
+        Console.WriteLine("menuId: ", menuId);
+        var parameters = new DialogParameters();
+        parameters.Add("menuId", menuId);
+        parameters.Add("menuname", menuname);
+        parameters.Add("str", str);
+        parameters.Add("botId", botId);
+        parameters.Add("name_btn", _localizer["lbl_Ok"].ToString());
+        parameters.Add("menus", menus_Q);
+        parameters.Add("title", _localizer["lbl_ContentMenu"].ToString());
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<ShowMenu>(null, parameters, options);
+
+    }
+}

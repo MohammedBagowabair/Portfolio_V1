@@ -1,0 +1,105 @@
+﻿@inject NavigationManager navigationManager
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+    <MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+    <TitleContent>
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5">@title</MudText>
+                @*<MudText Typo="Typo.h5"> لم يتم الانتهاء من هذه الصفحة سيتم التعديل عليها لأخذ قيمة الحدث</MudText>*@
+            </div>
+
+    </TitleContent>
+    <DialogContent>
+            @if (eventValue != null)
+            {
+        <Events @ref=events botId=@botId name_btns=@name_btn keyses=@eventValue></Events>
+            @*<MudText>@eventValue</MudText>*@
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+    </DialogContent>
+    <DialogActions>
+                @*<MudButton DisableElevation="true" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Style="position:relative;top:15px" OnClick="SaveAction">حفظ</MudButton>*@
+            <MudButton Class="fontContent" Color="Color.Secondary" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+            <MudButton Class="fontContent" Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveAction">@_localizer["lbl_Ok"]</MudButton>
+    </DialogActions>
+
+</MudDialog>
+</MudRTLProvider>
+
+@code {
+    string font_Title;
+    string font_Content;
+    string direction;
+    bool IsRTL;
+    Events events;
+    [CascadingParameter] 
+    MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public string title{ set; get; }
+    [Parameter]
+    public int botId { set; get; }
+    [Parameter]
+    public string eventValue{ set; get; }
+    [Parameter]
+    public string name_btn { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    //[Parameter] public MenuAction action{ set; get; }
+
+    protected override  async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            direction = "rtl";
+            IsRTL = true;
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+
+    }
+    public void Cancel() {
+        eventValue = events.getAction();
+        MudDialog.Close(DialogResult.Ok(eventValue));
+    }
+    public async Task SaveAction()
+    {
+        //action.Action = events.getAction();
+        eventValue = events.getAction();
+        MudDialog.Close(DialogResult.Ok(eventValue));
+        
+    }
+   
+  
+
+    
+
+}
+@*@functions {
+
+    string actionMenu;
+
+    public string getAction()
+    {
+        actionMenu = eventValue;
+        return actionMenu;
+    }
+
+}*@

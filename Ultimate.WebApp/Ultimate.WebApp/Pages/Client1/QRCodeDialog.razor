@@ -1,0 +1,60 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+
+<style>
+   
+    .fontTitle {
+        @font_Title
+    }
+
+    .fontContent {
+        @font_Content
+    }
+    .mud-dialog .mud-dialog-title .mud-button-close{
+        color: #c8cacd;
+        /*top: 8px;
+        left: -8px;
+        position: absolute;*/
+       
+    
+        
+    }
+
+   /* .mud-typography-h6{
+        color: #c8cacd;
+        direction: rtl;
+    }*/
+</style>
+<MudDialog>
+    
+    <DialogContent>
+        
+        <MudImage Class="fontContent" Src="@QRCodeSRC" Height="300" Width="300" Style="position:relative;top:10px;color:#c8cacd" Alt=@_localizer["lbl_ImageNotLoad"]> </MudImage>
+        
+       
+        
+        
+    </DialogContent>
+    <DialogActions>
+        
+    </DialogActions>
+
+</MudDialog>
+
+@code {
+    [Parameter] public string QRCodeSRC { get; set; }
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    protected override async Task OnInitializedAsync(){
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+}

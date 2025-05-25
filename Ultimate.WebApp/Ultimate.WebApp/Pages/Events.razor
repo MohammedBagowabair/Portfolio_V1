@@ -1,0 +1,496 @@
+﻿@using BlazorApp1.Model
+@inject CustomHttp Http
+@inherits EventsComponent
+@inject IEventsService _eventsService
+@inject IReportCollectionServices reportCollectionServices
+@inject IStringLocalizer<Resource> _localizer
+@inject ITextService textService
+@inject IDialogService DialogService
+<style>
+    .just{
+        display: flex;
+        height: 80vh;
+        width: 100%;
+        align-items: center;
+    }
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+        color: #d4d4d4;
+        @font_Content
+    }
+    .mud-application-layout-rtl .mud-input-label-filled.mud-input-label-margin-dense {
+        transform: translate(-12px,17px) scale(1);
+        color: #d4d4d4;
+    }
+
+    .mud-input > input.mud-input-root, div.mud-input-slot.mud-input-root {
+        font: inherit;
+        color: #d4d4d4;
+        width: 100%;
+        border: 0;
+        height: 1.1876em;
+        margin: 0;
+        display: block;
+        padding: 6px 0 7px;
+        min-width: 0;
+        background: none;
+        position: relative;
+        box-sizing: content-box;
+        letter-spacing: inherit;
+        -webkit-tap-highlight-color: transparent;
+    }
+</style>
+<MudGrid Spacing="1" Justify="Justify.FlexStart">
+    <MudItem sm="4" xs="6" md="4">
+
+        <MudSelect Margin="Margin.Dense" Style="color:white" Class="fontContent" Dense Variant="Variant.Filled" T="string" Label="@_localizer["lbl_Event"]" @bind-Value="value">
+            @*@if(keyses==null||keyses==""){*@
+
+            @foreach (var item in roots ?? Array.Empty<Root>())
+            {
+                <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@item.events"><span style="color:white" class="fontContent">@item.events</span></MudSelectItem>
+
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem sm="4" xs="6" md="4">
+
+        <MudSelect Margin="Margin.Dense" Dense  Class="fontContent" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_EventType"]" @bind-Value="value1">
+
+            @foreach (var item1 in roots ?? Array.Empty<Root>())
+            {
+                @if (value == item1.events)
+                {
+                    @foreach (var items in item1.events_name)
+                    {
+                        <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@items.eventsName"><span style="color:white" class="fontContent">@items.eventsName</span></MudSelectItem>
+                    }
+
+                }
+            }
+        </MudSelect>
+    </MudItem>
+    <MudItem sm="4" xs="6" md="4">
+        @{
+            if (value == null || value1 == null)
+            {
+                //keyses = null;
+                //key = null;
+                //keyss = null;
+            }
+            else if (
+            //(value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "1").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "2").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "3").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "4").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            //(value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "4").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            //(value == roots.Where(x => x.events_id == "202").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "5").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "101").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "1").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "101").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "2").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "101").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "3").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"]) ||
+            (value == roots.Where(x => x.events_id == "101").FirstOrDefault().events && value1 == roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "4").FirstOrDefault().eventsName) && (name_btns == _localizer["lbl_BtnSave"] || name_btns == _localizer["lbl_BtnEdit"])
+            )
+            {
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("value3: " + value3);
+                Console.WriteLine("messageAction1: " + messageAction1);
+                Console.WriteLine("keyss: " + keyss);
+                Console.WriteLine("keyses: " + keyses);
+                Console.WriteLine("mediatxt: " + mediatxt);
+                Console.WriteLine("key: " + key);
+                Console.WriteLine("value: " + value);
+                Console.WriteLine("value1: " + value1);
+            }
+            else
+            {
+                if (name_btns == _localizer["lbl_BtnEdit"])
+                {
+
+                }
+                else
+                {
+                    keyses = null;
+                    keyss = null;
+                    key = null;
+                }
+            }
+        }
+        @if (key == "N^M^S^")
+        {
+            isShowImage = false;
+            <MudSelect Class="fontContent" Dense Margin="Margin.Dense" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_ChooseMenu"]" @bind-Value="@value3">
+                @if (menus_S.Count > 0)
+                {
+                    @foreach (var itemss in menus_S)
+                    {
+                        <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@itemss.Id.ToString()"><span style ="color:white" class="fontContent">@itemss.MenuName</span>  </MudSelectItem>
+                    }
+
+                }
+                else
+                {
+                    <MudSelectItem Style="color:white" Class="fontContent" T="string">
+                        <span style="color:white" class="fontContent">@_localizer["lbl_NoItem"]</span>
+                        </MudSelectItem>
+                }
+            </MudSelect>
+            keyss = key + value3;
+
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+            else
+            {
+
+            }
+        }
+        @if (key == "N^M^Q^")
+        {
+            isShowImage = false;
+            <MudSelect Margin="Margin.Dense" Dense Class="fontContent" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_ChooseMenu"]" @bind-Value="@value4">
+                @if (menus_Q.Count > 0)
+                {
+                    @foreach (var itemss in menus_Q)
+                    {
+                        <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@itemss.Id.ToString()"><span style="color:white" class="fontContent"> @itemss.MenuName </span></MudSelectItem>
+                    }
+                }
+                else
+                {
+                    <MudSelectItem Style="color:white" Class="fontContent" T="string"><span style="color:white" class="fontContent">@_localizer["lbl_NoItem"]</span></MudSelectItem>
+                }
+            </MudSelect>
+            keyss = key + value4;
+
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+            else
+            {
+
+            }
+        }
+        @if (key == "N^M^R^")
+        {
+            isShowImage = false;
+            <MudSelect Margin="Margin.Dense" Dense Class="fontContent" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_ChooseGroupReports"]" @bind-Value="@value5">
+                @if (reports_G.Count > 0)
+                {
+                    @foreach (var item_G in reports_G)
+                    {
+                        <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@item_G.id.ToString()"><span style="color:white" class="fontContent"> @item_G.name </span></MudSelectItem>
+                    }
+                }
+                else
+                {
+                    <MudSelectItem Style="color:white" Class="fontContent" T="string"><span style="color:white" class="fontContent">@_localizer["lbl_NoItem"]</span></MudSelectItem>
+                }
+            </MudSelect>
+            keyss = key + value5;
+
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+            else
+            {
+
+            }
+        }
+
+        @if (key == "S^T^Q^")
+        {
+            isShowImage = false;
+            <MudSelect Margin="Margin.Dense" Dense Class="fontContent" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_ChooseText"]" @bind-Value="@value6">
+                @if (text_Q.Count > 0)
+                {
+                    @foreach (var itemss in text_Q)
+                    {
+                        <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@itemss.id.ToString()"><span style="color:white" class="fontContent"> @itemss.name </span></MudSelectItem>
+                    }
+                }
+                else
+                {
+                    <MudSelectItem Style="color:white" Class="fontContent" T="string"><span style="color:white" class="fontContent">@_localizer["lbl_NoItem"]</span></MudSelectItem>
+                }
+            </MudSelect>
+            keyss = key + value6;
+
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+            else
+            {
+
+            }
+        }
+        @if (key == "S^T^S^")
+        {
+            isShowImage = false;
+            <MudTextField Margin="Margin.Dense" Style="background-color:#343535;color:#c8cacd" Class="fontContent" Immediate="true" @bind-Value="@messageAction1" Placeholder="أضف محتوى الحدث" Variant="Variant.Filled"></MudTextField>
+            keyss = key + messageAction1;
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+        }
+        @if (key == "S^T^Q^1000")
+        {
+            isShowImage = false;
+            keyss = key;
+            if (keyss.Length > 6)
+            {
+                keyses = keyss;
+            }
+        }
+        @if (key == "S^M^")
+        {
+            isShowImage = false;
+            <MudSelect Margin="Margin.Dense" Dense Class="fontContent" Variant="Variant.Filled" T="string" Label="@_localizer["lbl_ChooseMedia"]" @bind-Value="@mediatxt">
+
+                @foreach (var mediaItem in medias)
+                {
+                    <MudSelectItem Style="color:white" Class="fontContent" T="string" Value="@mediaItem.mediaId"><span style="color:white" class="fontContent">@mediaItem.mediaName</span></MudSelectItem>
+                }
+            </MudSelect>
+            if (key + mediatxt == "S^M^Q^1000")
+            {
+                isShowImage = false;
+                keyss = key + mediatxt;
+                if (keyss.Length > 6)
+                {
+                    keyses = keyss;
+                }
+                else
+                {
+
+                }
+            }
+            else if (key + mediatxt == "S^M^S^")
+            {
+            }
+        }
+    </MudItem>
+    @if (key + mediatxt == "S^M^S^")
+    {
+    <MudItem sm="1" xs="5" md="1" Class="fontContent">
+            <MudIconButton Class="fontContent" Color="Color.Primary" Icon="@Icons.Material.Outlined.CameraAlt" OnClick="()=>Click(key+mediatxt,botId,Image_Id)" />
+            @NameImage
+    </MudItem>
+    }
+    else{}
+</MudGrid>
+
+@code {
+    bool isShowImage = false;
+    [Parameter]
+    public string name_btns { set; get; }
+    [Parameter]
+    public int botId { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private string messageAction1 { get; set; }
+    private string value { get; set; }
+    private string value4 { get; set; }
+    private string value6 { get; set; }
+    public string mediaImage { get; set; }
+    //private string value5 { get; set; }
+    private string mediatxt { get; set; }
+    private string key { get; set; }
+    public string keyss { get; set; }
+    [Parameter]
+    public string keyses { get; set; }
+    private string value1 { get; set; }
+    private string NameImage { get; set; }
+    private string value3 { get; set; }
+    private string value5 { get; set; }
+    private Root[]? roots;
+    public media[]? medias;
+    //private MenuERP[]? menuERPs;
+    public List<MenuModel> menus_S { get; set; }
+    public List<ReportCollectionModel> reports_G { get; set; }
+    public List<MenuModel> menus_Q { get; set; }
+    public List<TextModel> text_Q { get; set; }
+    public MenuModel str { set; get; }
+    public media txt { set; get; }
+    public MenuERP erp { set; get; }
+    string Image_Id;
+    async void Click(string key, int botId, string Image_Id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("botId", botId);
+        parameters.Add("idImage", Image_Id);
+        parameters.Add("name_btns", name_btns);
+        var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+        var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Automessage.SendImgeDialog>(null, parameters, options);
+        var reslut = await dialog.Result;
+        Console.WriteLine($"reslut: {reslut}");
+        var x = reslut.Data.ToString();
+        Console.WriteLine($"reslut of data: {x}");
+
+        if (x.Contains("^"))
+        {
+            var y = x.Split('^');
+            Image_Id = y[0];
+            NameImage = y[1];
+            Console.WriteLine($"split: {y}");
+            if (Image_Id != null)
+            {
+                keyss = key + Image_Id;
+                if (keyss.Length > 6)
+                {
+                    keyses = keyss;
+                }
+                else
+                {
+
+                }
+            }
+        }
+        else{
+
+        }
+        StateHasChanged();
+    }
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (value != null && value1 != null)
+        {
+            key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+            Console.WriteLine("key: " + key);
+        }
+        else { }
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;color:white;";
+            font_Title = "font-family:Noto Kufi Arabic;color:white;";
+            roots = await Http.HttpClient.GetFromJsonAsync<Root[]>("actions/ActionDropDownList.json");
+            medias = await Http.HttpClient.GetFromJsonAsync<media[]>("actions/media1.json");
+            //menuERPs = await Http.HttpClient.GetFromJsonAsync<MenuERP[]>("actions/MenuERP.json");
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            medias = await Http.HttpClient.GetFromJsonAsync<media[]>("actions/mediaEN.json");
+            roots = await Http.HttpClient.GetFromJsonAsync<Root[]>("actions/ActionDropDownListEN.json");
+
+            //menuERPs = await Http.HttpClient.GetFromJsonAsync<MenuERP[]>("actions/MenuERP_EN.json");
+
+        }
+        try{
+        ResponseModel<MenuModel> response_S = await _eventsService.GetMenu(botId, "s");
+        menus_S = response_S.Content;
+        ResponseModel<MenuModel> response_Q = await _eventsService.GetMenu(botId, "Q");
+        menus_Q = response_Q.Content;
+        ResponseModel<ReportCollectionModel> response_G = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        reports_G = response_G.Content;
+        ResponseModel<TextModel> response_txtG = await textService.GetByBotId(botId);
+        text_Q = response_txtG.Content;
+        if (name_btns == _localizer["lbl_BtnEdit"])
+        {
+
+            Console.WriteLine($"{value}-{value1}-{value3}");
+            Console.WriteLine("key111" + keyses);
+            if (keyses == null||keyses ==string.Empty)
+            {
+                value=null;
+                value1 = null;
+            }
+            else if (keyses.ToString().Substring(0, 6) == "N^M^S^")
+            {
+                value = roots.Where(x => x.events_id == "202").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "3").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                value3 = keyses.ToString().Substring(6);
+                Console.WriteLine($"{value}-{value1}-{value3}");
+            }
+            else if (keyses.ToString().Substring(0, 6) == "N^M^Q^")
+            {
+                value = roots.Where(x => x.events_id == "202").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "2").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                value4 = keyses.ToString().Substring(6);
+                Console.WriteLine($"{value}-{value1}-{value4}");
+            }
+            else if (keyses.ToString().Substring(0, 6) == "N^M^R^")
+            {
+                value = roots.Where(x => x.events_id == "202").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "202").FirstOrDefault().events_name.Where(x => x.events_name_id == "4").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                value5 = keyses.ToString().Substring(6);
+                Console.WriteLine($"{value}-{value1}-{value4}");
+            }
+            else if (keyses.ToString().Substring(0, 6) == "S^M^Q^")
+            {
+                value = roots.Where(x => x.events_id == "101").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "1").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                mediatxt = keyses.ToString().Substring(6);
+            }
+            else if (keyses.ToString().Substring(0, 6) == "S^M^S^")
+            {
+                value = roots.Where(x => x.events_id == "101").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "1").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                mediatxt = keyses.ToString().Substring(4,2);
+                Image_Id = keyses.ToString().Substring(6);
+            }
+            else if (keyses.ToString().Substring(0, 6) == "S^T^S^")
+            {
+                value = roots.Where(x => x.events_id == "101").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "3").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                messageAction1 = keyses.ToString().Substring(6);
+                keyses = key + messageAction1;
+            }
+            else if (keyses.ToString().Substring(0, 6) == "S^T^Q^")
+            {
+                value = roots.Where(x => x.events_id == "101").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "4").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                value6 = keyses.ToString().Substring(6);
+                //value4 = keyses.ToString().Substring(6);
+            }
+            else if (keyses.ToString().Substring(0, 10) == "S^T^Q^1000")
+            {
+                value = roots.Where(x => x.events_id == "101").FirstOrDefault().events;
+                value1 = roots.Where(x => x.events_id == "101").FirstOrDefault().events_name.Where(x => x.events_name_id == "2").FirstOrDefault().eventsName;
+                key = roots.Where(x => x.events == value).FirstOrDefault().events_name.Where(x => x.eventsName == value1).FirstOrDefault().keys;
+                Console.WriteLine("key: " + key);
+                //value4 = keyses.ToString().Substring(6);
+            }
+            
+        }
+    }
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+    }
+}
+}
+
+@functions {
+
+    string action;
+
+    public string getAction()
+    {
+        action = keyses;
+        return action;
+    }
+}

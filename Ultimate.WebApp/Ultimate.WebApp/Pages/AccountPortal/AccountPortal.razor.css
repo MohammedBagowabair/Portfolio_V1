@@ -1,0 +1,12 @@
+﻿body {
+}
+::deep .screen-full {
+    visibility: visible;
+}
+
+
+@media (max-width: 858px) {
+    ::deep .screen-full {
+        visibility: hidden;
+    }
+}

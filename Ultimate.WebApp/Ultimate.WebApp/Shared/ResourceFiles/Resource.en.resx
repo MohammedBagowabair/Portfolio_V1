@@ -1,0 +1,1560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="exp_1001" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="lbl_AboutBot" xml:space="preserve">
+    <value>Now you can communicate with your customers across all local networks through instant chat on a large scale by each by achieving a balance between meeting customer requests at the same time, promptly and usefully.</value>
+  </data>
+  <data name="lbl_AboutBotTitle" xml:space="preserve">
+    <value>chat is a way of communicating with customers through a messaging widget on your website. It’s like instant messaging that you’re used to on Facebook Messenger, Instagram DMs, WhatsApp, etc. but between a business and website visitors.</value>
+  </data>
+  <data name="lbl_AboutProjectSubTitle" xml:space="preserve">
+    <value>We put your business world in your hands through our applications to follow up, manage reports and process tasks.</value>
+  </data>
+  <data name="lbl_AboutProjectTitle" xml:space="preserve">
+    <value>OUR Apps</value>
+  </data>
+  <data name="lbl_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="lbl_AcceptedOrders" xml:space="preserve">
+    <value>Accepted Orders</value>
+  </data>
+  <data name="lbl_AccountDetails" xml:space="preserve">
+    <value>Account Details</value>
+  </data>
+  <data name="lbl_AccountManagement" xml:space="preserve">
+    <value>Account Management</value>
+  </data>
+  <data name="lbl_AccountsManagement" xml:space="preserve">
+    <value>Accounts Management</value>
+  </data>
+  <data name="lbl_AccountStatement" xml:space="preserve">
+    <value>Account Statement</value>
+  </data>
+  <data name="lbl_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="lbl_ActiveName" xml:space="preserve">
+    <value>Active Name</value>
+  </data>
+  <data name="lbl_ActiveType" xml:space="preserve">
+    <value>Active Type</value>
+  </data>
+  <data name="lbl_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="lbl_AddApplication" xml:space="preserve">
+    <value>Add Application</value>
+  </data>
+  <data name="lbl_AddEvent" xml:space="preserve">
+    <value>Add Event</value>
+  </data>
+  <data name="lbl_AddInitiMsg" xml:space="preserve">
+    <value>Add initial message</value>
+  </data>
+  <data name="lbl_AddNo" xml:space="preserve">
+    <value>Add Number</value>
+  </data>
+  <data name="lbl_AddPackage" xml:space="preserve">
+    <value>Add Package</value>
+  </data>
+  <data name="lbl_AddPeriod" xml:space="preserve">
+    <value>Add Period</value>
+  </data>
+  <data name="lbl_AddReply" xml:space="preserve">
+    <value>Add reply</value>
+  </data>
+  <data name="lbl_AddReplyOrNote" xml:space="preserve">
+    <value>Add reply or note</value>
+  </data>
+  <data name="lbl_AddText" xml:space="preserve">
+    <value>Add text</value>
+  </data>
+  <data name="lbl_Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="lbl_AdminManagement" xml:space="preserve">
+    <value>System Management</value>
+  </data>
+  <data name="lbl_AdminNo" xml:space="preserve">
+    <value>Admin Number</value>
+  </data>
+  <data name="lbl_AllSubscribers" xml:space="preserve">
+    <value> Subscribers</value>
+  </data>
+  <data name="lbl_AllSubscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="lbl_AllUsers" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="lbl_AllUserSubscriptions" xml:space="preserve">
+    <value>Total Subscriptions</value>
+  </data>
+  <data name="lbl_appId" xml:space="preserve">
+    <value>appId</value>
+  </data>
+  <data name="lbl_Application" xml:space="preserve">
+    <value>Applications</value>
+  </data>
+  <data name="lbl_ApplicationName" xml:space="preserve">
+    <value>Application name</value>
+  </data>
+  <data name="lbl_attachImage" xml:space="preserve">
+    <value>Attach image</value>
+  </data>
+  <data name="lbl_attachThePaymentVoucher" xml:space="preserve">
+    <value>Attach the payment voucher</value>
+  </data>
+  <data name="lbl_attachTheVoucher" xml:space="preserve">
+    <value>Attach the voucher</value>
+  </data>
+  <data name="lbl_AutoMessage" xml:space="preserve">
+    <value>AutoMessage</value>
+  </data>
+  <data name="lbl_AutoMessages" xml:space="preserve">
+    <value>AutoMessages</value>
+  </data>
+  <data name="lbl_B" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="lbl_balanceText" xml:space="preserve">
+    <value>Balance text</value>
+  </data>
+  <data name="lbl_balance_services" xml:space="preserve">
+    <value>alance services</value>
+  </data>
+  <data name="lbl_Body" xml:space="preserve">
+    <value>Body</value>
+  </data>
+  <data name="lbl_bot" xml:space="preserve">
+    <value>Bot</value>
+  </data>
+  <data name="lbl_BtnEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="lbl_BtnSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="lbl_Button" xml:space="preserve">
+    <value>Button</value>
+  </data>
+  <data name="lbl_ButtonText" xml:space="preserve">
+    <value>Button text</value>
+  </data>
+  <data name="lbl_C" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="lbl_Cancelbtn" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="lbl_cancelledSubscription" xml:space="preserve">
+    <value>Cancelled subscription</value>
+  </data>
+  <data name="lbl_ChangePackage" xml:space="preserve">
+    <value>Change package</value>
+  </data>
+  <data name="lbl_ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="lbl_ChooseGroupReports" xml:space="preserve">
+    <value>Choose collection reports</value>
+  </data>
+  <data name="lbl_ChooseImage" xml:space="preserve">
+    <value>Choose image</value>
+  </data>
+  <data name="lbl_ChooseMedia" xml:space="preserve">
+    <value>Choose media</value>
+  </data>
+  <data name="lbl_ChooseMenu" xml:space="preserve">
+    <value>Choose Menu</value>
+  </data>
+  <data name="lbl_ChooseService" xml:space="preserve">
+    <value>Choose service</value>
+  </data>
+  <data name="lbl_ChooseText" xml:space="preserve">
+    <value>Choose text</value>
+  </data>
+  <data name="lbl_Client" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="lbl_ClientNo" xml:space="preserve">
+    <value>Client No</value>
+  </data>
+  <data name="lbl_clients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="lbl_ClientWhatsappNo" xml:space="preserve">
+    <value>WhatsApp No.</value>
+  </data>
+  <data name="lbl_Cmessage" xml:space="preserve">
+    <value>Client message*</value>
+  </data>
+  <data name="lbl_CodeValidation" xml:space="preserve">
+    <value>Enter the code</value>
+  </data>
+  <data name="lbl_CofirmDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this menu?</value>
+  </data>
+  <data name="lbl_CofirmDeleteApp" xml:space="preserve">
+    <value>Are you sure you want to delete this application?</value>
+  </data>
+  <data name="lbl_CofirmDeleteAuto" xml:space="preserve">
+    <value>Are you sure you want to delete this AutoMessage?</value>
+  </data>
+  <data name="lbl_CofirmDeleteClient" xml:space="preserve">
+    <value>Are you sure you want to delete this number?</value>
+  </data>
+  <data name="lbl_CofirmDeletePackage" xml:space="preserve">
+    <value>Are you sure you want to delete this package?</value>
+  </data>
+  <data name="lbl_CofirmDeletePeriod" xml:space="preserve">
+    <value>Are you sure you want to delete this period?</value>
+  </data>
+  <data name="lbl_CofirmDeleteReportCollection" xml:space="preserve">
+    <value>Are you sure you want to delete this collection?</value>
+  </data>
+  <data name="lbl_CofirmDeleteSubscription" xml:space="preserve">
+    <value>Are you sure to cancel your subscription?</value>
+  </data>
+  <data name="lbl_CofirmRenewSub" xml:space="preserve">
+    <value>Are you sure you want to renew this package?</value>
+  </data>
+  <data name="lbl_CofirmResendSub" xml:space="preserve">
+    <value>Are you sure you want to resend this package?</value>
+  </data>
+  <data name="lbl_CofirmUpdateSecretkey" xml:space="preserve">
+    <value>Are you sure you want to update this secret key?</value>
+  </data>
+  <data name="lbl_Collection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
+  <data name="lbl_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="lbl_ConfirmAccount" xml:space="preserve">
+    <value>Confirm Account</value>
+  </data>
+  <data name="lbl_Confirmation" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="lbl_ConfirmDeleteReport" xml:space="preserve">
+    <value>Are you sure you want to delete this report?</value>
+  </data>
+  <data name="lbl_ConfirmDeleteText" xml:space="preserve">
+    <value>Are you sure you want to delete this text?</value>
+  </data>
+  <data name="lbl_confirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="lbl_ConfrimCodeSending" xml:space="preserve">
+    <value>Confirmation code has been sent successfully</value>
+  </data>
+  <data name="lbl_consultingservices" xml:space="preserve">
+    <value>onsulting services</value>
+  </data>
+  <data name="lbl_contactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="lbl_ContentMenu" xml:space="preserve">
+    <value>Content Menu</value>
+  </data>
+  <data name="lbl_CopyRight" xml:space="preserve">
+    <value>All Rights Reserved For </value>
+  </data>
+  <data name="lbl_CopyrightYear" xml:space="preserve">
+    <value>©2023</value>
+  </data>
+  <data name="lbl_CountAuto" xml:space="preserve">
+    <value>AutoMessage count</value>
+  </data>
+  <data name="lbl_CountMenus" xml:space="preserve">
+    <value>Menus count</value>
+  </data>
+  <data name="lbl_CountServices" xml:space="preserve">
+    <value>Count Services</value>
+  </data>
+  <data name="lbl_CreateApplication" xml:space="preserve">
+    <value>Create a Application</value>
+  </data>
+  <data name="lbl_CreateMenu" xml:space="preserve">
+    <value>Create new menu</value>
+  </data>
+  <data name="lbl_CreateNewCollection" xml:space="preserve">
+    <value>Create New Collection</value>
+  </data>
+  <data name="lbl_CreateNewReport" xml:space="preserve">
+    <value>Create New Report</value>
+  </data>
+  <data name="lbl_CreatePackage" xml:space="preserve">
+    <value>Create new Package</value>
+  </data>
+  <data name="lbl_CreateText" xml:space="preserve">
+    <value>Create text</value>
+  </data>
+  <data name="lbl_CurrentPassword" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="lbl_CurrentSubscription" xml:space="preserve">
+    <value>Current Subscription</value>
+  </data>
+  <data name="lbl_Dashboard" xml:space="preserve">
+    <value>Simple Dashboard</value>
+  </data>
+  <data name="lbl_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="lbl_DaysNO" xml:space="preserve">
+    <value>Days number</value>
+  </data>
+  <data name="lbl_DaysUserValidation" xml:space="preserve">
+    <value>Must enter Days number or select a user</value>
+  </data>
+  <data name="lbl_DeleteApplication" xml:space="preserve">
+    <value>Delete Application</value>
+  </data>
+  <data name="lbl_DeleteAutoMessage" xml:space="preserve">
+    <value>Delete AutoMessage</value>
+  </data>
+  <data name="lbl_Deletebtn" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="lbl_DeleteClient" xml:space="preserve">
+    <value>Delete Number</value>
+  </data>
+  <data name="lbl_DeleteEncodingReport" xml:space="preserve">
+    <value>Delete Report</value>
+  </data>
+  <data name="lbl_DeleteMenu" xml:space="preserve">
+    <value>Delete menu</value>
+  </data>
+  <data name="lbl_DeletePackage" xml:space="preserve">
+    <value>Delete Package</value>
+  </data>
+  <data name="lbl_DeletePeriod" xml:space="preserve">
+    <value>Delete Period</value>
+  </data>
+  <data name="lbl_DeleteReportCollection" xml:space="preserve">
+    <value>Delete Collection</value>
+  </data>
+  <data name="lbl_DeleteSubscription" xml:space="preserve">
+    <value>Cancel subscription</value>
+  </data>
+  <data name="lbl_DeleteText" xml:space="preserve">
+    <value>Delete Text</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="lbl_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="lbl_Discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="lbl_DiscountAmount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="lbl_Don'tHaveAccount" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="lbl_Done" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="lbl_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="lbl_EditActivity" xml:space="preserve">
+    <value>Edit status</value>
+  </data>
+  <data name="lbl_EditActivityConfrim" xml:space="preserve">
+    <value>Are you really want to edit your status?</value>
+  </data>
+  <data name="lbl_EditApplication" xml:space="preserve">
+    <value>Edit application</value>
+  </data>
+  <data name="lbl_EditDone" xml:space="preserve">
+    <value> Edited</value>
+  </data>
+  <data name="lbl_EditEvent" xml:space="preserve">
+    <value>Edit Event</value>
+  </data>
+  <data name="lbl_EditNo" xml:space="preserve">
+    <value>Edit Number</value>
+  </data>
+  <data name="lbl_EditPeriod" xml:space="preserve">
+    <value>Edit Period</value>
+  </data>
+  <data name="lbl_EditText" xml:space="preserve">
+    <value>Edit text</value>
+  </data>
+  <data name="lbl_Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="lbl_emailAddress" xml:space="preserve">
+    <value>support@malybot</value>
+  </data>
+  <data name="lbl_EmailIsIncorrect" xml:space="preserve">
+    <value>Email is incorrect</value>
+  </data>
+  <data name="lbl_EncodingMenus" xml:space="preserve">
+    <value>Encoding Menus</value>
+  </data>
+  <data name="lbl_EncodingReports" xml:space="preserve">
+    <value>Encoding Reports</value>
+  </data>
+  <data name="lbl_EndDate" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="lbl_EnterApplicationName" xml:space="preserve">
+    <value>Enter your Application name</value>
+  </data>
+  <data name="lbl_EnterConfirmationCode" xml:space="preserve">
+    <value>Enter confirmation code that sent to find out everthing new and useful</value>
+  </data>
+  <data name="lbl_EnterText" xml:space="preserve">
+    <value>Enter text</value>
+  </data>
+  <data name="lbl_EnterTheName" xml:space="preserve">
+    <value>Enter the name</value>
+  </data>
+  <data name="lbl_ERPSystems" xml:space="preserve">
+    <value>ERP Systems</value>
+  </data>
+  <data name="lbl_EstablishedNumbers" xml:space="preserve">
+    <value>Established numbers</value>
+  </data>
+  <data name="lbl_Event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="lbl_EventType" xml:space="preserve">
+    <value>Event Type</value>
+  </data>
+  <data name="lbl_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="lbl_Extend" xml:space="preserve">
+    <value>Extend</value>
+  </data>
+  <data name="lbl_ExtendSubscriptions" xml:space="preserve">
+    <value>Extend subscriptions</value>
+  </data>
+  <data name="lbl_ExtendSubscriptionsSuccessfully" xml:space="preserve">
+    <value>Subscriptions extended successfully</value>
+  </data>
+  <data name="lbl_F" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="lbl_Faileduploadedtobot" xml:space="preserve">
+    <value>Failed uploaded to bot</value>
+  </data>
+  <data name="lbl_FinishedSubscriptions" xml:space="preserve">
+    <value>Finished Subscriptions</value>
+  </data>
+  <data name="lbl_flexibleservices" xml:space="preserve">
+    <value>lexible services</value>
+  </data>
+  <data name="lbl_Footer" xml:space="preserve">
+    <value>Footer</value>
+  </data>
+  <data name="lbl_FooterAbout" xml:space="preserve">
+    <value>Chat MalyBot</value>
+  </data>
+  <data name="lbl_FooterAbout1" xml:space="preserve">
+    <value>Chat MalyBot and administrative solutions developed for  meeting all changes in all different businesses sectors and activities in the financial and human resources management.</value>
+  </data>
+  <data name="lbl_FooterLinked" xml:space="preserve">
+    <value>Useful links:</value>
+  </data>
+  <data name="lbl_FooterLinked1" xml:space="preserve">
+    <value>YemenSoft</value>
+  </data>
+  <data name="lbl_FooterLinked2" xml:space="preserve">
+    <value>Ultimate Solutions</value>
+  </data>
+  <data name="lbl_FooterLinked3" xml:space="preserve">
+    <value>SolutionInformatiques</value>
+  </data>
+  <data name="lbl_FooterLinked4" xml:space="preserve">
+    <value>Ultimate Academy</value>
+  </data>
+  <data name="lbl_FooterOurProducts" xml:space="preserve">
+    <value>Our Products:</value>
+  </data>
+  <data name="lbl_FooterOurProducts1" xml:space="preserve">
+    <value>ONYX pro</value>
+  </data>
+  <data name="lbl_FooterOurProducts2" xml:space="preserve">
+    <value>Almotakamel Pro</value>
+  </data>
+  <data name="lbl_FooterOurProducts3" xml:space="preserve">
+    <value>Almotakamel plus</value>
+  </data>
+  <data name="lbl_FooterOurProducts4" xml:space="preserve">
+    <value>Almotakamel Silver</value>
+  </data>
+  <data name="lbl_FooterOurProducts5" xml:space="preserve">
+    <value>almuhaseb1</value>
+  </data>
+  <data name="lbl_ForeignDescription" xml:space="preserve">
+    <value>English description</value>
+  </data>
+  <data name="lbl_ForeignPackageName" xml:space="preserve">
+    <value>English Package name</value>
+  </data>
+  <data name="lbl_ForeignPeriodName" xml:space="preserve">
+    <value>English period name</value>
+  </data>
+  <data name="lbl_free" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="lbl_FromDate" xml:space="preserve">
+    <value>From date:</value>
+  </data>
+  <data name="lbl_Getconnected" xml:space="preserve">
+    <value>Get connected with us on social networks:</value>
+  </data>
+  <data name="lbl_Gmail" xml:space="preserve">
+    <value>Gmail</value>
+  </data>
+  <data name="lbl_GroupReports" xml:space="preserve">
+    <value>Reports collection:</value>
+  </data>
+  <data name="lbl_HaveAccount" xml:space="preserve">
+    <value>Have an account?</value>
+  </data>
+  <data name="lbl_Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="lbl_HideDetail" xml:space="preserve">
+    <value>Hide detail</value>
+  </data>
+  <data name="lbl_home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="lbl_id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="lbl_ImageNotLoad" xml:space="preserve">
+    <value>Can't load image</value>
+  </data>
+  <data name="lbl_imageValidations" xml:space="preserve">
+    <value>Choose an image</value>
+  </data>
+  <data name="lbl_Inactive" xml:space="preserve">
+    <value>inactive</value>
+  </data>
+  <data name="lbl_initMsg" xml:space="preserve">
+    <value>Initial message</value>
+  </data>
+  <data name="lbl_ItemData" xml:space="preserve">
+    <value>Item Data</value>
+  </data>
+  <data name="lbl_ItemTitle" xml:space="preserve">
+    <value>Item Title</value>
+  </data>
+  <data name="lbl_joinBtn" xml:space="preserve">
+    <value>Join us now</value>
+  </data>
+  <data name="lbl_less" xml:space="preserve">
+    <value>less</value>
+  </data>
+  <data name="lbl_List" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="lbl_location" xml:space="preserve">
+    <value>Yemen ,Hadramout, Mukalla</value>
+  </data>
+  <data name="lbl_login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="lbl_logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="lbl_Media" xml:space="preserve">
+    <value>Media: </value>
+  </data>
+  <data name="lbl_Menu" xml:space="preserve">
+    <value>Menu:</value>
+  </data>
+  <data name="lbl_MenuData" xml:space="preserve">
+    <value>Menu Data</value>
+  </data>
+  <data name="lbl_MenuName" xml:space="preserve">
+    <value>Menu Name:</value>
+  </data>
+  <data name="lbl_MenuOfEvent" xml:space="preserve">
+    <value>Menu: </value>
+  </data>
+  <data name="lbl_Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="lbl_MenusUsed" xml:space="preserve">
+    <value>Used Menus</value>
+  </data>
+  <data name="lbl_MenuTemplates" xml:space="preserve">
+    <value>Menu templates</value>
+  </data>
+  <data name="lbl_MenuType" xml:space="preserve">
+    <value>Menu type</value>
+  </data>
+  <data name="lbl_Messages" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="lbl_Month" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="lbl_Monthly" xml:space="preserve">
+    <value>Monthly subscription</value>
+  </data>
+  <data name="lbl_Monthly1" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="lbl_Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="lbl_more" xml:space="preserve">
+    <value>...more</value>
+  </data>
+  <data name="lbl_MoveToAutomessage" xml:space="preserve">
+    <value>Move to AutoMessage</value>
+  </data>
+  <data name="lbl_MoveToMenus" xml:space="preserve">
+    <value>Navigate to menu</value>
+  </data>
+  <data name="lbl_MoveToReportColl" xml:space="preserve">
+    <value>Move to report collection</value>
+  </data>
+  <data name="lbl_MsgNo" xml:space="preserve">
+    <value>Message number</value>
+  </data>
+  <data name="lbl_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="lbl_nameApplication" xml:space="preserve">
+    <value>Let's start with a name for your Application</value>
+  </data>
+  <data name="lbl_Nameperiods" xml:space="preserve">
+    <value>Name periods</value>
+  </data>
+  <data name="lbl_NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="lbl_NewVerify" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="lbl_NoItem" xml:space="preserve">
+    <value>No items found</value>
+  </data>
+  <data name="lbl_NoItems" xml:space="preserve">
+    <value>You have no items</value>
+  </data>
+  <data name="lbl_NotActive" xml:space="preserve">
+    <value>Not Active</value>
+  </data>
+  <data name="lbl_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="lbl_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="lbl_NotificationsSending" xml:space="preserve">
+    <value>Notifications have been sent successfully</value>
+  </data>
+  <data name="lbl_NotificationType" xml:space="preserve">
+    <value>Notification type</value>
+  </data>
+  <data name="lbl_NotificationTypeMedia" xml:space="preserve">
+    <value>Media</value>
+  </data>
+  <data name="lbl_NotificationTypeText" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="lbl_notmatchpassword" xml:space="preserve">
+    <value>Not match password</value>
+  </data>
+  <data name="lbl_NotOnline" xml:space="preserve">
+    <value>not connected</value>
+  </data>
+  <data name="lbl_Number" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="lbl_NumberConfirmationText" xml:space="preserve">
+    <value>Please enter your number...to receive the latest news</value>
+  </data>
+  <data name="lbl_NumberConfirmed" xml:space="preserve">
+    <value>Number confirmed successfully</value>
+  </data>
+  <data name="lbl_NumberForConfirm" xml:space="preserve">
+    <value>Type the number you want to confirm</value>
+  </data>
+  <data name="lbl_NumberManagement" xml:space="preserve">
+    <value>Number Management</value>
+  </data>
+  <data name="lbl_Numbers" xml:space="preserve">
+    <value>Numbers</value>
+  </data>
+  <data name="lbl_NumbersUsed" xml:space="preserve">
+    <value>Used Numbers</value>
+  </data>
+  <data name="lbl_NumberValidations" xml:space="preserve">
+    <value>Enter the number</value>
+  </data>
+  <data name="lbl_Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="lbl_OnelUser" xml:space="preserve">
+    <value>user</value>
+  </data>
+  <data name="lbl_OneMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="lbl_OneOrder" xml:space="preserve">
+    <value>order</value>
+  </data>
+  <data name="lbl_OneSubscription" xml:space="preserve">
+    <value>subscription</value>
+  </data>
+  <data name="lbl_Online" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="lbl_OrderAccepted" xml:space="preserve">
+    <value>Order accepted</value>
+  </data>
+  <data name="lbl_OrderDate" xml:space="preserve">
+    <value>Order Date</value>
+  </data>
+  <data name="lbl_OrderNotAccepted" xml:space="preserve">
+    <value>The order could not be accepted for not exceeding allowable limit</value>
+  </data>
+  <data name="lbl_OrderRejected" xml:space="preserve">
+    <value>Order rejected</value>
+  </data>
+  <data name="lbl_OrderReturned" xml:space="preserve">
+    <value>Order returned</value>
+  </data>
+  <data name="lbl_Orders" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="lbl_Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="lbl_Our" xml:space="preserve">
+    <value>Our </value>
+  </data>
+  <data name="lbl_OurPackages" xml:space="preserve">
+    <value> Packages</value>
+  </data>
+  <data name="lbl_OurPackages1" xml:space="preserve">
+    <value>Package gives customers access to a product or a service for a period of time and you get extra benefits.</value>
+  </data>
+  <data name="lbl_OurServices1" xml:space="preserve">
+    <value>Technical Support</value>
+  </data>
+  <data name="lbl_OurServices11" xml:space="preserve">
+    <value>A 24/7 support service offered by a professional team with excellent expertise in software engineering, computer engineering, accounting/management system deployment.</value>
+  </data>
+  <data name="lbl_OurServices2" xml:space="preserve">
+    <value>Consulting Services</value>
+  </data>
+  <data name="lbl_OurServices21" xml:space="preserve">
+    <value>After assessing your existing systems and business performance, our consultants suggest the best solutions that help you grow your business and make insightful financial decisions.</value>
+  </data>
+  <data name="lbl_OurServices3" xml:space="preserve">
+    <value>User Training</value>
+  </data>
+  <data name="lbl_OurServices31" xml:space="preserve">
+    <value>Our experts train your team on every feature and function of the system, making sure that you get the most out of it.</value>
+  </data>
+  <data name="lbl_OurServices4" xml:space="preserve">
+    <value>System Deployment</value>
+  </data>
+  <data name="lbl_OurServices41" xml:space="preserve">
+    <value>Our experts provide clients with guidance and support on each step of the deployment process, including system configuration, backup plans, and specification of role-based authorities and permissions.</value>
+  </data>
+  <data name="lbl_OurServices5" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="lbl_OurServices51" xml:space="preserve">
+    <value>Chat MalyBot For flexible configuration, user-friendly, secure data-saving and prompt outcomes.</value>
+  </data>
+  <data name="lbl_OurServices6" xml:space="preserve">
+    <value>Flexible</value>
+  </data>
+  <data name="lbl_OurServices61" xml:space="preserve">
+    <value>For the flexibility and capability of expansion for achieving strong performance.</value>
+  </data>
+  <data name="lbl_OurServices7" xml:space="preserve">
+    <value>Balance​</value>
+  </data>
+  <data name="lbl_OurServices71" xml:space="preserve">
+    <value>For achieving balanced growth during business activities and organizational structure expansion.</value>
+  </data>
+  <data name="lbl_OurServices9" xml:space="preserve">
+    <value>Customer support</value>
+  </data>
+  <data name="lbl_OurServices91" xml:space="preserve">
+    <value>We provide the best and wonderful experience with MalyBot platform to support multinational clients as per customer satisfaction</value>
+  </data>
+  <data name="lbl_OurServicesSubTitle" xml:space="preserve">
+    <value>We provide a complete, premium business management system to help corporates transform performance, achieve sustainable growth, and manage their finances and accounting operations more easily and efficiently.</value>
+  </data>
+  <data name="lbl_OurServicesTitle" xml:space="preserve">
+    <value>OUR SERVICES</value>
+  </data>
+  <data name="lbl_Package" xml:space="preserve">
+    <value>Package</value>
+  </data>
+  <data name="lbl_PackageDetails" xml:space="preserve">
+    <value>Package Details</value>
+  </data>
+  <data name="lbl_PackageDiscount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="lbl_packageFree" xml:space="preserve">
+    <value>Package free</value>
+  </data>
+  <data name="lbl_PackageName" xml:space="preserve">
+    <value>Package Name</value>
+  </data>
+  <data name="lbl_Packages" xml:space="preserve">
+    <value>Packages</value>
+  </data>
+  <data name="lbl_packagesCount" xml:space="preserve">
+    <value>packages Count</value>
+  </data>
+  <data name="lbl_packageServices" xml:space="preserve">
+    <value>package Services</value>
+  </data>
+  <data name="lbl_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="lbl_paymentprocess" xml:space="preserve">
+    <value>Payment process</value>
+  </data>
+  <data name="lbl_PaymentsVouchers" xml:space="preserve">
+    <value>Payment Vouchers</value>
+  </data>
+  <data name="lbl_PaymentVoucher" xml:space="preserve">
+    <value>Payment voucher</value>
+  </data>
+  <data name="lbl_PayVouchers" xml:space="preserve">
+    <value>Payment vouchers</value>
+  </data>
+  <data name="lbl_Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="lbl_PeriodDuration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="lbl_phoneInfo" xml:space="preserve">
+    <value>+60 1117754323</value>
+  </data>
+  <data name="lbl_PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="lbl_Photo" xml:space="preserve">
+    <value>photo</value>
+  </data>
+  <data name="lbl_PleaseChooseImage" xml:space="preserve">
+    <value>Please choose image....</value>
+  </data>
+  <data name="lbl_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="lbl_PriceADiscount" xml:space="preserve">
+    <value>Net price</value>
+  </data>
+  <data name="lbl_QAbout1" xml:space="preserve">
+    <value>Chat MalyBot .. Why?</value>
+  </data>
+  <data name="lbl_QAbout11" xml:space="preserve">
+    <value>For enterprise organization via solutions that achieve performance accuracy, resources efficiency and better investment.</value>
+  </data>
+  <data name="lbl_QAbout12" xml:space="preserve">
+    <value>For achieving balanced growth during business activities and organizational structure expansion.</value>
+  </data>
+  <data name="lbl_QAbout13" xml:space="preserve">
+    <value>For the flexibility and capability of expansion for achieving strong performance.</value>
+  </data>
+  <data name="lbl_QAbout2" xml:space="preserve">
+    <value>how to Administe MalyBot?</value>
+  </data>
+  <data name="lbl_QAbout21" xml:space="preserve">
+    <value>Controlling businesses through displaying transactions movement details by time, user or branch.</value>
+  </data>
+  <data name="lbl_QAbout22" xml:space="preserve">
+    <value>Create automatic replies to customers and make lists</value>
+  </data>
+  <data name="lbl_QAbout23" xml:space="preserve">
+    <value>Add clients per bot</value>
+  </data>
+  <data name="lbl_QAbout3" xml:space="preserve">
+    <value>What are MalyBot Help Tools?</value>
+  </data>
+  <data name="lbl_QAbout31" xml:space="preserve">
+    <value>SMS Services:</value>
+  </data>
+  <data name="lbl_QAbout32" xml:space="preserve">
+    <value>For sending financial transaction’s notification to clients and suppliers; or accounts balances to the top management to be updated on the organization performance, then an SMS or Email is sent automatically after configuring the necessary information of SMS, Notifications, Sending Options and Recipients. The following are the main advantages:</value>
+  </data>
+  <data name="lbl_QAbout33" xml:space="preserve">
+    <value>Direct access for the transaction notifications by the concerned persons.</value>
+  </data>
+  <data name="lbl_QAbout34" xml:space="preserve">
+    <value>Getting the required information without logging into the system.</value>
+  </data>
+  <data name="lbl_QAbout35" xml:space="preserve">
+    <value>Updating accounts balances after carrying out any transactions.</value>
+  </data>
+  <data name="lbl_Qty" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="lbl_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="lbl_Receiptvouchers" xml:space="preserve">
+    <value>Receipt vouchers</value>
+  </data>
+  <data name="lbl_RefreshSecretKey" xml:space="preserve">
+    <value>Refresh Secret Key</value>
+  </data>
+  <data name="lbl_register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="lbl_Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="lbl_RejectedOrders" xml:space="preserve">
+    <value>Rejected Orders</value>
+  </data>
+  <data name="lbl_RejectSubscription" xml:space="preserve">
+    <value>Reject Subscription</value>
+  </data>
+  <data name="lbl_RemainingSubscriptions" xml:space="preserve">
+    <value>Remaining Subscriptions</value>
+  </data>
+  <data name="lbl_RenewalSubscription" xml:space="preserve">
+    <value>Renewal subscription</value>
+  </data>
+  <data name="lbl_Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="lbl_ReportCollections" xml:space="preserve">
+    <value>Report Collections</value>
+  </data>
+  <data name="lbl_Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="lbl_ReqeustSubscription" xml:space="preserve">
+    <value>Reqeust Subscription</value>
+  </data>
+  <data name="lbl_RequestDate" xml:space="preserve">
+    <value>Request Date</value>
+  </data>
+  <data name="lbl_RequestedOrders" xml:space="preserve">
+    <value>Requested Orders</value>
+  </data>
+  <data name="lbl_requestFsent" xml:space="preserve">
+    <value>Failed to send your request.</value>
+  </data>
+  <data name="lbl_requestsending" xml:space="preserve">
+    <value>Your request is sending...</value>
+  </data>
+  <data name="lbl_requestsent" xml:space="preserve">
+    <value>Your request has been sent.</value>
+  </data>
+  <data name="lbl_Resend_subscription" xml:space="preserve">
+    <value>Resend subscription</value>
+  </data>
+  <data name="lbl_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="lbl_ReturnedOrders" xml:space="preserve">
+    <value>Returned Orders</value>
+  </data>
+  <data name="lbl_Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="lbl_S" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="lbl_Salesinvoices" xml:space="preserve">
+    <value>Sales invoices</value>
+  </data>
+  <data name="lbl_Salesreturns" xml:space="preserve">
+    <value>Sales returns</value>
+  </data>
+  <data name="lbl_SearchForUser" xml:space="preserve">
+    <value>Search for a user</value>
+  </data>
+  <data name="lbl_Second" xml:space="preserve">
+    <value>sec</value>
+  </data>
+  <data name="lbl_secretKey" xml:space="preserve">
+    <value>secretKey</value>
+  </data>
+  <data name="lbl_Seemore" xml:space="preserve">
+    <value>See more</value>
+  </data>
+  <data name="lbl_Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="lbl_SelectCollection" xml:space="preserve">
+    <value>Select Collection</value>
+  </data>
+  <data name="lbl_SelectReport" xml:space="preserve">
+    <value>Select Report</value>
+  </data>
+  <data name="lbl_Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="lbl_SendAgain" xml:space="preserve">
+    <value>Send again</value>
+  </data>
+  <data name="lbl_SendingCode" xml:space="preserve">
+    <value>Sending the code in :</value>
+  </data>
+  <data name="lbl_SendNotificationBy" xml:space="preserve">
+    <value>Send notification by</value>
+  </data>
+  <data name="lbl_SendNotifications" xml:space="preserve">
+    <value>Send Notifications</value>
+  </data>
+  <data name="lbl_SendQText" xml:space="preserve">
+    <value>Send encoding text</value>
+  </data>
+  <data name="lbl_SendText" xml:space="preserve">
+    <value>Send Text: </value>
+  </data>
+  <data name="lbl_SendTextt" xml:space="preserve">
+    <value>Send text</value>
+  </data>
+  <data name="lbl_Service" xml:space="preserve">
+    <value>Service </value>
+  </data>
+  <data name="lbl_Service1" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="lbl_serviceApi1" xml:space="preserve">
+    <value>API connectivity service on the MalyBot platform</value>
+  </data>
+  <data name="lbl_serviceApi2" xml:space="preserve">
+    <value>We provide a wonderful and unique service, as we connect all systems of various types and technologies with our service, the MalyBot service, with ease, integration and absolute professionalism.</value>
+  </data>
+  <data name="lbl_serviceApi3" xml:space="preserve">
+    <value>Send reports, results, notifications, or any other information to all your customers via the WhatsApp application automatically, based on your preferred settings.</value>
+  </data>
+  <data name="lbl_serviceApi4" xml:space="preserve">
+    <value>Saving the time and effort spent on manual preparation of reports, preparing them and sending them to customers with all their data collected from the system, whether (reports, test results, or statements of accounts) via WhatsApp.</value>
+  </data>
+  <data name="lbl_serviceApi5" xml:space="preserve">
+    <value>Sending immediate notifications to customers, whether notifications about (updates, payment confirmation, order status, emergency) for example, and other information.</value>
+  </data>
+  <data name="lbl_serviceApi6" xml:space="preserve">
+    <value>Achieve an outstanding user experience by customizing and designing messages and using custom commands, templates and appropriate formats, according to the required needs.</value>
+  </data>
+  <data name="lbl_serviceMsg1" xml:space="preserve">
+    <value>WhatsApp messaging service provided by the MalyBot platform</value>
+  </data>
+  <data name="lbl_serviceMsg2" xml:space="preserve">
+    <value>The service offers the ability to automatically respond to customer requests, which makes it easier for you to interact quickly and effectively with them</value>
+  </data>
+  <data name="lbl_serviceMsg3" xml:space="preserve">
+    <value>You can easily improve your customer self-services by automatically responding to their requests and inquiries by using the service with the WhatsApp application.</value>
+  </data>
+  <data name="lbl_serviceMsg4" xml:space="preserve">
+    <value>By using this service, you can improve customer experience and interact with them quickly and effectively. When customers contact you via WhatsApp, they receive an automated response that can contain useful information or a reference to available self-services.</value>
+  </data>
+  <data name="lbl_serviceMsg5" xml:space="preserve">
+    <value>Automatically responding to customer requests via WhatsApp is a useful way to provide self-support, answer frequently asked questions instantly, and relieve pressure on the human support team. You can also customize auto-reply messages according to your needs and business requirements.</value>
+  </data>
+  <data name="lbl_services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="lbl_services1" xml:space="preserve">
+    <value>WhatsApp messaging service</value>
+  </data>
+  <data name="lbl_services11" xml:space="preserve">
+    <value>The WhatsApp messaging service provided by the MalyBot platform provides automatic response to customer requests, which facilitates quick and effective interaction with them. Using this service, you can customize auto-reply messages according to your needs and business requirements.</value>
+  </data>
+  <data name="lbl_services2" xml:space="preserve">
+    <value>API connection service:</value>
+  </data>
+  <data name="lbl_services21" xml:space="preserve">
+    <value>Sending logos and alerts to all your customers by linking to the API, the service provided by the MalyBot platform as a very flexible service, regardless of the programming language used in your system.</value>
+  </data>
+  <data name="lbl_Services_" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="lbl_Show" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="lbl_ShowDetail" xml:space="preserve">
+    <value>Show detail</value>
+  </data>
+  <data name="lbl_Smessage" xml:space="preserve">
+    <value>System message*</value>
+  </data>
+  <data name="lbl_speedservices" xml:space="preserve">
+    <value>peed services</value>
+  </data>
+  <data name="lbl_Status" xml:space="preserve">
+    <value>Status:</value>
+  </data>
+  <data name="lbl_Status2" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="lbl_StayUpdated" xml:space="preserve">
+    <value>Stay updated</value>
+  </data>
+  <data name="lbl_subPackageFree" xml:space="preserve">
+    <value>Are you sure to subscribe to the free package?</value>
+  </data>
+  <data name="lbl_subscribedSuccessfully" xml:space="preserve">
+    <value>Subscribed successfully</value>
+  </data>
+  <data name="lbl_Subscriber" xml:space="preserve">
+    <value>subscriber</value>
+  </data>
+  <data name="lbl_Subscribers" xml:space="preserve">
+    <value>Subscribers</value>
+  </data>
+  <data name="lbl_SubscribersNumber" xml:space="preserve">
+    <value>Subscribers number</value>
+  </data>
+  <data name="lbl_Subscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="lbl_SubscriptionConfirmation" xml:space="preserve">
+    <value>Are you sure to subscribe this package?</value>
+  </data>
+  <data name="lbl_SubscriptionDate" xml:space="preserve">
+    <value>Subscription date</value>
+  </data>
+  <data name="lbl_SubscriptionDetails" xml:space="preserve">
+    <value>Subscription Details</value>
+  </data>
+  <data name="lbl_SubscriptionManagement" xml:space="preserve">
+    <value>Subscription Management</value>
+  </data>
+  <data name="lbl_SubscriptionOrders" xml:space="preserve">
+    <value>Subscription Orders</value>
+  </data>
+  <data name="lbl_SubscriptionPackages" xml:space="preserve">
+    <value>Subscription Packages</value>
+  </data>
+  <data name="lbl_SubscriptionPeriods" xml:space="preserve">
+    <value>Subscription Periods</value>
+  </data>
+  <data name="lbl_SubscriptionsDetails" xml:space="preserve">
+    <value>Subscriptions Details</value>
+  </data>
+  <data name="lbl_System" xml:space="preserve">
+    <value>System:</value>
+  </data>
+  <data name="lbl_systemsdevelopment" xml:space="preserve">
+    <value>ystems development</value>
+  </data>
+  <data name="lbl_T" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="lbl_Technicalsupport" xml:space="preserve">
+    <value>echnical support</value>
+  </data>
+  <data name="lbl_Template" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="lbl_text1" xml:space="preserve">
+    <value>Create innovative communication with your customers by connecting your website, online store, app, or sales systems with WhatsApp, the most popular messaging platform in the world.</value>
+  </data>
+  <data name="lbl_text11" xml:space="preserve">
+    <value>Sending unlimited WhatsApp messages daily.</value>
+  </data>
+  <data name="lbl_text12" xml:space="preserve">
+    <value>A secure and encrypted communication channel, and no third party can access your information</value>
+  </data>
+  <data name="lbl_text13" xml:space="preserve">
+    <value>Providing many ready-made lists that are in line with your business scope and commercial activity.</value>
+  </data>
+  <data name="lbl_text21" xml:space="preserve">
+    <value>Possibility of sending text and video media.</value>
+  </data>
+  <data name="lbl_text22" xml:space="preserve">
+    <value>Simple and easy to use interface.</value>
+  </data>
+  <data name="lbl_text23" xml:space="preserve">
+    <value>Pre-made text templates for your correspondence.</value>
+  </data>
+  <data name="lbl_text31" xml:space="preserve">
+    <value>It works 24 hours without stopping.</value>
+  </data>
+  <data name="lbl_text32" xml:space="preserve">
+    <value>Real accurate reports on the status of messages and numbers</value>
+  </data>
+  <data name="lbl_text33" xml:space="preserve">
+    <value>Saves costs and increases efficiency.</value>
+  </data>
+  <data name="lbl_texts" xml:space="preserve">
+    <value>Texts</value>
+  </data>
+  <data name="lbl_textValidations" xml:space="preserve">
+    <value>Enter a text</value>
+  </data>
+  <data name="lbl_TheDiscount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="lbl_timeRefreshToken" xml:space="preserve">
+    <value>Time refresh token</value>
+  </data>
+  <data name="lbl_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="lbl_ToDate" xml:space="preserve">
+    <value>To date:</value>
+  </data>
+  <data name="lbl_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="lbl_TotalPrice" xml:space="preserve">
+    <value>Total Price</value>
+  </data>
+  <data name="lbl_TotalQuantity" xml:space="preserve">
+    <value>Total Quantity</value>
+  </data>
+  <data name="lbl_txt" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="lbl_TypeConfirmationCode" xml:space="preserve">
+    <value>Type the Code</value>
+  </data>
+  <data name="lbl_Typeperiods" xml:space="preserve">
+    <value>Type periods</value>
+  </data>
+  <data name="lbl_U" xml:space="preserve">
+    <value>U</value>
+  </data>
+  <data name="lbl_UBot" xml:space="preserve">
+    <value>MalyBOT</value>
+  </data>
+  <data name="lbl_UBot1" xml:space="preserve">
+    <value>A chatbot is software that simulates human-like conversations with users via chat. Its key task is to answer user questions with instant messages.</value>
+  </data>
+  <data name="lbl_UBot12" xml:space="preserve">
+    <value>conversations with users via chat. Its key task</value>
+  </data>
+  <data name="lbl_UBot13" xml:space="preserve">
+    <value>is to answer user questions with instant messages.</value>
+  </data>
+  <data name="lbl_UpdateSecretKey" xml:space="preserve">
+    <value>Update secret key</value>
+  </data>
+  <data name="lbl_uploadedtobot" xml:space="preserve">
+    <value>Uploaded to bot</value>
+  </data>
+  <data name="lbl_User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="lbl_UserName" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="lbl_Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="lbl_UsersManagement" xml:space="preserve">
+    <value>Users Management</value>
+  </data>
+  <data name="lbl_usertraining" xml:space="preserve">
+    <value>ser training</value>
+  </data>
+  <data name="lbl_UserValidations" xml:space="preserve">
+    <value>Select a user</value>
+  </data>
+  <data name="lbl_Valueperiods" xml:space="preserve">
+    <value>Value periods</value>
+  </data>
+  <data name="lbl_Verification" xml:space="preserve">
+    <value>Enter the verification code that we have sent to</value>
+  </data>
+  <data name="lbl_Verify" xml:space="preserve">
+    <value>Verification</value>
+  </data>
+  <data name="lbl_Verifybtn" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="lbl_Verifyfialed" xml:space="preserve">
+    <value>Didn't receive code?</value>
+  </data>
+  <data name="lbl_video1" xml:space="preserve">
+    <value>We provide you with innovative tools to transfer knowledge and communicate with your audience in an easy and attractive way. Through educational videos and a guide for use</value>
+  </data>
+  <data name="lbl_video11" xml:space="preserve">
+    <value>Videos explaining the subscription process.</value>
+  </data>
+  <data name="lbl_video12" xml:space="preserve">
+    <value>Videos explaining how to deal with the bot, create the number, etc.</value>
+  </data>
+  <data name="lbl_videobtn" xml:space="preserve">
+    <value>Download file (User Guide)</value>
+  </data>
+  <data name="lbl_Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="lbl_WelcomeToTheAutoMessage" xml:space="preserve">
+    <value>Welcome to the AutoMessage chat</value>
+  </data>
+  <data name="lbl_WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
+  </data>
+  <data name="lbl_WhatsAppGmail" xml:space="preserve">
+    <value>WhatsApp and Gmail</value>
+  </data>
+  <data name="lbl_WhatsappNo" xml:space="preserve">
+    <value>Whatsapp Number</value>
+  </data>
+  <data name="lbl_why" xml:space="preserve">
+    <value>Why</value>
+  </data>
+  <data name="lbl_YCompany" xml:space="preserve">
+    <value>YemenSoft Company</value>
+  </data>
+  <data name="lbl_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="lbl_Yearly" xml:space="preserve">
+    <value>Yearly subscription</value>
+  </data>
+  <data name="lbl_Yearly1" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
+  <data name="lbl_Years" xml:space="preserve">
+    <value>Years</value>
+  </data>
+  <data name="msg_AlertdDeleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="msg_AlertdFDeleted" xml:space="preserve">
+    <value>Failed to delete</value>
+  </data>
+  <data name="msg_AlertFModified" xml:space="preserve">
+    <value>Failed to Modify</value>
+  </data>
+  <data name="msg_AlertFSaved" xml:space="preserve">
+    <value>Failed to save</value>
+  </data>
+  <data name="msg_AlertModified" xml:space="preserve">
+    <value>Modified</value>
+  </data>
+  <data name="msg_AlertModifiedandUpdate" xml:space="preserve">
+    <value>Modified, please update MalyBot</value>
+  </data>
+  <data name="msg_AlertSaved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="msg_AlertSavedandUpdate" xml:space="preserve">
+    <value>Saved, please update MalyBot</value>
+  </data>
+  <data name="msg_alreadySubscribed" xml:space="preserve">
+    <value>you have already subscribed in this package</value>
+  </data>
+  <data name="msg_alreadyWaiting" xml:space="preserve">
+    <value>There is a request is already waiting</value>
+  </data>
+  <data name="msg_cancelledFSubscription" xml:space="preserve">
+    <value>Failed cancel subscription</value>
+  </data>
+  <data name="msg_CannotRunBot" xml:space="preserve">
+    <value>Sorry...you can't run the bot. You don't have a subscription.</value>
+  </data>
+  <data name="msg_CheckOnline" xml:space="preserve">
+    <value>Please check online</value>
+  </data>
+  <data name="msg_DataRequired" xml:space="preserve">
+    <value>Must enter all information</value>
+  </data>
+  <data name="msg_DonotHaveSubscription" xml:space="preserve">
+    <value>Can not add ! do not have subscription</value>
+  </data>
+  <data name="msg_ExitError" xml:space="preserve">
+    <value>Can't exit due to an error</value>
+  </data>
+  <data name="msg_ExitSuccess" xml:space="preserve">
+    <value>Exit successfully</value>
+  </data>
+  <data name="msg_Fail" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="msg_FModifiedPackageExpired" xml:space="preserve">
+    <value>Failed to modify, your package has expired</value>
+  </data>
+  <data name="msg_FSavePackageExpired" xml:space="preserve">
+    <value>Failed to save, your package has expired</value>
+  </data>
+  <data name="msg_initMsg" xml:space="preserve">
+    <value>Welcome to MalyBot</value>
+  </data>
+  <data name="msg_InlTelValidation" xml:space="preserve">
+    <value>Wrong number</value>
+  </data>
+  <data name="msg_ItemsRequired" xml:space="preserve">
+    <value>At least you should add one item</value>
+  </data>
+  <data name="msg_LoginError" xml:space="preserve">
+    <value>Invalid username or password</value>
+  </data>
+  <data name="msg_LogoutFail" xml:space="preserve">
+    <value>Log out failed</value>
+  </data>
+  <data name="msg_LogoutSuccess" xml:space="preserve">
+    <value>Logged out successfully</value>
+  </data>
+  <data name="msg_numberLarger" xml:space="preserve">
+    <value>Number of clients is larger than allowed in the new package</value>
+  </data>
+  <data name="msg_PackageServiceRequired" xml:space="preserve">
+    <value>At least you should add one service</value>
+  </data>
+  <data name="msg_RegisterExists" xml:space="preserve">
+    <value>User already exists</value>
+  </data>
+  <data name="msg_Required" xml:space="preserve">
+    <value>This filed is Required</value>
+  </data>
+  <data name="msg_RunError" xml:space="preserve">
+    <value>Can't run due to an error</value>
+  </data>
+  <data name="msg_RunSuccess" xml:space="preserve">
+    <value>Run successfully</value>
+  </data>
+  <data name="msg_SelectCollectionOrTemplate" xml:space="preserve">
+    <value>Must select collection or template</value>
+  </data>
+  <data name="msg_unauthorizedWarning" xml:space="preserve">
+    <value>Sorry, you're not authorized to access this resource. Please Login to continue</value>
+  </data>
+  <data name="msg_usedPackageFree" xml:space="preserve">
+    <value>Sorry, you've used your free package</value>
+  </data>
+  <data name="msg_Verification" xml:space="preserve">
+    <value>Not verified. Please verify the code</value>
+  </data>
+</root>

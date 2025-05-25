@@ -1,0 +1,48 @@
+﻿<MudGrid Spacing="0">
+    <MudItem xs="4" sm="5" md="3">
+                    <MudTreeView T="string" Hover="true" @bind-SelectedValue="SelectedValue">
+                        <MudTreeViewItem Value="@("الأونكس")" ExpandedIcon="@Icons.Filled.ArrowRight">
+                            <MudTreeViewItem Value="@("التقارير")" ExpandedIcon="@Icons.Filled.ArrowRight">
+                                <MudTreeViewItem Value="@("صافي المبيعات")" />
+                                <MudTreeViewItem Value="@("كشف الحساب")" />
+                            </MudTreeViewItem>
+
+                            <MudTreeViewItem Value="@("القوائم")" ExpandedIcon="@Icons.Filled.ArrowRight">
+                                <MudTreeViewItem Value="@("فواتير المبيعات")" />
+                                <MudTreeViewItem Value="@("سندات الصرف")" />
+                            </MudTreeViewItem>
+
+                            <MudTreeViewItem Value="@("النصوص")" ExpandedIcon="@Icons.Filled.ArrowRight">
+                                <MudTreeViewItem Value="@("نص الرصيد")" />
+                                <MudTreeViewItem Value="@("نص التنبيهات")" />
+                            </MudTreeViewItem>
+                            
+                        </MudTreeViewItem>
+                        <MudTreeViewItem Value="@("متكامل")" ExpandedIcon="@Icons.Filled.ArrowRight">
+                            @*<MudTreeViewItem Value="@("Avatar")" />
+                            <MudTreeViewItem Value="@("Button")" />*@
+                        </MudTreeViewItem>
+                    </MudTreeView>
+                </MudItem>
+    <MudItem xs="8" sm="7" md="9">
+                    @if(@SelectedValue=="صافي المبيعات"){
+                    <MudPaper Elevation="0" Outlined Height="350px">
+                    <MudText Align="Align.Center" Style="color:#707070; padding-top:10px; padding-bottom:10px;"><b>متغيرات التقرير</b></MudText>
+                        <MudDivider Light DividerType="DividerType.Middle" Style="margin-bottom:5px" />
+                    <MudGrid  Spacing="8" Justify="Justify.Center">
+                            <MudItem  xs="12" sm="3">
+                            <b><MudTextField T="DateTime" Format="yyyy-MM-dd" Style="font-size:500" Label="من تاريخ" InputType="InputType.Date" />
+                            </b>
+                        </MudItem>
+                            <MudItem  xs="12" sm="3">
+                            <MudTextField T="DateTime" Format="yyyy-MM-dd" Label="الى تاريخ" InputType="InputType.Date" />
+                            </MudItem>
+                    </MudGrid>    
+                    </MudPaper>
+                }
+                </MudItem>
+</MudGrid>
+@code {
+    string SelectedValue { get; set; }
+    string isoDate;
+}

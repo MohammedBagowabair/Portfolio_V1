@@ -1,0 +1,14 @@
+[
+  {
+    "typeId": "1",
+    "type": "Monthly",
+    "typeToAPI": "Monthly"
+
+  },
+  {
+    "typeId": "2",
+    "type": "Yearly",
+    "typeToAPI": "Yearly"
+
+  }
+]

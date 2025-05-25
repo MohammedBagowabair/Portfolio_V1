@@ -1,0 +1,423 @@
+﻿@inject NavigationManager navigationManager
+@inject IPackagesService packagesService
+@inject IPeriodService PeriodService
+@inject IStringLocalizer<Resource> _localizer
+@inject IDialogService DialogService
+@inject CustomHttp Http
+@page "/ViewSubscriptionPackages"
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Subscription Package</PageTitle>
+<MudGrid Spacing="1" Justify="Justify.SpaceBetween" Class="mt-5">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    @if (result != null)
+    {
+        <MudItem xs="11" sm="11" md="8">
+            <MudGrid>
+
+
+                <MudItem xs="12" sm="12" md="12">
+                    <MudButton Variant="Variant.Filled" OnClick="addPackages" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Class="fontContent">@_localizer["lbl_AddPackage"] </MudButton>
+                </MudItem>
+                @foreach (PackagesModel pck in result.Content)
+                {
+
+
+                    @*pck.periodId*@
+                    if (pck.status == "free")
+                    {
+                        <MudItem xs="11" sm="6" md="4">
+
+                            <MudCard Elevation="1" Outlined="true" Style="background-color:#424242;">
+
+                                @if (selectedCulture.Contains("en"))
+                                {
+                                    <div style="background-color:#4aa47e; color:white; width:30%">
+                                        <MudText Align="Align.Center" Class="fontContent" Color="Color.Secondary">
+                                            @pckStatus.Where(x=>x.status==pck.status).FirstOrDefault()?.status
+                                        </MudText>
+                                    </div>
+                                }
+                                else if (selectedCulture.Contains("ar"))
+                                {
+                                    <div style="background-color:#4aa47e; color:white; width:30%">
+                                        <MudText Align="Align.Center" Class="fontContent" Color="Color.Secondary">
+                                            @pckStatus.Where(x=>x.status==pck.status).FirstOrDefault()?.value
+                                        </MudText>
+                                    </div>
+                                }
+
+
+
+                                <MudCardContent>
+
+                                    <MudText Align="Align.Center">
+                                        <MudImage Height="80" Width="80" Src="images/package.png" Alt="subscription Package" Class="mt-3" />
+                                    </MudText>
+                                    <MudText Typo="Typo.h6" Align="Align.Center" Class="mt-3 fontContent" Color="Color.Secondary">
+                                        @if (selectedCulture.Contains("ar"))
+                                        {
+                                            <span>@pck.name</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@pck.foreignName</span>
+                                        }
+                                    </MudText>
+                                    @{
+                                        double totalPrice;
+                                        totalPrice = pck.packageServices.Sum(x => x.price * x.qty);
+
+                                    }
+
+
+
+                                    @if (pck.disCount > 0)
+                                    {
+                                        double PriceAfterDiscount;
+                                        PriceAfterDiscount = totalPrice - totalPrice * (pck.disCount / 100);
+                                        <div class="d-flex flex-row mt-3 gap-1 justify-center">
+                                            <MudText Typo="Typo.h6" Color="Color.Primary" Align="Align.Center" Class="fontContent">$@PriceAfterDiscount</MudText>
+                                            <MudText Align="Align.Center" Class="mt-1 fontContent" Color="Color.Secondary"><sub><del>@totalPrice</del></sub></MudText>
+                                        </div>
+                                        <div class="d-flex flex-row mt-9">
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Class="fontContent mt-n1" Color="Color.Secondary">@_localizer["lbl_Discount"] @pck.disCount%</MudText>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Primary" Class="mt-3 fontContent">$@totalPrice</MudText>
+                                        <div class="d-flex flex-row mt-9">
+                                            <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Secondary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Class="fontContent mt-n1" Color="Color.Secondary">@_localizer["lbl_Discount"] @pck.disCount%</MudText>
+                                        </div>
+                                    }
+                                    <div class="d-flex flex-row mt-3">
+
+                                        @if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Monthly")
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Monthly"]</MudText>
+                                        }
+                                        else if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Yearly")
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Yearly"]</MudText>
+                                        }
+                                    </div>
+                                    <div class="d-flex flex-row mt-3">
+                                        <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                        <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Service1"]</MudText>
+                                    </div>
+
+
+
+
+                                    <div Class="d-flex justify-space-between mt-11">
+                                        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                                            <MudButton Color="Color.Primary" Variant="Variant.Filled" FullWidth DisableElevation OnClick="()=>ShowDetails(result.Content.IndexOf(pck),pck.id)" Class="fontContent">@_localizer["lbl_Details"]</MudButton>
+                                        </MudHidden>
+                                        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                                            <MudButton Color="Color.Primary" Variant="Variant.Filled" FullWidth DisableElevation OnClick="()=>DetailsinSm(result.Content.IndexOf(pck),pck.id)" Class="fontContent">@_localizer["lbl_Details"]</MudButton>
+                                        </MudHidden>
+                                        <div class="d-flex flex-row-reverse gap-1">
+                                            @*<MudMenu Icon="@Icons.Material.Filled.MoreVert" DisableElevation="true">
+                                <MudMenuItem OnTouch="()=>EditPackage(pck.id)" OnClick="()=>EditPackage(pck.id)">@_localizer["lbl_BtnEdit"]</MudMenuItem>
+                                <MudMenuItem OnTouch="()=>deletePackage(pck.periodId)" OnClick="()=>deletePackage(pck.periodId)">@_localizer["lbl_Deletebtn"]</MudMenuItem>
+                                </MudMenu>*@
+                                            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Medium" OnClick="()=>EditPackage(pck.id)" Color="Color.Secondary" />
+                                            @* <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Medium" Color="Color.Primary" />
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium" Color="Color.Primary" />*@
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                        </MudItem>
+                    }
+                }
+                @foreach (PackagesModel pckb in result.Content)
+                {
+
+                    if (pckb.status == "basic")
+                    {
+                        @*pck.periodId*@
+
+                        <MudItem xs="11" sm="6" md="4">
+
+                            <MudCard Elevation="1" Outlined="true" Style="background-color:#424242;">
+
+                                @if (selectedCulture.Contains("en"))
+                                {
+                                    <div style="background-color:#4aa47e; color:white; width:30%">
+                                        <MudText Align="Align.Center" Class="fontContent" Color="Color.Secondary">
+                                            @pckStatus.Where(x=>x.status==pckb.status).FirstOrDefault()?.status
+                                        </MudText>
+                                    </div>
+                                }
+                                else if (selectedCulture.Contains("ar"))
+                                {
+                                    <div style="background-color:#4aa47e; color:white; width:30%">
+                                        <MudText Align="Align.Center" Class="fontContent" Color="Color.Secondary">
+                                            @pckStatus.Where(x=>x.status==pckb.status).FirstOrDefault()?.value
+                                        </MudText>
+                                    </div>
+                                }
+                                <MudCardContent>
+
+                                    <MudText Align="Align.Center">
+                                        <MudImage Height="80" Width="80" Src="images/package.png" Alt="subscription Package" Class="mt-3" />
+                                    </MudText>
+                                    <MudText Typo="Typo.h6" Align="Align.Center" Class="mt-3 fontContent" Color="Color.Secondary">
+                                        @if (selectedCulture.Contains("ar"))
+                                        {
+                                            <span>@pckb.name</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@pckb.foreignName</span>
+                                        }
+                                        </MudText>
+                                    @{
+                                        double totalPrice;
+                                        totalPrice = pckb.packageServices.Sum(x => x.price * x.qty);
+
+                                    }
+
+
+
+                                    @if (pckb.disCount > 0)
+                                    {
+                                        double PriceAfterDiscount;
+                                        PriceAfterDiscount = totalPrice - totalPrice * (pckb.disCount / 100);
+                                        <div class="d-flex flex-row mt-3 gap-1 justify-center">
+                                            <MudText Typo="Typo.h6" Color="Color.Primary" Align="Align.Center" Class="fontContent"> $@PriceAfterDiscount</MudText>
+                                            <MudText Align="Align.Center" Class="mt-1 fontContent" Color="Color.Secondary"><sub><del>@totalPrice</del></sub></MudText>
+                                        </div>
+                                        <div class="d-flex flex-row mt-9">
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Class="fontContent" Color="Color.Secondary">@_localizer["lbl_Discount"] @pckb.disCount%</MudText>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Primary" Class="mt-3 fontContent">$@totalPrice</MudText>
+                                        <div class="d-flex flex-row mt-9">
+                                            <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Secondary" Size="Size.Small" Class="me-2 fontContent"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Discount"] @pckb.disCount%</MudText>
+                                        </div>
+                                    }
+                                    <div class="d-flex flex-row mt-3">
+
+                                        @if (periodlist.Where(x => x.id == pckb.periodId).FirstOrDefault().type == "Monthly")
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent">@_localizer["lbl_Monthly"]</MudText>
+                                        }
+                                        else if (periodlist.Where(x => x.id == pckb.periodId).FirstOrDefault().type == "Yearly")
+                                        {
+                                            <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                            <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Yearly"]</MudText>
+                                        }
+                                    </div>
+                                    <div class="d-flex flex-row mt-3">
+                                        <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Primary" Size="Size.Small" Class="me-2"></MudIcon>
+                                        <MudText Align="Align.Start" Style="font-size:18px;" Color="Color.Secondary" Class="fontContent mt-n1">@_localizer["lbl_Service1"]</MudText>
+                                    </div>
+
+
+
+
+                                    <div Class="d-flex justify-space-between mt-11">
+                                        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                                            <MudButton Color="Color.Primary" Variant="Variant.Filled" FullWidth DisableElevation OnClick="()=>ShowDetails(result.Content.IndexOf(pckb),pckb.id)" Class="fontContent">@_localizer["lbl_Details"]</MudButton>
+                                        </MudHidden>
+                                        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                                            <MudButton Color="Color.Primary" Variant="Variant.Filled" FullWidth DisableElevation OnClick="()=>DetailsinSm(result.Content.IndexOf(pckb),pckb.id)" Class="fontContent">@_localizer["lbl_Details"]</MudButton>
+                                        </MudHidden>
+
+                                        <div class="d-flex flex-row-reverse gap-1">
+                                            @*<MudMenu Icon="@Icons.Material.Filled.MoreVert" DisableElevation="true">
+                                <MudMenuItem OnTouch="()=>EditPackage(pckb.id)" OnClick="()=>EditPackage(pckb.id)">@_localizer["lbl_BtnEdit"]</MudMenuItem>
+                                <MudMenuItem OnTouch="()=>deletePackage(pckb.periodId)" OnClick="()=>deletePackage(pckb.periodId)">@_localizer["lbl_Deletebtn"]</MudMenuItem>
+                                </MudMenu>*@
+                                            <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Medium" OnClick="()=>EditPackage(pckb.id)" Color="Color.Secondary" />
+                                            @*<MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium" Color="Color.Primary" />*@
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                        </MudItem>
+                    }
+                }
+
+            </MudGrid>
+        </MudItem>
+       if(result.Content.Count()!=0){
+
+       
+        <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+            <MudItem xs="11" sm="11" md="4">
+                <PackageDetails package=@package period=@period pckStatus=@pckStatus></PackageDetails>
+            </MudItem>
+        </MudHidden>
+        }
+    }
+    else
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    }
+</MudGrid>
+@code {
+    ResponseModel<PackagesModel> result;
+    PackagesModel package;
+    ResponseModel<PeriodModel> periods;
+    PeriodModel period;
+    List<PeriodModel> periodlist = new List<PeriodModel>();
+    private bool isVisible;
+    string borderStyle = "rounded-lg pb-0 border border-solid mud-border-Defalut";
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private PackageStatus[]? pckStatus;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+
+
+        }
+        pckStatus = await Http.HttpClient.GetFromJsonAsync<PackageStatus[]>("PackageStatus/PackagesStatus.json");
+        await getPackages();
+
+        try
+        {
+            package =  result.Content[0] ;
+            periods = await PeriodService.GetAll();
+            periodlist = periods.Content;
+            period = periodlist.Where(x => x.id == package.periodId).FirstOrDefault();
+        }
+        catch (Exception e)
+        {
+            package = new PackagesModel();
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+        Console.WriteLine($"content {result.Message}- {result.Content.Count()} -{result.Code}");
+        //await GetPeriod(1);
+    }
+    //public async Task<PeriodModel> GetPeriod(int prdId)
+    //{
+    //    period = await PeriodService.GetById(prdId);
+    //    return period;
+
+    //}
+    public void addPackages()
+    {
+        navigationManager.NavigateTo("/addpackages");
+    }
+    public async Task getPackages()
+    {
+        try
+        {
+            result = await packagesService.GetPackages();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    public async Task ShowDetails(int pckIndx, int pckId)
+    {
+        //var parameters = new DialogParameters();
+        package = result.Content[pckIndx];
+
+        period = periodlist.Where(x => x.id == package.periodId).FirstOrDefault();
+
+
+        //var options = new DialogOptions()
+        //    {
+        //        Position = DialogPosition.Center,
+        //        //MaxWidth = MaxWidth.Large,
+        //        CloseButton = true,
+        //        FullWidth = true,
+
+        //    };
+        //parameters.Add("package", package);
+        //parameters.Add("period", period);
+        //DialogService.Show<PackageDetails>(null, parameters, options);
+        //if (pckIndx == result.Content.IndexOf(package))
+        //{
+        //    borderStyle = "border border-solid mud-border-primary";
+        //}
+        //else
+        //{
+        //    borderStyle = "border border-solid mud-border-Default";
+        //}
+    }
+    public async Task DetailsinSm(int pckIndx, int pckId)
+    {
+        //package = result.Content[pckIndx];
+        //period = periodlist.Where(x => x.id == package.periodId).FirstOrDefault();
+        ////PackageDetails p=new PackageDetails();
+        ////p.package = package;
+        ////p.period = period;
+        ////p.pckStatus=pckStatus;
+        //var parameters = new DialogParameters();
+        //parameters.Add("package", package);
+        //parameters.Add("period", period);
+        //parameters.Add("pckStatus", pckStatus);
+        //var options = new DialogOptions { FullWidth = true };
+        //DialogService.Show<PackageDetailsDialog>(null, parameters, options);
+        navigationManager.NavigateTo($"/packagesdetails/{pckId}");
+
+    }
+    public void EditPackage(int pckId)
+    {
+        navigationManager.NavigateTo($"/addpackages/{pckId}");
+    }
+    async Task DeletedPackage()
+    {
+        try
+        {
+            result = await packagesService.GetPackages();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    async void deletePackage(int packageId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeletePackage"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeletePackage"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", packageId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedPackage));
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+
+
+}

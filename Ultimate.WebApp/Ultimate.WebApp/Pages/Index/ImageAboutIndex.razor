@@ -1,0 +1,313 @@
+﻿@page "/hh"
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    /*.containers {
+        max-width: 800px;
+        padding: 0;
+        background-color: #FFF;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        height: 800px;
+        margin: auto;
+    }*/
+
+    /* ===== MENU ===== */
+
+
+    /* === CONVERSATIONS === */
+
+
+
+    .online {
+        position: relative;
+        top: 30px;
+        left: 35px;
+        width: 13px;
+        height: 13px;
+        background-color: #8BC34A;
+        border-radius: 13px;
+        border: 3px solid #FAFAFA;
+    }
+
+    /*.desc-contact {
+        height: 43px;
+        width: 50%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }*/
+
+    /*.discussions .discussion .name {
+        margin: 0 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11pt;
+        color: #515151;
+    }*/
+
+    /*.discussions .discussion .message {
+        margin: 6px 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 9pt;
+        color: #515151;
+    }*/
+
+    /*.timer {
+        margin-left: 15%;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 11px;
+        padding: 3px 8px;
+        color: #BBB;
+        background-color: #FFF;
+        border: 1px solid #E5E5E5;
+        border-radius: 15px;
+    }*/
+
+    .chat {
+        /* width: calc(65% - 85px);*/
+    }
+
+    .header-chat {
+        background-color: #afc2ef;
+        height: 90px;
+        box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
+        display: flex;
+        align-items: center;
+         position: absolute;
+         right: 40px;
+
+    }
+    /*
+    .chat .header-chat .icon {
+        margin-left: 30px;
+        color: #515151;
+        font-size: 14pt;
+    }*/
+
+    /*.chat .header-chat .name {
+        margin: 0 0 0 20px;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13pt;
+        color: #f9f9f9;
+    }
+
+    .chat .header-chat .right {
+        position: absolute;
+        right: 40px;
+    }*/
+   /*//////////////////////////////////////يمكن نستغنى عنهن بالقريد////////////////////////  */
+    /*.chat .messages-chat {
+        padding: 25px 35px;
+    }
+
+        .chat .messages-chat .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }*/
+
+            .chat .messages-chat .message .photo {
+                display: block;
+                width: 45px;
+                height: 45px;
+                background: #E6E7ED;
+                -moz-border-radius: 50px;
+                -webkit-border-radius: 50px;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+        .chat .messages-chat .text { /*background*/
+            /*margin: 0 35px;*/
+            background-color: #f6f6f6;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+    .text-only {
+        /*margin-left: 45px;*/
+    }
+
+    /*.time {
+        font-size: 10px;
+        color: lightgrey;
+        margin-bottom: 10px;
+        margin-left: 85px;
+    }
+
+    .response-time {
+        float: right;
+        margin-right: 40px !important;
+    }*/
+
+    .response {
+        /*float: right;
+        margin-right: 0px !important;
+        margin-left: auto; /* flexbox alignment rule */*/
+    }
+
+        .response .text {
+            background-color: #e3effd !important;
+        }
+
+    /*.footer-chat {
+        width: calc(65% - 66px);
+        height: 80px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        background-color: transparent;
+        border-top: 2px solid #EEE;
+    }*/
+
+    /*.chat .footer-chat .icon {
+        margin-left: 30px;
+        color: #C0C0C0;
+        font-size: 14pt;
+    }*/
+
+   /* .chat .footer-chat .send {
+        color: #fff;
+        background-color: #4f6ebd;
+        position: absolute;
+        right: 50px;
+        padding: 12px 12px 12px 12px;
+        border-radius: 50px;
+        font-size: 14pt;
+    }*/
+
+    /*.chat .footer-chat .name {
+        margin: 0 0 0 20px;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13pt;
+        color: #515151;
+    }
+
+    .chat .footer-chat .right {
+        position: absolute;
+        right: 40px;
+    }*/
+
+    /*.write-message {
+        width: 60%;
+        height: 50px;
+        margin-left: 20px;
+        padding: 10px;
+    }
+
+    .footer-chat *::-webkit-input-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .footer-chat input *:-moz-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .footer-chat input *::-moz-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+        margin-left: 5px;
+    }
+
+    .footer-chat input *:-ms-input-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }*/
+
+    /*.btn-primary {
+        color: #fff;
+        background-color: #91bdff;
+        border-color: #91bdff;
+        height: 45px;
+    }*/
+
+    .step-wizard {
+        /* height: 100vh;*/
+        width: 100%;
+        display: flex;
+        justify-content: start;
+    }
+
+    .jus {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+
+
+<div class="containers">
+
+    <section class="chat">
+        @*<div class="header-chat">
+            <p class="name">Megan Leib</p>
+        </div>*@
+        <div class="messages-chat" style="overflow-y: scroll; height:400px;">
+            <MudGrid Justify="Justify.FlexStart" Class="pa-5">
+                <MudItem sm="12" xs="12" md="12">
+                    <MudGrid Justify="Justify.FlexEnd">
+                        <MudItem sm="12" xs="12" md="12">
+            <MudPaper Class="message">
+                <div class="photo" style="background-image:url('images/Robot face-cuate.png')">
+
+
+                    <div class="online"></div>
+                </div>
+                <MudText Class="text"> Hi, how are you ? </MudText>
+            </MudPaper>
+            </MudItem>
+                    </MudGrid>
+            </MudItem>
+            <MudItem sm="12" xs="12" md="12">
+                    <MudPaper Class="message text-only">
+                            <MudText Class="text"> Hey Megan ! It's been a while 😃</MudText>
+                        
+                    </MudPaper>
+            @*<div class="message text-only">
+                <p class="text"> What are you doing tonight ? Want to go take a drink ?</p>
+            </div>*@
+            </MudItem>
+            @*<div class="message text-only">
+                <div class="response">
+                    <p class="text"> Hey Megan ! It's been a while 😃</p>
+                </div>
+            </div>*@
+            @*<div class="message text-only">
+                <div class="response">
+                    <p class="text"> When can we meet ?</p>
+                </div>
+            </div>*@
+            @*<div class="message">
+
+                <div class="photo" style="background-image:url('images/Robot face-cuate.png')">
+
+                    <div class="online"></div>
+                </div>
+                <p class="text"> 9 pm at the bar if possible 😳</p>
+            </div>*@
+            @*<div class="message text-only">
+                <p class="text"> What are you doing tonight ? Want to go take a drink ?</p>
+            </div>
+            <div class="message text-only">
+                <div class="response">
+                    <p class="text"> Hey Megan ! It's been a while 😃</p>
+                </div>
+            </div>*@
+            
+
+            </MudGrid>
+
+
+        </div>
+
+    </section>
+    <hr />
+</div>

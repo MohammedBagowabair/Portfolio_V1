@@ -1,0 +1,11 @@
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\APITEST.exe
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\APITEST.dll
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\APITEST.deps.json
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\APITEST.runtimeconfig.json
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\APITEST.pdb
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\user\source\repos\APITEST\APITEST\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

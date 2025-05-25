@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\C# Dictionary\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9AF92899-CD11-43DB-8BED-ABAFDE504AE9}|C# Dictionary\\C# Dictionary.csproj|c:\\users\\user\\source\\repos\\c# dictionary\\c# dictionary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AF92899-CD11-43DB-8BED-ABAFDE504AE9}|C# Dictionary\\C# Dictionary.csproj|solutionrelative:c# dictionary\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\C# Dictionary\\C# Dictionary\\Program.cs",
+              "RelativeDocumentMoniker": "C# Dictionary\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\C# Dictionary\\C# Dictionary\\Program.cs",
+              "RelativeToolTip": "C# Dictionary\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAmwA4AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T14:15:00.125Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

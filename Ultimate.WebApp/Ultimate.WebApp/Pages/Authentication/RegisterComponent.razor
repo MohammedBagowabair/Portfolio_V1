@@ -1,0 +1,209 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject IUserService UserService
+@inject ISendVerifyCodeService SendVerifyCodeService
+@inject NavigationManager _navigationManager
+@using System.ComponentModel.DataAnnotations
+@using Ultimate.WebApp.DTO
+
+<PageTitle>Register</PageTitle>
+<style>
+    .ju{
+        height: 88vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items:center
+    }
+    .fontTitle {
+    @font_Title
+    }
+    .fontContent{
+    @font_Content
+    }
+</style>
+
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999" >
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+        <div class="ju">
+    <MudGrid Justify="Justify.Center">
+        <MudItem sm="7" md="6" xs="11">
+            <MudPaper Class="py-5" Elevation="5" Style="background-color:#424242;box-shadow:9px 8px 200px -13px #4aa47e">
+       
+    <MudGrid Justify="Justify.Center" Spacing="0">
+        <MudItem xs="11" md="7" sm="8">
+
+                        <MudText Style="color:#c8cacd" Typo="Typo.h5" Align="Align.Center" Class="fontContent">@_localizer["lbl_Welcome"]</MudText>
+            <MudForm Class="mt-16" @bind-IsValid="@success">
+                            <MudTextField Style="color:#c8cacd" AdornmentColor="Color.Secondary" Immediate=true @bind-Value=userNames Placeholder="@_localizer["lbl_UserName"]" T="string" Adornment="Adornment.Start" Required=true RequiredError=@_localizer["msg_Required"] InputType="InputType.Text" AdornmentIcon="@Icons.Material.Outlined.PersonOutline"></MudTextField>
+                            <MudTextField Style="color:#c8cacd" AdornmentColor="Color.Secondary" Class="fontContent" @bind-Value=emails Placeholder="@_localizer["lbl_Email"]" T="string" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Email" Required=true RequiredError="هذا الحقل مطلوب"
+                              Validation="@(new EmailAddressAttribute() {ErrorMessage= @_localizer["lbl_EmailIsIncorrect"]})"></MudTextField>
+                            <MudTextField Style="color:#c8cacd" AdornmentColor="Color.Secondary" Class="fontContent" Immediate=true @bind-Value=password Placeholder="@_localizer["lbl_Password"]" T="string" Adornment="Adornment.Start" Required=true RequiredError=@_localizer["msg_Required"] InputType="@PasswordInput" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick"></MudTextField>
+                            <MudTextField  Style="color:#c8cacd" AdornmentColor="Color.Secondary" Class="fontContent" Immediate=true @bind-Value=cPassword Placeholder="@_localizer["lbl_confirmPassword"]" T="string" Adornment="Adornment.Start" Required=true RequiredError="كلمةالمرور غير صحيحة" InputType="@PasswordInput1" AdornmentIcon="@PasswordInputIcon1" OnAdornmentClick="ButtonTestclick1" Validation="new Func<string,string>(PasswordMatch)"></MudTextField>
+
+                            <MudButton Disabled="@(!success)" Variant="Variant.Filled" FullWidth Class="mt-5 fontContent" Style="font-weight:200;font-size:18px;color:#c8cacd" Color="Color.Primary" OnClick="HandelRegister">@_localizer["lbl_register"]</MudButton>
+            </MudForm>
+
+            @*<EditForm Model="userModel" OnInvalidSubmit="HandelSubment" Class="mt-10">
+                <MudTextField Immediate=true @bind-Value=userModel.Email Placeholder="@_localizer["lbl_Email"]" T="string" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Outlined.Email" Required=true></MudTextField>
+                <MudTextField Immediate=true @bind-Value=userModel.Password Placeholder="@_localizer["lbl_Password"]" T="string" Adornment="Adornment.Start" Required=true RequiredError="كلمةالمرور غير صحيحة" InputType="@PasswordInput" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
+                <MudTextField Immediate=true @bind-Value=userModel.ConfirmPassword Placeholder="@_localizer["lbl_confirmPassword"]" T="string" Adornment="Adornment.Start" Required=true RequiredError="كلمةالمرور غير صحيحة" InputType="@PasswordInput" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" AdornmentAriaLabel="Show Password"></MudTextField>
+                <MudButton FullWidth Class="mt-5" Style="background-color:#00AF37;color:white" OnClick="HandelSubment">@_localizer["lbl_register"]</MudButton>
+            </EditForm>*@
+            @*<MudButton Disabled="@(!success)" FullWidth Class="mt-5" Style="background-color:#00AF37;color:white" OnClick="HandelRegister">@_localizer["lbl_register"]</MudButton>*@
+
+
+                        <span class="text-danger fontContent" style="visibility:@error">@message</span>
+
+                        <div class="mt-5 d-flex justify-center align-center fontContent" style="font-size:17px;color:#c8cacd">
+                @_localizer["lbl_HaveAccount"]
+                <MudElement Class="fontTitle" HtmlTag="a"
+                        Style="color:#4aa47e;font-weight:200;font-size:18px"
+                            href="/login">
+                    @_localizer["lbl_login"]
+                </MudElement>
+            </div>
+        
+    </MudItem>
+    </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+</div>
+@code {
+    private bool isVisible;
+    bool success;
+    //private string 
+    UserModel result;
+    UserModel userModel = new UserModel();
+    public string message { set; get; }
+    ResponseModel<SendVerifyCodeModel> VerifyCode;
+    SendVerifyCodeModel sendVerifyCodeModel = new SendVerifyCodeModel();
+    public string emails { set; get; }
+    public string userNames { set; get; }
+    public string password { set; get; }
+    [Required]
+    [Compare(nameof(password))]
+    public string cPassword { set; get; }
+    bool isShow;
+    bool error;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    InputType PasswordInput1 = InputType.Password;
+    string PasswordInputIcon1 = Icons.Material.Filled.VisibilityOff;
+    public async void HandelRegister()
+    {
+        message = null;
+        isVisible = true;
+        error = false;
+        await Task.Delay(1000);
+
+        
+        UserModel userModel = new UserModel()
+            {
+                userName=userNames,
+                Email = emails,
+                Password = password,
+                ConfirmPassword=cPassword
+
+            };
+
+
+        ResponsePost<UserDto> res = await UserService.Create(userModel);
+        
+        if (res.Code != 0)
+        {
+            //message = "الايميل مستخدم";
+            if (res.Message == "User already exists")
+            {
+                
+                message = _localizer["msg_RegisterExists"];
+                isVisible = false;
+                error = true;
+                StateHasChanged();
+                //Console.WriteLine(res.Message);
+                return;
+                
+            }
+            else{
+                message = _localizer["msg_CheckOnline"];
+                isVisible = false;
+                error = true;
+                StateHasChanged();
+                return;
+            }
+        }
+        else
+        {
+            isVisible = false;
+            Console.WriteLine(res.Message);
+            int userId = res.Content.Id;
+            string email = res.Content.Email;
+            Console.WriteLine(userId);
+            await SendVerifyCodeService.Create(userId);
+            StateHasChanged();
+            _navigationManager.NavigateTo($"/verification/{userId}/{email}");
+
+        }
+            // result = res.Content;
+            
+        
+            
+            //Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        
+    }
+    void ButtonTestclick()
+    {
+    @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+    void ButtonTestclick1()
+    {
+    @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon1 = Icons.Material.Filled.VisibilityOff;
+            PasswordInput1 = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon1 = Icons.Material.Filled.Visibility;
+            PasswordInput1 = InputType.Text;
+        }
+    }
+    private string PasswordMatch(string cPassword)
+    {
+        if (cPassword != password)
+            return _localizer["lbl_notmatchpassword"];
+        return null;
+    }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override void OnInitialized()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+    //mar1999sal@gmail.com
+}

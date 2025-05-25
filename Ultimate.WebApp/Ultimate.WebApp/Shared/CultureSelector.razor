@@ -1,0 +1,47 @@
+﻿@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudMenu Icon="@Icons.Material.Filled.Language" Color="Color.Secondary">
+    <MudMenuItem Class="fontContent" OnTouch="SelectArabic" OnClick="SelectArabic"><span class="fontContent" style="color:#c8cacd">العربية</span></MudMenuItem>
+    <MudMenuItem Class="fontContent" OnTouch="SelectEnglish" OnClick="SelectEnglish"><span class="fontContent" style="color:#c8cacd">English</span></MudMenuItem>
+</MudMenu>
+
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+    }
+    protected void SelectArabic()
+    {
+        var js = (IJSInProcessRuntime)JSRuntime;
+        js.InvokeVoid("blazorCulture.set", "ar-YE");
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+
+    protected void SelectEnglish()
+    {
+        var js = (IJSInProcessRuntime)JSRuntime;
+        js.InvokeVoid("blazorCulture.set", "en-US");
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}

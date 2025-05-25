@@ -1,0 +1,94 @@
+﻿@inject ISyncLocalStorageService _localStorageServices
+@inject ILocalStorageService _localStorageService
+@inject IListPackagesService ListPackagesService
+@inject IDialogService DialogService
+@implements IDisposable
+@using System.Security.Claims
+@using Ultimate.WebApp.Listpackages
+<MudLink OnClick="showdialog" Color="Color.Transparent" Underline="Underline.None">
+    @if (getCounter() != 0)
+    {
+        <MudBadge Content="getCounter()" Color="Color.Primary" Class="">
+            <MudIcon Color="Color.Secondary" Icon="@Icons.Material.Outlined.ShoppingBag" />
+        </MudBadge>
+    }
+    else
+    {
+        <MudIcon Color="Color.Secondary" Icon="@Icons.Material.Outlined.ShoppingBag" />
+    }
+</MudLink>
+@code {
+    int UserId;
+    protected override async Task OnInitializedAsync()
+    {
+        ListPackagesService.Onchange += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        ListPackagesService.Onchange -= StateHasChanged;
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = int.Parse(identity.FindFirst("UserId").Value);
+        var resultListPackagesByUserId = new List<PackageRelation>();
+        var ListPackages = await _localStorageService.GetItemAsync<List<PackageRelation>>("ListPackages");
+        if (ListPackages == null)
+        {
+            resultListPackagesByUserId = new List<PackageRelation>();
+            await _localStorageService.SetItemAsync("ListPackagesByUserId", resultListPackagesByUserId);
+        }
+        else
+        {
+            foreach (var item in ListPackages)
+            {
+                if (item.userid == UserId)
+                {
+                    resultListPackagesByUserId.Add(new PackageRelation
+                        {
+                            id = item.id,
+                            orderId = item.orderId,
+                            package = item.package,
+                            packageId = item.packageId,
+                            userid = item.userid,
+                        });
+                }
+            }
+            await _localStorageService.SetItemAsync("ListPackagesByUserId", resultListPackagesByUserId);
+        }
+
+
+    }
+    private int getCounter()
+    {
+        var result = new List<PackageRelation>();
+
+        var ListPackages = _localStorageServices.GetItem<List<PackageRelation>>("ListPackages");
+        if (ListPackages != null)
+        {
+            foreach (var x in ListPackages)
+            {
+                if (x.userid == UserId)
+                {
+                    result.Add(x);
+                }
+            }
+            return result != null ? result.Count : 0;
+        }
+        else{
+            return 0;
+        }
+
+        //return result != null ? result.Count : 0;
+    }
+    public async void showdialog()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("curr1", "current-item");
+        var options = new DialogOptions { FullWidth = false, DisableBackdropClick = true };
+        var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+        var reslut = await dialog.Result;
+    }
+
+}

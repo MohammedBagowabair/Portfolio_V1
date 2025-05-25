@@ -1,0 +1,201 @@
+﻿@page "/notification methods"
+@inject IUserService userService
+@inject IStringLocalizer<Resource> _localizer
+@inject INotificationServices notificationServices
+@inject ISnackbar Snackbar
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .mud-icon-button {
+        color: #4aa47e;
+    }
+
+    .mud-table-cell {
+        border-bottom: 1px solid #4b4848;
+    }
+
+    .mud-icon-default {
+        color: #c8cacd;
+    }
+
+    .mud-ltr {
+        direction: inherit !important;
+    }
+
+    .mud-table-pagination-select .mud-input .mud-input-root {
+        color: white;
+    }
+</style>
+<MudGrid Spacing="4" Class="mx-1" Justify="Justify.SpaceBetween" >
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    @*<MudItem xs="11" sm="8" md="6">*@
+    @*<MudGrid>*@
+    <MudItem xs="6" sm="11" md="11">
+        <MudRadioGroup @bind-SelectedOption="notificationMethod" For="@(()=>notificationMethod)">
+            <MudText Class="fontContent mb-2 mt-5 " Color="Color.Secondary" Typo="Typo.body1">@_localizer["lbl_SendNotificationBy"]</MudText>
+            <MudRadio Option="@(2)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_WhatsApp"]</span></MudRadio>
+            <MudRadio Option="@(1)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_Gmail"]</span></MudRadio>
+            <MudRadio Option="@(0)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_WhatsAppGmail"]</span></MudRadio>
+          @*  <MudGrid Spacing="0">
+                <MudItem xs="11" sm="11" md="11">
+                    <MudText Class="fontContent mb-2 mt-5 " Color="Color.Secondary" Typo="Typo.body1">@_localizer["lbl_SendNotificationBy"]</MudText>
+            </MudItem>
+            <MudItem xs="11" sm="4" md="3">
+                    <MudRadio Option="@(2)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_WhatsApp"]</span></MudRadio>
+            </MudItem>
+            <MudItem xs="11" sm="4" md="3">
+                    <MudRadio Option="@(1)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_Gmail"]</span></MudRadio>
+           </MudItem>
+           <MudItem xs="11" sm="4" md="3">
+                    <MudRadio Option="@(0)" Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_WhatsAppGmail"]</span></MudRadio>
+            </MudItem>
+            </MudGrid>*@
+        </MudRadioGroup>
+    </MudItem>
+
+    @*</MudGrid>*@
+    @*</MudItem>*@
+    <MudItem xs="11" sm="11" md="11">
+        <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.body1">@_localizer["lbl_Users"]</MudText>
+        <MudText Typo="Typo.body1" Class="fontContent" Color="Color.Error">@UserValidations</MudText>
+    </MudItem>
+    @if (users != null)
+    {
+      
+
+        <MudItem xs="11" sm="11" md="11">
+
+            <MudTable Items="users.Content" Context="users" Breakpoint="Breakpoint.Xs" T="UsersModel" Class="mt-3" Style="background-color:#393939;" Height="300px" Filter="new Func<UsersModel,bool>(SearchFunc)" MultiSelection=true @bind-SelectedItems="selectedUsers">
+      
+                <ToolBarContent>
+                    <MudItem xs="7" sm="6" md="6">
+                        <MudTextField @bind-Value="searchString" Margin="Margin.Dense" Placeholder=@_localizer["lbl_SearchForUser"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class=" fontContent" Variant="Variant.Outlined" Style="color:#c8cacd"></MudTextField>
+                    </MudItem>
+
+                </ToolBarContent>
+                <ColGroup>
+                    <col width="70px" />
+                    <col />
+                </ColGroup>
+                <HeaderContent>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_User"]</b></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="@_localizer["lbl_User"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@users.email</MudTd>
+
+                </RowTemplate>
+            </MudTable>
+        </MudItem>
+        <MudItem xs="11" sm="11" md="11">
+            <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Class="mt-1 px-10 fontContent" OnClick="updateNotificationsMethods">@_localizer["lbl_Edit"]</MudButton>
+            @*<MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" Class="mt-1 fontContent" OnClick="cancelExtend" hidden="@(!isMultiSelection)">@_localizer["lbl_Cancelbtn"]</MudButton>*@
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="11" sm="11" md="11">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="mt-5" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    int notificationMethod;
+    private bool isVisible;
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    ResponseModel<UsersModel> users;
+    public string UserValidations;
+    private string searchString = "";
+    private HashSet<UsersModel> selectedUsers = new HashSet<UsersModel>();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        await getUsers();
+    }
+    public async Task getUsers()
+    {
+        try
+        {
+            users = await userService.GetAllUsers();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    private bool SearchFunc(UsersModel user)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (user.email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+    public async void updateNotificationsMethods()
+    {
+        if (selectedUsers.Count() == 0)
+        {
+            UserValidations = _localizer["lbl_UserValidations"];
+            StateHasChanged();
+        }
+        else
+        {
+            try
+            {
+
+                UserValidations = string.Empty;
+                isVisible = true;
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+                Snackbar.Configuration.ShowCloseIcon = false;
+                await Task.Delay(1000);
+                List<int> userIds = new List<int>();
+                foreach (var item in selectedUsers)
+                {
+                    //Console.WriteLine($"user{item.Id}");
+                    userIds.Add(item.Id);
+                    userIds.ForEach((x)=>Console.WriteLine($"xxxx:{x}"));
+                }
+
+                var notificationResult = await notificationServices.UpdateNotifications(notificationMethod, userIds);
+                Console.WriteLine($" res {notificationMethod}");
+                isVisible = false;
+                Snackbar.Add(_localizer["lbl_EditDone"], Severity.Success);
+                selectedUsers.Clear();
+                userIds.Clear();
+                //await GetExtendSubscriptions();
+
+
+            }
+
+
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_Fail"], Severity.Normal);
+            }
+        }
+
+        StateHasChanged();
+    }
+}

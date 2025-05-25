@@ -1,0 +1,21 @@
+﻿
+<MudDialog>
+    <DialogContent>   
+        @if(fileInfo!=null)
+        {
+            <object data="data:@fileInfo.fileType;base64,@fileInfo.fileContent" alt=@fileInfo.fileDescription width="500" height="500" style=":100%;%" type="@fileInfo.fileType"></object>
+            
+        
+        }
+        else
+        {
+            <MudText>تعذر تحميل الصورة</MudText>
+        }
+</DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public FileInformation fileInfo { set; get; }
+   
+}

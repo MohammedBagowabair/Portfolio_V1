@@ -1,0 +1,164 @@
+﻿
+@page "/accountPortal"
+@page "/accountPortal/{selectedValue}"
+@inject IStringLocalizer<Resource> _localizer
+
+
+<style>
+    .mud-typography-body1 {
+        font-size: var(--mud-typography-body1-size);
+    @font_Content;
+        font-weight: var(--mud-typography-body1-weight);
+        line-height: var(--mud-typography-body1-lineheight);
+        letter-spacing: var(--mud-typography-body1-letterspacing);
+        text-transform: var(--mud-typography-body1-text-transform);
+    }
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<AuthorizeView Roles="User">
+    <Authorized>
+        @*-----------------------------------list-------------------------------------------------*@
+         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <PageTitle>Account Portal</PageTitle>
+            <MudGrid>
+                <MudItem xs="3" sm="3" md="3">
+                    <MudList  Style="background-color:#424242;color:#c8cacd;height:100vh" Class="px-3 fontContent" Clickable="true" @bind-SelectedValue="selectedValues" @bind-SelectedItem="SelectedValue" >
+                        <MudListItem Class="fontContent mud-typography-body1" Text="@_localizer["lbl_SubscriptionDetails"]" Value="1" />
+                        <MudListItem Class="fontContent mud-typography-body1" Text="@_localizer["lbl_Dashboard"]" Value="2" />
+                        <MudListItem Class="fontContent mud-typography-body1" Text="@_localizer["lbl_AccountManagement"]">
+
+                             <NestedList>
+                                <MudListItem Class="fontContent" Value="3" Text="@_localizer["lbl_ChangePassword"]" />
+                                <MudListItem Class="fontContent" Value="4" Text="@_localizer["lbl_ConfirmAccount"]" />
+                                    </NestedList>
+                        </MudListItem>
+                        <MudListItem Class="fontContent mud-typography-body1" Value="5" Text="@_localizer["lbl_NumberManagement"]" />
+                        <MudListItem Class="fontContent mud-typography-body1" Value="6" Text="Numbers Managment" />
+
+                    </MudList>
+                    </MudItem>
+                     <MudItem xs="8" sm="8" md="8">
+                    
+                    @if (@selectedValues?.ToString() == "1")
+                    {
+                        <SubscriptionDetails />
+                    }
+                    @if (@selectedValues?.ToString() == "2")
+                    {
+                        <SimpleDashboard />
+                    }
+                    @if (@selectedValues?.ToString() == "3")
+                    {
+                        <AccountManagement />
+                    }
+                    @if (@selectedValues?.ToString() == "4")
+                    {
+                        <NumberConfrimation OnBacktoClients="@OnBacktoClients" />
+                    }
+                    @if (@selectedValues?.ToString() == "5")
+                    {
+                        <Ultimate.WebApp.Pages.Client1.Clients />
+                    }
+                    @if (@selectedValues?.ToString() == "6")
+                    {
+                        <Ultimate.WebApp.Pages.ClientTestFolder.ClientTest />
+                    }
+                 
+                    </MudItem>
+                    </MudGrid>
+          
+        </MudHidden>
+
+        @*-----------------------------------tabs-------------------------------------------------*@
+        @*<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <PageTitle>Account Portal</PageTitle>
+            <MudTabs Position="Position.Start" Rounded="true" Border="true" Color="Color.Dark"
+                     ApplyEffectsToContainer="true" Class="mt-8" PanelClass="pa-6" ActivePanelIndex="4">
+                <MudTabPanel Class="fontContent" Text="@_localizer["lbl_SubscriptionDetails"]">
+                    <SubscriptionDetails />
+                </MudTabPanel>
+                <MudTabPanel Class="fontContent" Text="@_localizer["lbl_Dashboard"]">
+                    <SimpleDashboard />
+                </MudTabPanel>
+
+                <MudTabPanel Class="fontContent" Text="@_localizer["lbl_AccountManagement"]" >
+                  
+
+                    <AccountManagement />
+                </MudTabPanel>
+                <MudTabPanel Class="fontContent" Text="تأكيد رقم">
+
+                    <NumberConfrimation />
+                </MudTabPanel>
+               
+                <MudTabPanel Class="fontContent" Text="@_localizer["lbl_NumberManagement"]"  >
+                    <Ultimate.WebApp.Pages.Client1.Clients />
+                </MudTabPanel>
+            </MudTabs>
+        </MudHidden>*@
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+
+            <Ultimate.WebApp.Pages.Client1.Clients />
+        </MudHidden>
+    </Authorized>
+</AuthorizeView>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <Ultimate.WebApp.Pages.Admin.AdminManagement />
+    </Authorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public object selectedValue { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    MudListItem SelectedValue;
+    object selectedValues;
+   
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        selectedValues = 5;
+    }
+    void OnBacktoClients(){
+        selectedValues = 5;
+    }
+
+    protected override async Task OnParametersSetAsync()
+
+    {
+
+        if (selectedValue == null)
+        {
+            selectedValues = 5;
+        }
+        else
+        {
+            Console.WriteLine($"para {selectedValue}");
+            selectedValues = selectedValue;
+
+            Console.WriteLine($"selectedValues {selectedValues}");
+           
+        }
+        StateHasChanged();
+    }
+    void show(){
+        Console.WriteLine("hghg");
+    }
+}

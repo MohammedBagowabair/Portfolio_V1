@@ -1,0 +1,246 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+    .footerImag {
+        height: 60px;
+        margin-top: 10px;
+    }
+    .fontContent{
+        @font_Content
+    }
+    .text-dark {
+    --bs-text-opacity: 1;
+    color: whitesmoke;
+    text-decoration-line: none;
+
+}
+
+    .text-md-start {
+        text-align: @decr !important;
+    }
+    .text-dark {
+        --bs-text-opacity: 1;
+        color: whitesmoke;
+        text-decoration-line: none;
+        --bs-text-opacity: 1;
+        color: whitesmoke;
+        text-decoration-line: none;
+    }
+
+    .text-black {
+        --bs-text-opacity: 1;
+        color: rgba(var(--bs-black-rgb),var(--bs-text-opacity)) !important
+    }
+
+    .text-white {
+        --bs-text-opacity: 1;
+        color: rgba(var(--bs-white-rgb),var(--bs-text-opacity)) !important
+    }
+
+    .text-body {
+        --bs-text-opacity: 1;
+        color: rgba(var(--bs-body-rgb),var(--bs-text-opacity)) !important
+    }
+</style>
+<div class="text-center text-lg-start text-dark"
+        style="background-color: #434548;">
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-between p-4 text-white"
+             style="background-color:#4aa47e">
+        <!-- Left -->
+        <div class="me-5">
+            <span class="fontContent" style="color:white">@_localizer["lbl_Getconnected"]</span>
+        </div>
+        <!-- Left -->
+        <!-- Right -->
+        <div>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-facebook-f"></i>
+            </MudLink>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-twitter"></i>
+            </MudLink>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-google"></i>
+            </MudLink>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-instagram"></i>
+            </MudLink>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-linkedin"></i>
+            </MudLink>
+            <MudLink Underline="Underline.None" Href="" Class="text-white me-4">
+                <i class="fab fa-github"></i>
+            </MudLink>
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <MudGrid Class="mt-3">
+                <!-- Grid column -->
+                <MudItem md="3" lg="4" xl="3" Class="mx-auto mb-4">
+                    <!-- Content -->
+                    <MudText Typo="Typo.h6" Class=" text-white text-uppercase fw-bold fontContent">@_localizer["lbl_FooterAbout"]</MudText>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto line" />
+                    <MudText Class="text-white fontContent">
+                        @_localizer["lbl_FooterAbout1"]
+                    </MudText>
+                    <div>
+                        @*  <img src="img/ubot2.jpg" width="250px" height="50px"/>*@
+                        @* <MudImage Src="images/LogoMaly.png" Width="250" Height="65" Class="footerImag" /> *@
+                    </div>
+                </MudItem>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <MudItem md="2" lg="2" xl="2" Class="mx-auto mb-4">
+                    <!-- Links -->
+                    <MudText Typo="Typo.h6" Class="text-white text-uppercase fw-bold fontContent">@_localizer["lbl_FooterOurProducts"]</MudText>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto line" />
+                    @*<MudText>
+
+                        <MudLink Underline="Underline.None" Href="#!" Class="text-white fontContent">@_localizer["lbl_FooterOurProducts1"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#!" Class="text-white fontContent">@_localizer["lbl_FooterOurProducts2"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#!" Class="text-white fontContent">@_localizer["lbl_FooterOurProducts3"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#!" Class="text-white fontContent">@_localizer["lbl_FooterOurProducts4"]</MudLink>
+                    </MudText>*@
+                    <MudText>
+                            <MudLink Underline="Underline.None" Href="/"><MudImage src="images/LogoMaly.png" Fluid="true" Alt="MalyBot Logo" Width="120" Height="120" Class="" /></MudLink>
+                            @* <MudLink Underline="Underline.None" Href="/">@_localizer["lbl_UBot"]<MudImage src="images/LogoMaly.png" Fluid="true" Alt="MalyBot Logo" Width="120" Height="120" Class="" /></MudLink> *@
+                    </MudText>
+                </MudItem>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                @*<MudItem md="3" lg="2" xl="2" Class="mx-auto mb-4">
+                    <!-- Links -->
+
+                    <MudText Typo="Typo.h6" Class="text-white text-uppercase fw-bold fontContent">@_localizer["lbl_FooterLinked"]</MudText>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto line" />
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#" Class="text-white fontContent">@_localizer["lbl_FooterLinked1"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#" Class="text-white fontContent">@_localizer["lbl_FooterLinked2"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#" Class="text-white fontContent">@_localizer["lbl_FooterLinked3"]</MudLink>
+                    </MudText>
+                    <MudText>
+                        <MudLink Underline="Underline.None" Href="#" Class="text-white fontContent">@_localizer["lbl_FooterLinked4"]</MudLink>
+                    </MudText>
+                </MudItem>*@
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <MudItem md="4" lg="3" xl="3" Class="mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <MudText Typo="Typo.h6" Class="text-white text-uppercase fw-bold fontContent">@_localizer["lbl_contactUs"]</MudText>
+                    <hr class="mb-4 mt-0 d-inline-block mx-auto line" />
+                    @*<MudText Class="text-white fontContent"><i class="fas fa-home text-white mr-3"></i> @_localizer["lbl_location"]</MudText>*@
+                    <MudText Class="text-white fontContent"><i class="fas fa-envelope text-white mr-3"></i> @_localizer["lbl_emailAddress"]</MudText>
+                    <MudText Class="text-white fontContent"><i class="fas fa-phone text-white mr-3"></i> @_localizer["lbl_phoneInfo"]</MudText>
+                    @*<MudText Class="text-white fontContent"><i class="fas fa-print text-white mr-3"></i> + 05 234 567 89</MudText>*@
+                </MudItem>
+                <!-- Grid column -->
+            </MudGrid>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+    <!-- Copyright -->
+   @* <div class="text-white text-center p-3 fontContent"
+         style="background-color: rgba(0, 0, 0, 0.2)">
+        @_localizer["lbl_CopyRight"]
+    </div>*@
+    <div class="text-white text-center p-3 fontContent"
+         style="background-color: rgba(0, 0, 0, 0.2)">
+        <MudText Inline Class="fontContent">@_localizer["lbl_CopyRight"]</MudText>
+    <MudText Inline Class="fontContent" dir=@copyrightNdir>Rowadai</MudText>
+        <MudText Inline Class="fontContent" dir=@copyrightYdir>@_localizer["lbl_CopyrightYear"]</MudText>
+    </div>
+    <!-- Copyright -->
+</div>
+
+
+
+
+@*<div class="border-t-4" style="color:#2F6EDB;justify-content:center"></div>*@
+@*<div style="background-image: linear-gradient(180deg, rgb(	44,	47,	136) 10%, #111236 70%);">*@
+    @*<MudContainer>*@
+
+        @*<MudGrid Spacing="0" Class="mt-0" Justify="Justify.SpaceAround">
+            <MudItem xs="12" sm="4" md="4">*@
+                @*<div>*@
+                @*<hr style="color:white;height:3%" class="my-9 visi" />*@
+                @*</div>*@
+               @* </MudItem>
+            <MudItem xs="12" sm="4" md="4">
+                <MudText Align="Align.Center">
+                    <MudImage Src="images/Ulogo.png" Height="100" Width="200" />
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4">*@
+                @*<div>*@
+                @*<hr style="color:white;height:3%" class="my-9 visi" />*@
+                @*</div>*@
+               @* </MudItem>
+            <MudItem xs="12" sm="4" md="4" Class="mb-10">
+                <MudText Typo="Typo.h4" Align="Align.Center" Style="color:#FFFFFF">
+                    @_localizer["lbl_FooterAbout"]
+                </MudText>
+                <MudText Align="Align.Center" Style="color:#FFFFFF">
+                    @_localizer["lbl_FooterAbout1"]
+                </MudText>
+
+            </MudItem>
+            <MudItem xs="12" sm="4" md="4" Class="mb-10">*@
+                @*<MudText Typo="Typo.h4" Class="px-11" Align="Align.Start" Style="color:#FFFFFF">@_localizer["lbl_FooterOurProducts"]</MudText>*@
+                @*<MudLink Href="https://onyxproerp.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">– @_localizer["lbl_FooterOurProducts1"]</MudText></MudLink>*@
+                @*<MudLink Href="https://almotakamelpro.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">– @_localizer["lbl_FooterOurProducts2"]</MudText></MudLink>*@
+                @*<MudLink Href="http://www.almotakamelplus.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">– @_localizer["lbl_FooterOurProducts3"]</MudText></MudLink>*@
+                @*<MudLink Href="http://www.almotakamelplus.com/silver" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">– @_localizer["lbl_FooterOurProducts4"]</MudText></MudLink>*@
+                @*<MudLink Href="http://almuhaseb1.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">– @_localizer["lbl_FooterOurProducts5"]</MudText></MudLink>*@
+            @*</MudItem>
+            <MudItem xs="12" sm="4" md="4" Class="mb-10">*@
+                @*<MudText Typo="Typo.h4" Class="px-11" Align="Align.Start" Style="color:#FFFFFF">@_localizer["lbl_FooterLinked"] </MudText>*@
+                @*<MudLink Href="https://www.yemensoft.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">@_localizer["lbl_FooterLinked1"] </MudText></MudLink>*@
+                @*<MudLink Href="https://ultimate-sa.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">@_localizer["lbl_FooterLinked2"] </MudText></MudLink>*@
+                @*<MudLink Href="https://www.solutionsinformatiques.dz" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">@_localizer["lbl_FooterLinked3"] </MudText></MudLink>*@
+                @*<MudLink Href="https://www.ultiacademy.com" Underline="Underline.None"><MudText Align="Align.Start" Class="px-11 mt-3" Style="color:#FFFFFF">@_localizer["lbl_FooterLinked4"] </MudText></MudLink>*@
+           @* </MudItem>
+        </MudGrid>
+    </MudContainer>
+</div>
+<div style="background-image: linear-gradient(180deg, rgb(2, 199, 64) 0%, #0a732b 70%)">
+    <MudText Align="Align.Center" Class="pt-3 pb-3" style="color:white;">@_localizer["lbl_CopyRight"]</MudText>
+</div>*@
+@code{
+    [Parameter]
+    public string font_Content { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string copyrightNdir;
+    string copyrightYdir;
+    string decr;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            copyrightNdir = "rlt";
+            copyrightYdir = "ltr";
+            decr = "right";
+        }
+        else
+        {
+            //copyrightNdir = "ltr";
+            decr = "left";
+            copyrightYdir = "rtl";
+        }
+    }
+}

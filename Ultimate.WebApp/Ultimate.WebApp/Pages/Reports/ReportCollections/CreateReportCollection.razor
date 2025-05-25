@@ -1,0 +1,131 @@
+﻿@page "/CreateCollection"
+@inject NavigationManager _navigationManager
+@inject IReportCollectionServices reportCollectionServices
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Create Collection</PageTitle>
+@*<div style="background-color:#393939">*@
+<EditForm Model="Collection" OnValidSubmit="AddCollection">  
+    <DataAnnotationsValidator />
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    <MudGrid Spacing="4" Justify="Justify.Center" Class="py-6 px-5">
+     <MudItem xs="9" sm="7" md="8">
+            <MudText Typo="Typo.h5" Color="Color.Secondary" Class="fontContent">@headline</MudText>
+    </MudItem>
+    <MudItem  xs="10" sm="8" md="8">
+            <MudTextField @bind-Value="Collection.name" Variant="Variant.Outlined" Placeholder=@_localizer["lbl_EnterTheName"] Margin="Margin.Dense" For="@(()=>Collection.name)" Style="color:#c8cacd" Class="fontContent"></MudTextField>
+    </MudItem>
+    <MudItem  xs="9" sm="8" md="8">
+            <MudGrid Spacing="1" Justify="Justify.Center" Class="pt-6">
+                <MudItem xs="6" sm="4"  md="4">
+            <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" FullWidth ButtonType="ButtonType.Submit" Class="py-2 fontContent">@name_btn</MudButton>
+                </MudItem>
+                <MudItem xs="6" sm="4" md="4">
+                    <MudButton DisableElevation="true" Variant="Variant.Filled" FullWidth Color="Color.Secondary" Class="py-2 fontContent" OnClick="CancelBtn">@_localizer["lbl_Cancelbtn"]</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+    
+</MudGrid>
+</EditForm>
+@*</div>*@
+@code {
+    [Parameter]
+    public int botId{ set; get; }
+    [Parameter]
+    public ReportCollectionModel Collection { set; get; }
+    [Parameter]
+    public string headline { set; get; }
+    [Parameter]
+    public string name_btn { set; get; }
+    [Parameter]
+    public EventCallback OnAddOREditReportCollection { set; get; }
+    private bool isVisible;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+
+        }
+    }
+
+    private async void AddCollection()
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            try{
+                Collection.botId = botId;
+                ResponsePost<ReportCollectionModel> res = await reportCollectionServices.Create(Collection);
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertSaved"], Severity.Success);
+                Collection = new ReportCollectionModel();
+                await OnAddOREditReportCollection.InvokeAsync();
+               
+                StateHasChanged();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+        else if (name_btn == _localizer["lbl_BtnEdit"])
+        {
+            try
+            {
+
+
+                ResponseModel res = await reportCollectionServices.UpdateReportCollection(Collection);
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertModified"], Severity.Success);
+                Collection = new ReportCollectionModel();
+                await OnAddOREditReportCollection.InvokeAsync();
+                //headline = _localizer["lbl_CreateNewReport"];
+                //name_btn = _localizer["lbl_BtnSave"];
+                StateHasChanged();
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+    }
+    private async Task CancelBtn()
+    {
+        await OnAddOREditReportCollection.InvokeAsync();
+    }
+
+}

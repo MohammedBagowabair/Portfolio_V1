@@ -1,0 +1,214 @@
+﻿@page "/Extended"
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+@inject IOrdersService ordersService
+<style>
+     .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+    .mud-table-cell {
+        border-bottom: 1px solid #4b4848;
+    }
+
+    .mud-icon-button {
+        color: #4aa47e;
+    }
+
+    .mud-checkbox mud-ltr{
+
+    }
+    .mud-icon-default {
+        color: #c8cacd;
+    }
+
+    .mud-ltr {
+        direction: inherit !important;
+    }
+</style>
+<MudGrid Spacing="4" Class="mt-5">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    <MudItem xs="11" sm="11" md="11">
+        <MudText Typo="Typo.h6" Class=" fontContent" Color="Color.Secondary">@_localizer["lbl_ExtendSubscriptions"]</MudText>
+    </MudItem>
+    @if (getExtendedSubscriptions != null)
+    {
+        <MudItem xs="11" sm="11" md="11">
+            <MudToolBar>
+
+                <MudGrid Spacing="1">
+                    <MudItem xs="7" sm="6" md="6">
+                        <MudTextField @bind-Value="searchString" Margin="Margin.Dense" Placeholder=@_localizer["lbl_SearchForUser"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class=" fontContent" Variant="Variant.Outlined" Style="color:#c8cacd"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="5" sm="3" md="2" hidden="@(!isMultiSelection)">
+
+
+                        <MudTextField @bind-Value="daysNO" Margin="Margin.Dense" Placeholder=@_localizer["lbl_DaysNO"] Class=" fontContent" Variant="Variant.Outlined" Style="color:#c8cacd"></MudTextField>
+
+
+                    </MudItem>
+
+                    <MudItem xs="11" sm="3" md="3">
+                        <MudButton Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" Class="mt-1 fontContent" OnClick="extend">@(isMultiSelection ? _localizer["lbl_Ok"] : _localizer["lbl_Extend"])</MudButton>
+                            <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary" Class="mt-1 fontContent" OnClick="cancelExtend" hidden="@(!isMultiSelection)">@_localizer["lbl_Cancelbtn"]</MudButton>
+                    </MudItem>
+                        <MudItem xs="11" sm="11" md="11">
+                            <MudText Typo="Typo.body1" Class="fontContent" Color="Color.Error">@daysValidations</MudText>
+                        </MudItem>
+
+                    </MudGrid>
+
+                </MudToolBar>
+            </MudItem>
+        <MudItem xs="11" sm="11" md="11">
+            @*<MudText Color="Color.Primary">@(string.Join("", selectedOrders.OrderBy(x => x.user.Id).Select(x => x.user.Id)))</MudText>*@
+            <MudTable Items="getExtendedSubscriptions.Content" Breakpoint="Breakpoint.Xs" T="SubscriptionModel" Class="mt-3" Style="background-color:#393939;" Filter="new Func<SubscriptionModel,bool>(SearchFunc)" MultiSelection=@isMultiSelection @bind-SelectedItems="selectedOrders">
+
+                <HeaderContent>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_User"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_EndDate"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+                    @*<MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Status2"]</b></MudTh>*@
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Package"]</b></MudTh>
+
+
+
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="@_localizer["lbl_User"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.user.Email</MudTd>
+                    <MudTd DataLabel="@_localizer["lbl_EndDate"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.endDate</MudTd>
+                    <MudTd DataLabel="@_localizer["lbl_Price"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848"> @context.price</MudTd>
+                    @*<MudTd DataLabel="@_localizer["lbl_Status2"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848"> @context.status</MudTd>*@
+                    <MudTd DataLabel="@_localizer["lbl_Package"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+                        @(selectedCulture.Contains("en") ? context.package.foreignName : context.package.name)
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="11" sm="11" md="11">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="mt-5" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+
+    ResponseModel<SubscriptionModel> getExtendedSubscriptions;
+    ResponseModel extendedResult;
+    private string searchString = "";
+    private bool isVisible;
+    private int? daysNO;
+    public string daysValidations;
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private HashSet<SubscriptionModel> selectedOrders = new HashSet<SubscriptionModel>();
+    private bool isMultiSelection;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        await GetExtendSubscriptions();
+    }
+    public async Task GetExtendSubscriptions()
+    {
+        try
+        {
+            getExtendedSubscriptions = await ordersService.GetSubscriptionForExtend();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    private bool SearchFunc(SubscriptionModel subscription)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (subscription.user.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        //if (order.orderTime.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //    return true;
+        return false;
+    }
+    public async void extend()
+    {
+        if (isMultiSelection)
+        {
+            if (daysNO == null || selectedOrders.Count() == 0)
+            {
+                daysValidations = _localizer["lbl_DaysUserValidation"];
+                StateHasChanged();
+            }
+            else
+            {
+                try
+                {
+
+                    daysValidations = string.Empty;
+                    isVisible = true;
+                    Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+                    Snackbar.Configuration.ShowCloseIcon = false;
+                    await Task.Delay(1000);
+                    List<int> userIds = new List<int>();
+                    foreach (var item in selectedOrders)
+                    {
+                        Console.WriteLine($"extend -items {item.user.Id}");
+                        userIds.Add(item.user.Id);
+                        //userIds.ForEach((x)=>Console.WriteLine($"xxxx:{x}"));
+                    }
+
+                    extendedResult = await ordersService.ExtendSubscription(daysNO, userIds);
+                    isVisible = false;
+                    Snackbar.Add(_localizer["lbl_ExtendSubscriptionsSuccessfully"], Severity.Success);
+                    selectedOrders.Clear();
+                    userIds.Clear();
+                    await GetExtendSubscriptions();
+
+                    isMultiSelection = false;
+                }
+
+
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_Fail"], Severity.Normal);
+                }
+            }
+
+
+        }
+        else
+        {
+            Console.WriteLine($"extend");
+
+            isMultiSelection = !isMultiSelection;
+        }
+        StateHasChanged();
+    }
+    void cancelExtend()
+    {
+        isMultiSelection = false;
+        daysValidations = string.Empty;
+        StateHasChanged();
+    }
+}

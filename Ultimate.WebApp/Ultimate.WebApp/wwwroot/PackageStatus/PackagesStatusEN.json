@@ -1,0 +1,14 @@
+[
+  {
+    "statusId": "1",
+    "status": "free",
+    "value": "مجانية"
+
+  },
+  {
+    "statusId": "2",
+    "status": "basic",
+    "value": "أساسية"
+
+  }
+]

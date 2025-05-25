@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+
+
+        .sv {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%) rotate(45deg) scale(1);
+            transform: translate(-50%, -50%) rotate(45deg) scale(1);
+        }
+
+        .stroke-still {
+            stroke: #232323;
+        }
+
+        .stroke-animation {
+            -webkit-animation: stroke-spacing 1.2s ease-in, stroke-color 4.8s linear;
+            animation: stroke-spacing 1.2s ease-in, stroke-color 4.8s linear;
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            -webkit-animation-delay: 0;
+            animation-delay: 0;
+            -webkit-animation-direction: normal;
+            animation-direction: normal;
+            -webkit-animation-fill-mode: forwards;
+            animation-fill-mode: forwards;
+            -webkit-animation-play-state: running;
+            animation-play-state: running;
+            -webkit-transform-origin: center center;
+            transform-origin: center center;
+        }
+
+        @-webkit-keyframes stroke-spacing {
+            0% {
+                stroke-dasharray: 0 200;
+            }
+
+            45% {
+                stroke-dashoffset: 0;
+                stroke-dasharray: 200 200;
+            }
+
+            90% {
+                stroke-dashoffset: -200;
+                stroke-dasharray: 200 200;
+            }
+
+            100% {
+                stroke-dashoffset: -200;
+                stroke-dasharray: 200 200;
+            }
+        }
+
+        @keyframes stroke-spacing {
+            0% {
+                stroke-dasharray: 0 200;
+            }
+
+            45% {
+                stroke-dashoffset: 0;
+                stroke-dasharray: 200 200;
+            }
+
+            90% {
+                stroke-dashoffset: -200;
+                stroke-dasharray: 200 200;
+            }
+
+            100% {
+                stroke-dashoffset: -200;
+                stroke-dasharray: 200 200;
+            }
+        }
+
+        @-webkit-keyframes stroke-color {
+            0% {
+                stroke: #327864;
+            }
+
+            24% {
+                stroke: #327864;
+            }
+
+            25% {
+                stroke: #327864;
+            }
+
+            49% {
+                stroke: #327864;
+            }
+
+            50% {
+                stroke: #327864;
+            }
+
+            74% {
+                stroke: #327864;
+            }
+
+            75% {
+                stroke: #327864;
+            }
+
+            99% {
+                stroke: white;
+            }
+        }
+
+        @keyframes stroke-color {
+            0% {
+                stroke: #327864;
+            }
+
+            24% {
+                stroke: #327864;
+            }
+
+            25% {
+                stroke: #327864;
+            }
+
+            49% {
+                stroke: #327864;
+            }
+
+            50% {
+                stroke: #327864;
+            }
+
+            74% {
+                stroke: #327864;
+            }
+
+            75% {
+                stroke: #327864;
+            }
+
+            99% {
+                stroke: white;
+            }
+        }
+
+        .pLoading {
+            position: absolute;
+            top: 75%;
+            left: 46%;
+            font-family: 'Arial Rounded MT';
+        }
+
+        .Reloadhtml, .Reloadbody {
+            margin: 0;
+        }
+
+        .centered {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        .blob-4 {
+        }
+
+        .blob-1, .blob-2, .blob-3, .blob-4 {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            background: #989898;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        .blob-1 {
+            left: 50%;
+            animation: osc-m 1.5s ease infinite;
+            color: darkgray;
+        }
+
+        .blob-4 {
+            left: 50%;
+            animation: osc-d 1.5s ease infinite;
+            color: darkgray;
+        }
+
+        .blob-3 {
+            left: 1%;
+            animation: osc-l 1.5s ease infinite;
+            background: #5db691;
+        }
+
+        .blob-2 {
+            left: 80%;
+            animation: osc-r 1.5s ease infinite;
+            background: #5db691;
+        }
+
+        @keyframes osc-l {
+            0% {
+                left: 35%;
+            }
+
+            50% {
+                left: 50%;
+            }
+
+            100% {
+                left: 35%;
+            }
+        }
+
+        @keyframes osc-d {
+            0% {
+                left: 50%;
+            }
+
+            50% {
+                left: 65%;
+            }
+
+            100% {
+                left: 50%;
+            }
+        }
+
+        @keyframes osc-r {
+            0% {
+                left: 65%;
+            }
+
+            50% {
+                left: 50%;
+            }
+
+            100% {
+                left: 65%;
+            }
+        }
+
+        @keyframes osc-m {
+
+            0% {
+                left: 50%;
+            }
+
+            50% {
+                left: 35%;
+            }
+
+            100% {
+                top: 50%;
+            }
+        }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>MALYBOT</title>
+    <base href="/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@200&display=swap" rel="stylesheet">
+    <!--<link href="https://fonts.cdnfonts.com/css/droid-2" rel="stylesheet">-->
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="Ultimate.WebApp.styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="StyleSheetgloble.css" rel="stylesheet" />
+    <link href="css/bot.css" rel="stylesheet" />
+    <link href="css/fontawesome-free/css/all.css" rel="stylesheet" />
+    <link href="css/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./_content/IntlTelInputBlazor/css/intlTelInput.css">
+</head>
+
+<body class="Reloadbody" style="background-color: #343535">
+    <div id="app" style="color:white">
+        <svg class="sv" width="200" height="200" viewBox="0 0 100 100">
+
+            <polyline class="line-cornered stroke-still" points="0,0 100,0 100,100" stroke-width="10" fill="none"></polyline>
+            <polyline class="line-cornered stroke-still" points="0,0 0,100 100,100" stroke-width="10" fill="none"></polyline>
+            <polyline class="line-cornered stroke-animation" points="0,0 100,0 100,100" stroke-width="10" fill="none"></polyline>
+            <polyline class="line-cornered stroke-animation" points="0,0 0,100 100,100" stroke-width="10" fill="none"></polyline>
+        </svg>
+        <div class="centered">
+            <div class="blob-3"></div>
+            <div class="blob-4"></div>
+            <div class="blob-1"></div>
+            <div class="blob-2"></div>
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="./_content/IntlTelInputBlazor/js/intlTelInput.js"></script>
+    <script type="text/javascript">
+        window.blazorCulture = {
+            get: () => localStorage['BlazorCulture'],
+            set: (value) => localStorage['BlazorCulture'] = value
+        };
+    </script>
+
+</body>
+
+</html>

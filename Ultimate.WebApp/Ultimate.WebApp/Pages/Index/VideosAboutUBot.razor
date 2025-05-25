@@ -1,0 +1,62 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .mud-grid-spacing-xs-3 {
+        /* width: calc(100% + 24px); */
+        /* margin: -12px
+                        px
+                        ; */
+        margin: 0;
+        width: auto;
+    }
+</style>
+<div class="my-10" style="background-image:url(img/frame.jpg);">
+    @*<MudPaper Square>*@
+    @*<img src="~/img/screenshot 2023-06-13 170820.jpg" />*@
+    <MudGrid Justify="Justify.Center" Spacing="1" Class="py-10">
+        <MudItem xs="11" sm="11" md="10" Class="py-2"></MudItem>
+        <MudItem xs="10" sm="10" md="7">
+            <MudText Class="fontContent pt-15" Style="font-size:20px;font-weight:900;" Align="Align.Center">
+                @_localizer["lbl_video1"]
+            </MudText>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12" Class="py-9">
+            <MudGrid Justify="Justify.Center" Spacing="3">
+                <MudItem xs="11" sm="4" md="2">
+                </MudItem>
+                <MudItem xs="11" sm="4" md="4">
+                        <div style="max-width: 400px;max-height:400px;min-height:200px;min-width:200px;background-color:gray" class="px-auto"></div>
+                    <MudText Class="mt-3 fontContent" Style="font-size:18px;font-weight:900;">@_localizer["lbl_video11"]</MudText>
+                </MudItem>
+                <MudItem xs="11" sm="4" md="4">
+                        <div style="max-width: 400px;max-height:400px;min-height:200px;min-width:200px;background-color:gray" class="px-auto"></div>
+                    <MudText Class="mt-3 fontContent" Style="font-size:18px;font-weight:900;">@_localizer["lbl_video12"]</MudText>
+                   
+                </MudItem>
+                <MudItem xs="11" sm="4" md="2">
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+        <MudItem xs="11" sm="4" md="4">
+            <MudText Align="Align.Center">
+                <MudButton Variant="Variant.Filled" DisableElevation="true" Style="color:#343535;font-size:15px;font-weight:bold;" Class="fontContent rounded-pill pa-3 px-6" Color="Color.Secondary">@_localizer["lbl_videobtn"]</MudButton>
+            </MudText>
+        </MudItem>
+        <MudItem xs="11" sm="11" md="10" Class="py-7"></MudItem>
+    </MudGrid>
+    @*</MudPaper>*@
+</div>
+@code {
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+}
+

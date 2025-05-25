@@ -1,0 +1,118 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\RowadAI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|c:\\users\\user\\source\\repos\\rowadai\\rowadai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74150492-7C9B-497F-B28A-14A3CC23F6B6}|RowadAI\\RowadAI.csproj|solutionrelative:rowadai\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Program.cs",
+              "RelativeDocumentMoniker": "RowadAI\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Program.cs",
+              "RelativeToolTip": "RowadAI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-08T14:06:51.518Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "RowadAI\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "RowadAI\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-07T11:22:02.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "RowadAI\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "RowadAI\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-05T18:05:08.982Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "RowadAI\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\wwwroot\\index.html",
+              "RelativeToolTip": "RowadAI\\wwwroot\\index.html",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABoAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-05T13:23:34.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "RowadAI\\wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "RowadAI\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAIgEAAAAAAAAAAAqwK4EAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-03T09:03:50.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "RowadAI\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI\\RowadAI\\Pages\\Home.razor",
+              "RelativeToolTip": "RowadAI\\Pages\\Home.razor",
+              "ViewState": "AgIAAGIFAAAAAAAAAAAIwIYGAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-03T09:04:52.681Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

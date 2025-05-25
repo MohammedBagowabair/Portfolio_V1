@@ -1,0 +1,89 @@
+﻿@page "/clientTest"
+@inject IClientService clientService
+
+
+<MudGrid Spacing="0"  Class="mt-5">
+    <MudItem xs="12" sm="12" md="12" lg="12">
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Add" Color="Color.Primary">Add Number</MudButton>
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.PowerSettingsNew" Color="Color.Primary">Run </MudButton>
+        <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.ExitToApp" Color="Color.Primary">Exist</MudButton>
+    </MudItem>
+
+    @foreach (ClientModel c in result.Content)
+    {
+        <MudCard Elevation="1" Class="rounded-lg " Style="background-color:#424242;">
+            <!-- Card Media -->
+            <MudCardMedia Image="images/door.jpg" Height="200" />
+
+            <!-- Card Content -->
+            <MudCardContent>
+                <MudText Align="Align.Center" Style="color:#c8cacd;" Class="fontContent">
+                    @c.WhatsappNumber
+                </MudText>
+                <MudText Align="Align.Center" Style="color:#c8cacd;" Class="fontContent" Typo="Typo.body2">
+                    @c.Description
+                </MudText>
+            </MudCardContent>
+
+            <!-- Card Actions -->
+            <MudCardActions>
+                <!-- Display Button -->
+                <MudButton Variant="Variant.Text" Color="Color.Primary">
+                    Display
+                </MudButton>
+
+                <!-- Activity Button -->
+                <MudButton Variant="Variant.Text" Color="Color.Primary">
+                    Activity
+                </MudButton>
+
+                <!-- Inactive Toggle -->
+                <MudItem xs="4" sm="4" md="4" lg="4">
+                    <MudIconButton 
+                                   
+                                   Size="Size.Medium">
+                    </MudIconButton>
+                </MudItem>
+            </MudCardActions>
+        </MudCard>
+    }
+
+   
+</MudGrid>
+                
+
+
+
+
+@code {
+
+    ResponseModel<ClientModel> result;
+    ClientModel clientModel = new ClientModel();
+    List<ClientModel> ClientList = new List<ClientModel>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        await GetClient();
+
+        // foreach(ClientModel c in result.Content)
+        // {
+        //     await IsConnected(c.Id);
+        //     c.isConnected = checkConnection;
+        // }
+    }
+
+    public async Task GetClient()
+    {
+        try
+        {
+            result = await clientService.GetClients();
+
+        }
+        catch(Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+        
+    }
+
+}

@@ -1,0 +1,274 @@
+﻿@page "/TextPage/{botId:int}"
+@inject IStringLocalizer<Resource> _localizer
+@using System.ComponentModel.DataAnnotations
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject ITextService textService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+</MudOverlay>
+<div style="">
+    @if (response != null)
+    {
+        <MudGrid Class="pa-2">
+            @if (isShow)
+            {
+                <MudItem sm="11" xs="11" md="11">
+                    <MudButton Variant="Variant.Filled" Class="fontContent" Color="Color.Primary" OnClick="show">@_localizer["lbl_AddText"]</MudButton>
+                </MudItem>
+            }
+            @if (isShowEditForm)
+            {
+                <MudItem sm="11" xs="11" md="11">
+                    <div class="just">
+                        <EditForm Model="textModel" OnValidSubmit="HandelSubment">
+                            <DataAnnotationsValidator />
+                            <MudGrid Class="pa-5">
+                                <MudItem sm="8" xs="11" md="7">
+                                    <MudText Color="Color.Secondary" Class="fontContent">@lbl_name</MudText>
+                                </MudItem>
+
+                                <MudItem sm="8" xs="11" md="7">
+                                    @if (textModel.name == null || textModel.name == string.Empty)
+                                    {
+                                        <MudTextField Class="fontContent" Immediate Style="font-size:30px;color:#c8cacd" @bind-Value="textModel.name" Placeholder="@_localizer["lbl_EnterText"]" For="@(() => textModel.name)" InputType="InputType.Text" Margin="Margin.Dense" T="string" Variant="Variant.Text" />
+                                    }
+                                    else
+                                    {
+                                        <MudTextField Class="fontContent" Style="color:#c8cacd" AutoFocus Immediate @bind-Value="textModel.name" Label="@_localizer["lbl_EnterText"]" For="@(() => textModel.name)" InputType="InputType.Text" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" />
+                                    }
+                                </MudItem>
+                                <MudItem sm="8" xs="11" md="7">
+
+                                    <MudButton Class="fontContent" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">@name_btn</MudButton>
+                                    <MudButton Class="fontContent" Variant="Variant.Filled" Color="Color.Secondary" OnClick="Close">@_localizer["lbl_Cancelbtn"]</MudButton>
+                                </MudItem>
+                            </MudGrid>
+                        </EditForm>
+                    </div>
+                </MudItem>
+            }
+            @if (isShow)
+            {
+                <MudItem sm="11" xs="11" md="11">
+                    <MudTable Items="response.Content" Hover="true" Breakpoint="Breakpoint.Xs" Style="background-color:#393939;">
+                        <HeaderContent>
+                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_id"]</b></MudTh>
+                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_txt"]</b></MudTh>
+                            <MudTh Style="border-bottom:1px solid #4b4848"></MudTh>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_id"]">@context.id</MudTd>
+                            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_txt"]">@context.name</MudTd>
+                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848">
+                                <div class="d-flex gap-3">
+                                    <MudLink Underline="Underline.None" OnClick="()=>EditText(context)" Class="text-white">
+                                        <MudIcon Icon="far fa-edit" Size="Size.Small" style="color:#c8cacd;" />
+                                    </MudLink>
+                                    <MudLink Underline="Underline.None" Class="text-white" OnClick="()=>DeleteText(context.id)">
+                                        <MudIcon Icon="fas fa-trash-alt" Size="Size.Small" style="color:#c8cacd;"></MudIcon>
+                                    </MudLink>
+                                </div>
+                            </MudTd>
+
+                        </RowTemplate>
+                    </MudTable>
+                    @*<MudGrid Justify="Justify.FlexStart">
+            @foreach (var texts in response.Content)
+            {
+            <MudItem sm="4" xs="11" md="4">
+            <MudCard Elevation="3" Style="border-radius: 15px;">
+            <MudCardContent>
+            <div class="d-flex justify-space-between pa-2">
+            <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.TextFields" Class="" Size="Size.Medium" style="color:#c8cacd" />
+            <MudText Color="Color.Secondary" Class="fontContent px-2">@texts.name</MudText>
+            </div>
+            <div class="d-flex gap-3">
+            <MudLink Underline="Underline.None" OnClick="()=>EditText(texts)" Class="text-white">
+            <MudIcon Icon="far fa-edit" Size="Size.Small" style="color:#c8cacd;" />
+            </MudLink>
+            <MudLink Underline="Underline.None" Class="text-white" OnClick="()=>DeleteText(texts.id)">
+            <MudIcon Icon="fas fa-trash-alt" Size="Size.Small" style="color:#c8cacd;"></MudIcon>
+            </MudLink>
+            </div>
+            </div>
+            </MudCardContent>
+            </MudCard>
+            </MudItem>
+            }
+
+            </MudGrid>*@
+                </MudItem>
+            }
+        </MudGrid>
+    }
+    else
+    {
+        <MudProgressCircular Color="Color.Primary" Class="d-flex mx-auto" Indeterminate="true" />
+    }
+</div>
+
+
+@code {
+    [Parameter]
+    public int botId { get; set; }
+    string font_Title;
+    string font_Content;
+    private bool isVisible;
+    public string msgalert { get; set; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private bool isShow;
+    private bool isShowEditForm;
+    ResponseModel<TextModel> response;
+    TextModel textModel = new TextModel();
+    private bool _editTriggerRowClick;
+    public string name_btn { get; set; }
+    public string lbl_name { get; set; }
+    private List<string> _events = new();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        isShow = true;
+        isShowEditForm = false;
+        name_btn = _localizer["lbl_BtnSave"];
+        lbl_name = _localizer["lbl_CreateText"];
+        response = await textService.GetByBotId(botId);
+    }
+    public async void HandelSubment()
+    {
+        isVisible = true;
+        textModel.botId = botId;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(500);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            Console.WriteLine("hbjmhv: " + DateTime.Today);
+            try
+            {
+                await textService.Create(textModel);
+                isVisible = false;
+                response = await textService.GetByBotId(botId);
+                msgalert = _localizer["msg_AlertSaved"];
+                Snackbar.Add(msgalert, Severity.Success);
+                isShow = true;
+                isShowEditForm = false;
+                textModel = new TextModel();
+                StateHasChanged();
+
+            }
+            catch (Exception x)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFSaved"];
+                Snackbar.Add(msgalert, Severity.Error);
+                //auto = await AutomessageService.GetById(botId);
+                //autoMessageModel = new AutoMessageModel();
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+        else
+        {
+            try
+            {
+                await textService.Update(textModel);
+                name_btn = _localizer["lbl_BtnSave"];
+                lbl_name = _localizer["lbl_CreateText"];
+                isVisible = false;
+                response = await textService.GetByBotId(botId);
+                msgalert = _localizer["msg_AlertModified"];
+                Snackbar.Add(msgalert, Severity.Success);
+                isShow = true;
+                isShowEditForm = false;
+                textModel = new TextModel();
+                StateHasChanged();
+
+            }
+            catch (Exception x)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFModified"];
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+    }
+    public void show()
+    {
+        isShowEditForm = true;
+        isShow = false;
+        StateHasChanged();
+    }
+    async void Close()
+    {
+        isShowEditForm = false;
+        isShow = true;
+        textModel = new TextModel();
+        StateHasChanged();
+    }
+    public async void EditText(TextModel textModels)
+    {
+        textModel = textModels;
+        isShowEditForm = true;
+        isShow = false;
+        lbl_name = _localizer["lbl_EditText"];
+        name_btn = _localizer["lbl_BtnEdit"];
+        StateHasChanged();
+
+    }
+    async Task DeletedText()
+    {
+        response = await textService.GetByBotId(botId);
+    }
+    void DeleteText(int textId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteText"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_ConfirmDeleteText"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", textId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, (() => DeletedText())));
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+    void StartedEditingItem(TextModel item)
+    {
+        _events.Insert(0, $"Event = StartedEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    void CanceledEditingItem(TextModel item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    void CommittedItemChanges(TextModel item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+}

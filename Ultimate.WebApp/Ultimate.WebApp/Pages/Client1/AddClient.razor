@@ -1,0 +1,325 @@
+﻿@page "/client"
+@page "/client/{name_btn}"
+
+@using System.Security.Claims;
+@using Ultimate.Bot.Application.DTO;
+@using Ultimate.Bot.Core.Model
+@using Ultimate.WebApp.Service
+@inject IClientService ClientService
+@inject NavigationManager navigationManager
+@inject IStringLocalizer<Resource> _localizer
+@inject ILocalStorageService _localStorageService;
+@inject ISnackbar Snackbar
+<PageTitle> AddClient</PageTitle>
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+@*@if (client != null)
+{*@
+    <EditForm Model="@client" OnValidSubmit="submitClient">
+        <DataAnnotationsValidator />
+    <MudPaper Elevation="0" Class="mx-8 my-4" Style="background-color:#424242;">
+            <MudGrid Spacing="4" Class="px-3 py-3">
+                <MudItem sm="11" xs="11" md="11">
+                    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+                    </MudOverlay>
+                    <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h4">@title</MudText>
+                </MudItem>
+
+                @*<div class="d-flex flex-row ">*@
+                <MudItem sm="11" xs="11" md="6">
+                <MudTextField Style="color:#c8cacd" @bind-Value="client.Name" Class="fontContent" Variant="Variant.Filled" Placeholder="@_localizer["lbl_Name"]" Label=@_localizer["lbl_Name"] InputType="InputType.Text" For="@(()=>client.Name)" />
+                </MudItem>
+
+                <MudItem sm="11" xs="11" md="5">
+                <MudNumericField HideSpinButtons=true Style="color:#c8cacd" @bind-Value="client.WhatsappNumber" Class="fontContent" Variant="Variant.Filled" Placeholder="@_localizer["lbl_ClientWhatsappNo"]" Label=@_localizer["lbl_ClientWhatsappNo"] For="@(()=>client.WhatsappNumber)" />
+                </MudItem>
+                @*</div>*@
+
+
+
+                @*<div class="d-flex flex-row">*@
+                @*<MudTextField @bind-Value="client.NameAdmin" Variant="Variant.Filled" Label="المسؤول" InputType="InputType.Telephone" />*@
+
+                <MudItem sm="11" xs="11" md="6">
+                    @* <MudSelect Label=@_localizer["lbl_Admin"] Variant="Variant.Outlined" T="string" @bind-Value="client.NameAdmin" Class="mx-8 my-4">
+                @foreach (string adminname in admins)
+                {
+                <MudSelectItem Value="@(adminname)"></MudSelectItem>
+                }
+                </MudSelect>*@
+                <MudTextField Style="color:#c8cacd" @bind-Value="client.NameAdmin" Class="fontContent" Variant="Variant.Filled" Placeholder="@_localizer["lbl_Admin"]" Label=@_localizer["lbl_Admin"] For="@(()=>client.NameAdmin)" />
+
+                </MudItem>
+                <MudItem sm="11" xs="11" md="5">
+                    @*<MudNumericField  Placeholder="bnb" Style="color:#c8cacd" @bind-Value="client.PhoneAdmin" Variant="Variant.Filled" Class="fontContent"></MudNumericField>*@
+                <MudNumericField HideSpinButtons=true Style="color:#c8cacd" @bind-Value="client.PhoneAdmin" Variant="Variant.Filled" Class="fontContent" Placeholder="@_localizer["lbl_AdminNo"]" Label=@_localizer["lbl_AdminNo"] For="@(()=>client.PhoneAdmin)" ></MudNumericField>
+                </MudItem>
+                @* </div>*@
+
+                @*<div class="d-flex flex-row mx-8">*@
+                <MudItem sm="11" xs="11" md="11">
+                <MudTextField Style="color:#c8cacd" @bind-Value="client.Description" Class="fontContent" Variant="Variant.Filled" Placeholder="@_localizer["lbl_Description"]" Label=@_localizer["lbl_Description"] InputType="InputType.Text" Lines="4" For="@(()=>client.Description)"></MudTextField>
+                </MudItem>
+                
+                <MudItem sm="11" xs="11" md="4">
+                    
+                <MudSwitch @bind-Checked=client.Inactive Style="color:#c8cacd"  Label= Color="Color.Primary" ><span class="fontContent">@(client.Inactive == true ? _localizer["lbl_Active"] : _localizer["lbl_NotActive"])</span></MudSwitch>
+
+
+                    @* <MudTextField @bind-Value=client.ActiveName Variant="Variant.Outlined" Label=@_localizer["lbl_ActiveName"] InputType="InputType.Text" Class="mx-8 my-4"></MudTextField>*@
+                    @*<MudTextField @bind-Value="client.ActiveType" Variant="Variant.Filled" Label="نوع النشاط" InputType="InputType.Telephone" />*@
+                    
+                </MudItem>
+                
+                @*<MudItem sm="11" xs="11" md="6">
+            <MudSelect @bind-Value="client.ActiveType" Label=@_localizer["lbl_ActiveType"] Variant="Variant.Outlined" T="string" Class="mx-8 my-4">
+            @foreach (string nameofactive in ActiveTypes)
+            {
+            <MudSelectItem Value="@(nameofactive)"></MudSelectItem>
+            }
+
+            </MudSelect>
+
+            </MudItem>*@
+                @*  <MudItem sm="11" xs="11" md="11">*@
+                @*<MudTextField @bind-Value="client.UserModelId" Variant="Variant.Filled" Label="رقم المستخدم" InputType="InputType.Telephone" />*@
+
+                @*<MudSelect @bind-Value="client.UserId" Label=@_localizer["lbl_User"] Variant="Variant.Outlined" T="int" Class="mx-8 my-4">
+            @foreach (int user in users)
+            {
+            <MudSelectItem Value="@(user)"></MudSelectItem>
+            }
+
+            </MudSelect>*@
+                @*</div>*@
+                @*</MudItem>*@
+                <MudItem sm="11" xs="11" md="11">
+                <MudButton DisableElevation="true" ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="fontContent demo-form-button">@name_btn</MudButton>
+                <MudButton DisableElevation="true" OnClick="Cancelbtn" Variant="Variant.Filled" Color="Color.Secondary" Class="fontContent demo-form-button">@_localizer["lbl_Cancelbtn"]</MudButton>
+                    @*<button type="submit">@result</button>*@
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </EditForm>
+    @*<h1>@result</h1>*@
+@*}*@
+@*else
+{
+    <MudProgressCircular Class="d-flex mx-auto" Style="margin-top:25%" Color="Color.Primary" Indeterminate="true" />
+
+}*@
+
+@*<MudItem sm="3" xs="12" md="2">
+    <MudPaper Elevation="0" Height="30rem">*@
+@*<MudNavMenu Color="Color.Primary" Rounded="true" Margin="Margin.Dense" Class="pa-6">*@
+@*<MudText Class="py-2 px-4" Typo="Typo.h6">معلومات العميل</MudText>*@
+@* <MudNavLink Href="/profile" Match="NavLinkMatch.Prefix">
+    <MudText>العميل الأول</MudText>
+    <MudText Typo="Typo.body2">773568537 967+</MudText>
+    </MudNavLink>
+    <MudNavLink Href="#" Match="NavLinkMatch.Prefix">
+    <MudText Typo="Typo.h6">العميل الثاني</MudText>
+    <MudText Typo="Typo.body2">775647853 967+</MudText>
+    </MudNavLink>
+    </MudNavMenu>*@
+@* </MudPaper>
+    </MudItem>*@
+
+@*<span>@client.NameAdmin</span>*@
+@code {
+    //[Parameter]
+    //public int id { get; set; }
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private string result = "";
+    [Parameter]
+    public string name_btn{ set; get; }
+    string title;
+    protected string selectValue = string.Empty;
+    ClientModel client = new ClientModel();
+    ResponseModel<ClientModel> clients;
+    private string UserId;
+
+
+
+    private bool isVisible;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        if (name_btn == _localizer["lbl_BtnEdit"])
+        {
+            title = _localizer["lbl_EditNo"];
+            ClientSingle c = Global.Services.GetService<ClientSingle>();
+            client = c.client;
+        }
+        else
+        {
+            name_btn = _localizer["lbl_BtnSave"];
+            title = _localizer["lbl_AddNo"];
+        }
+
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = identity.FindFirst("UserId").Value;
+
+    }
+
+    //protected override async Task OnParametersSetAsync()
+    //{
+    //    //clients = await ClientService.GetClientById(id);
+    //    if (clients.Content.Count > 0)
+    //    {
+    //        name_btn = _localizer["lbl_BtnEdit"];
+    //        title = @_localizer["lbl_EditNo"];
+    //        //client = clients.Content[0];
+    //    }
+    //    else
+    //    {
+    //        name_btn = _localizer["lbl_BtnSave"];
+    //        title = _localizer["lbl_AddNo"];
+    //    }
+
+    //}
+
+
+    public async void submitClient()
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(2000);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            client.UserId = int.Parse(UserId);
+            ResponsePost<ClientModel> res = await ClientService.Create(client);
+            Console.WriteLine($"add code {res.Code}-msg{res.Message}-content{res.Content}");
+            try
+            {
+                if (res.Code == 0)
+                {
+
+                    //client.UserId = int.Parse(UserId);
+                    ////await ClientService.Update(client);
+                    //ResponsePost<ClientModel> res = await ClientService.Create(client);
+                    //result = res.Message;
+                    //Console.WriteLine(res.Message);
+                    //Console.WriteLine($"msg {res.Message} code{res.Code}");
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertSaved"], Severity.Success);
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+
+                }
+                else if (res.Code == 3003)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertSavedandUpdate"], Severity.Success);
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+                }
+                else if (res.Code == 4004)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_FSavePackageExpired"], Severity.Error);
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+                }
+                else{
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                StateHasChanged();
+                }
+                //   else if (res.Code == 3003)
+                //{
+                //    isVisible = false;
+                //    Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+                //    StateHasChanged();
+
+                //}
+                //else if (res.Code == 3001)
+                //{
+                //    isVisible = false;
+                //    Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+                //    StateHasChanged();
+                //    navigationManager.NavigateTo("/SeeMoreSubscription");
+                //}
+            }
+            catch(Exception e)
+            {
+
+                Console.WriteLine($"msg {e.Message}");
+                //Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+        else
+        {
+            var res=await ClientService.Update(client);
+            try
+            {
+
+                if (res.Code == 0)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertModified"], Severity.Success);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+                }
+                else if(res.Code==3003){
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertModifiedandUpdate"], Severity.Success);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+                }
+                else if(res.Code==4004){
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_FModifiedPackageExpired"], Severity.Error);
+                    name_btn = _localizer["lbl_BtnSave"];
+                    StateHasChanged();
+                    navigationManager.NavigateTo("/accountPortal");
+                }
+                else{
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+
+    }
+    public void Cancelbtn()
+    {
+        navigationManager.NavigateTo("/accountPortal");
+    }
+}

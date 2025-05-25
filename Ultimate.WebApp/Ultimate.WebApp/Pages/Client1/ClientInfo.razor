@@ -1,0 +1,325 @@
+﻿@inject IClientService clientService
+@inject NavigationManager navigationManager
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@*<MudPaper Elevation="0">*@
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .hoverLnk {
+        color: #c8cacd;
+    }
+
+        .hoverLnk:hover {
+            color: #4aa47e;
+        }
+        /*.only  .mud-icon-root.mud-svg-icon{
+        color: #4aa47e
+        }*/
+</style>
+<MudGrid Spacing="0">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    @if (result != null)
+
+    {
+
+
+
+        <MudItem xs="4" sm="8" md="9">
+            <div class="d-flex gap-2">
+                <MudAvatar Class="fontContent" Color=@color Size="Size.Medium" Variant="Variant.Filled">
+                    <MudText Align="Align.Center">@result.Content[0].WhatsappNumber.ToString().Substring(0,2)</MudText>
+                </MudAvatar>
+                <div class="d-flex flex-column align-content-start">
+                    <MudLink Underline="Underline.None" Color="Color.Default" Class="fontContent hoverLnk cursor-pointer" OnClick="ShowInfo">
+                        <MudText Color="Color.Secondary" Class="fontContent">@result.Content[0].WhatsappNumber</MudText>
+                        <MudText Color="Color.Secondary" Typo="Typo.subtitle2" Class="fontContent mt-n1">@(result.Content[0].isConnected == true ? _localizer["lbl_Online"] : _localizer["lbl_NotOnline"])</MudText>
+                        </MudLink>
+                    </div>
+                </div>
+            </MudItem>
+
+        <MudItem xs="8" sm="4" md="3">
+            <MudGrid Spacing="0" Justify="Justify.FlexEnd">
+                <MudItem xs="2" sm="2" md="2">
+                    <div class="only">
+                    @if (result.Content[0].Inactive)
+                    {
+                        
+                        <MudIconButton Icon="@Icons.Material.Filled.ToggleOn" Color="Color.Primary" OnClick="()=>EditActivity(result.Content[0])"></MudIconButton>
+                    }
+                    else
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.ToggleOff" Color="Color.Secondary" OnClick="()=>EditActivity(result.Content[0])"></MudIconButton>
+                    }
+                    </div>
+                </MudItem>
+               @* @{
+
+                    getQr(result.Content[0]);
+                }*@
+                @if (!result.Content[0].isConnected)
+                {
+                    <MudItem xs="2" sm="2" md="2">
+
+
+
+                        <MudIconButton OnClick="@((e) => OpenQRCodeDialog(result.Content[0]))" Icon="@Icons.Material.Outlined.QrCode" Size="Size.Medium" aria-label="QRCode" Color="Color.Secondary"></MudIconButton>
+
+                    </MudItem>
+                }
+                else
+                {
+
+                }
+                <MudItem xs="2" sm="2" md="2">
+                    <MudMenu Class="fontContent" IconColor="Color.Secondary" Color="Color.Secondary" Icon="@Icons.Material.Filled.MoreVert" DisableElevation="true">
+                        <MudMenuItem OnTouch="()=>EditClient(result.Content[0].Id)" OnClick="()=>EditClient(result.Content[0].Id)"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_BtnEdit"]</span></MudMenuItem>
+                        <MudMenuItem OnTouch="()=>DeleteClient(result.Content[0].UserId,result.Content[0].Id)" OnClick="()=>DeleteClient(result.Content[0].UserId,result.Content[0].Id)"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_Deletebtn"]</span></MudMenuItem>
+                        <MudMenuItem OnTouch="addClient" OnClick="addClient"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_AddNo"]</span></MudMenuItem>
+                        @if (result.Content[0].isConnected){
+                            <MudMenuItem Class="fontContent" OnTouch="()=>ClientLogout(result.Content[0])" OnClick="()=>ClientLogout(result.Content[0])"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_logout"]</span></MudMenuItem>
+                        }
+                       
+                    </MudMenu>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+    }
+    else
+    {
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    }
+</MudGrid>
+
+@*</MudPaper>*@
+
+@code {
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    [Parameter]
+    public int clnId { set; get; }
+    ResponseModel<ClientModel> result;
+
+    string status;
+    Color color;
+    private bool isVisible;
+    ResponsGeneric<string> logOutResulst;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        result = await clientService.GetClientById(clnId);
+        Console.WriteLine($" active {result.Content[0].Inactive}");
+        //status = result.Content[0].Inactive == true ? @_localizer["lbl_Active"] : @_localizer["lbl_NotActive"];
+
+    }
+    public void addClient()
+    {
+
+        navigationManager.NavigateTo($"/client/{_localizer["lbl_BtnSave"]}");
+    }
+    public async Task getQr(ClientModel c)
+    {
+        try{
+
+
+            ResponseAdd<string> responseAdd = await clientService.getQr<string>(c.Id);
+            if (responseAdd.Code == 0)
+            {
+                if (responseAdd.Content == "Connected")
+                {
+                    c.isConnected = true;
+
+                    //StateHasChanged();
+
+                }
+                else if (responseAdd.Content == "NotFound")
+                {
+
+                    c.isConnected = false;
+
+                    //StateHasChanged();
+                }
+                else
+                {
+                    c.isConnected = false;
+                    c.Qr = responseAdd.Content;
+
+                }
+            }
+
+            else
+            {
+                c.isConnected = false;
+                //ResponseAdd<string> responseAdd = await clientService.getQr<string>(c.Id);
+                //c.Qr = responseAdd.Content;
+                //await Task.Delay(2000);
+                //StateHasChanged();
+            }
+            color = result.Content[0].isConnected == true ? Color.Primary : Color.Default;
+            StateHasChanged();
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message},{e.StackTrace}");
+        }
+    }
+    public async void OpenQRCodeDialog(ClientModel client) 
+    {
+        await getQr(client);
+        var options = new DialogOptions()
+            {
+                Position = DialogPosition.Center,
+                MaxWidth = MaxWidth.Large,
+                CloseButton = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("QRCodeSRC", client.Qr);
+        DialogService.Show<QRCodeDialog>("QRCode", parameters, options);
+    }
+    private void EditClient(int id)
+    {
+        ClientSingle s = Global.Services.GetService<ClientSingle>();
+        s.client = result.Content[0];
+
+        navigationManager.NavigateTo($"/client/{_localizer["lbl_BtnEdit"]}");
+    }
+    async Task DeletedClient()
+    {
+        result = await clientService.GetClientById(clnId);
+    }
+    public void DeleteClient(int userId, int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteClient"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeleteClient"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("userId", userId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedClient));
+        parameters.Add("Id", id);
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+    private async Task EditActivity(ClientModel cln)
+    {
+        //Console.WriteLine($"activity before updated {result.Content[0].Inactive}");
+        if (cln.Inactive)
+        {
+            Console.WriteLine($"activity before updated {cln.Inactive}");
+            var parameters = new DialogParameters();
+            parameters.Add("title", _localizer["lbl_EditActivity"].ToString());
+            parameters.Add("deleteConfirmation", _localizer["lbl_EditActivityConfrim"].ToString());
+            parameters.Add("buttonText", _localizer["lbl_Edit"].ToString());
+            parameters.Add("cln", cln);
+            var options = new DialogOptions { FullWidth = true };
+            DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+        }
+        else
+        {
+
+
+            
+            isVisible = true;
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+            Snackbar.Configuration.ShowCloseIcon = false;
+            await Task.Delay(2000);
+            try
+            {
+                cln.Inactive = !cln.Inactive;
+                var re = await clientService.Update(cln);
+                //status = cln.Inactive == true ? @_localizer["lbl_Active"] : @_localizer["lbl_NotActive"];
+                color = cln.Inactive == true ? Color.Primary : Color.Default;
+                Console.WriteLine($"activity after updated {cln.Inactive}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertModified"], Severity.Success);
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                cln.Inactive = !cln.Inactive;
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+    }
+    void ShowInfo()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("cln", result.Content[0]);
+        //var options = new DialogOptions { CloseButton = true };
+        DialogService.Show<ClientInfoDialog>(null, parameters);
+    }
+    async Task ClientLogout(ClientModel cln)
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(2000);
+        try
+        {
+            logOutResulst = await clientService.logOut(cln.Id);
+            ResponseAdd<string> responseAdd = await clientService.getQr<string>(cln.Id);
+            if (responseAdd.Code == 0)
+            {
+                if (responseAdd.Content == "Connected")
+                {
+                    cln.isConnected = true;
+                    //StateHasChanged();
+
+                }
+                else if (responseAdd.Content == "NotFound")
+                {
+
+                    cln.isConnected = false;
+                    //StateHasChanged();
+                }
+                else
+                {
+                    cln.isConnected = false;
+                    cln.Qr = responseAdd.Content;
+
+                }
+            }
+
+            else
+            {
+                cln.isConnected = false;
+
+            }
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_LogoutSuccess"], Severity.Success);
+            StateHasChanged();
+            Console.WriteLine($"logout re {logOutResulst.Content}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_LogoutFail"], Severity.Normal);
+            StateHasChanged();
+        }
+    }
+}

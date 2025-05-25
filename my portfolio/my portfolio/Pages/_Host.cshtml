@@ -1,0 +1,75 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@namespace my_portfolio.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="~/" /> 
+   @*  <base href="https://mohammedbagowabair.github.io/Personal-Portfolio/" /> *@
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/app.css" />
+  @*   <link href="my portfolio.styles.css" rel="stylesheet" /> *@
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <link href="_content/Radzen.Blazor/css/default.css" rel="stylesheet" />
+
+   
+    <link rel="icon" type="image/png" href="favicon.png" />
+   @*  <link rel="stylesheet" href="css/styles.css" /> *@
+
+    <!-- Add Slick Slider CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+    <!-- Add FontAwesome for custom icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body>
+@*     <component type="typeof(App)" render-mode="ServerPrerendered" /> *@
+    <component type="typeof(App)" render-mode="Server" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="js/site.js"></script>
+
+    <script src="_framework/blazor.server.js"></script>
+
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+
+
+    <!-- Add jQuery (required for Slick Slider) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Add Slick Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    
+    <script>
+        window.getWindowWidth = () => {
+            return window.innerWidth;
+        };
+
+
+    </script>
+
+
+</body>
+</html>

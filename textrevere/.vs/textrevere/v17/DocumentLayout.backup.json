@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\textrevere\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6C220F90-93E7-444A-99D2-4177792C9CC7}|textrevere\\textrevere.csproj|c:\\users\\user\\source\\repos\\textrevere\\textrevere\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C220F90-93E7-444A-99D2-4177792C9CC7}|textrevere\\textrevere.csproj|solutionrelative:textrevere\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\textrevere\\textrevere\\Program.cs",
+              "RelativeDocumentMoniker": "textrevere\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\textrevere\\textrevere\\Program.cs",
+              "RelativeToolTip": "textrevere\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-17T11:07:54.424Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

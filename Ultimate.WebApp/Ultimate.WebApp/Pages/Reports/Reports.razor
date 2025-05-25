@@ -1,0 +1,49 @@
+﻿@page "/Reports"
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Reports</PageTitle>
+<MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+<MudTabs Position="Position.Start" ApplyEffectsToContainer=true PanelClass="px-5"
+         Rounded="true" Border="true" Class="py-6" ActivePanelIndex="0">
+        <MudTabPanel Text=@_localizer["lbl_ReportCollections"] Class="fontContent">
+        <Ultimate.WebApp.Pages.Reports.ReportCollections.ViewReportCollection botId="@botId"/>
+    </MudTabPanel>
+        <MudTabPanel Text=@_localizer["lbl_EncodingReports"] Class="fontContent">
+        <Ultimate.WebApp.Pages.Reports.EncodingReports.ViewEncodingReport botId="@botId" />
+    </MudTabPanel>
+</MudTabs>
+</MudHidden>
+<MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+    <Ultimate.WebApp.Pages.Reports.ReportCollections.ViewReportCollection botId="@botId" />
+    </MudHidden>
+@code {
+    [Parameter]
+    public int botId { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+
+        }
+        
+    }
+}

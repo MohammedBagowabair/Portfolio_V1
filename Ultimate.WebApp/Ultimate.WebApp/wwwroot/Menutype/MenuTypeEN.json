@@ -1,0 +1,14 @@
+[
+  {
+    "typeId": "1",
+    "type": "Items",
+    "symbol": "M"
+
+  },
+  {
+    "typeId": "2",
+    "type": "Buttons",
+    "symbol": "B"
+
+  }
+]

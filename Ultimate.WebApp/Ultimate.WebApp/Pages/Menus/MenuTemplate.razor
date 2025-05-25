@@ -1,0 +1,298 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject IMenuService menuService
+@inject ISnackbar Snackbar
+@inject IReportCollectionServices reportCollectionServices
+@inject NavigationManager navigationManager
+<MudGrid Spacing="3" Class="py-0 mx-5">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+    @if(templates!=null){
+    <MudItem xs="10" sm="9" md="9">
+        <MudGrid Spacing="4" >
+                  <MudItem xs="12" md="12" sm="12" lg="12">
+                <MudText Color="Color.Secondary" Typo="Typo.h6" class="pb-6 fontContent">القوائم الجاهزة</MudText>
+            </MudItem>
+            @foreach (var template in templates.Content.Where(t => t.sMenu.Count() > 0)){
+
+
+                
+            <MudItem xs="11" sm="8" md="6">
+                    <MudCard Elevation="1" Class="rounded-lg pb-0" Style="background-color:#424242;">
+                        
+                       <MudCardContent>
+                                <MudText Color="Color.Primary" Typo="Typo.h6"  Class="pb-2" >@template.name</MudText>
+                                <div class="d-flex flex-row justify-space-between ">
+                                    <div class="d-flex flex-row gap-1">
+                                        <MudIcon Icon="@Icons.Material.Filled.FormatListBulleted" Size="Size.Medium" Color="Color.Secondary" />
+                                        <MudText Color="Color.Secondary" Class="fontContent" Style="font-size:16px">@_localizer["lbl_Menus"]</MudText>
+                                       
+                                    </div>
+                                     <div class="d-flex flex-row">
+                                        <MudText Color="Color.Secondary" Class="fontContent" Style="font-size:16px" > @template.sMenu.Count</MudText>
+                                        @if (template.displayTemplateDetails == "none"){
+                                            <MudLink Underline="Underline.None" Class="text-white cursor-pointer" OnClick="@(()=>showDetails(template.Id))">
+                                                <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Medium" Color="Color.Secondary" />
+                                            </MudLink>
+                                        }
+                                        else if (template.displayTemplateDetails == "block")
+                                        {
+                                        <MudLink Underline="Underline.None" Class="text-white cursor-pointer" OnClick="@(()=>hideDetails(template.Id))">
+                                            <MudIcon Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Medium" Color="Color.Secondary" />
+                                        </MudLink>
+                                        }
+                                        
+                                   </div>
+                                  </div>  
+                                  <div style=" display: @template.displayTemplateDetails;">
+                                    <MudTable Items="template.sMenu" Breakpoint="Breakpoint.Xs"  Style="background-color:#424242;" Elevation="0">
+                                        <HeaderContent>
+                                            @*<MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd"></b></MudTh>*@
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                            <MudTd  Class="fontContent" Style="color:#4aa47e;border-bottom:1px solid #424242;font-size:18px;">
+                                                @*<MudIcon Icon="@Icons.Material.Filled.Circle" Style="font-size:8px;" Color="Color.Primary"  Class="pt-n2" />*@
+                                                @context.MenuName</MudTd>
+                                                </RowTemplate>
+                                                <ChildRowContent >
+                                            <MudTr Style="background-color:#424242;">
+                                                <MudTable Items="context.Items" Context="items" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=true Style="background-color:#424242;">
+                                                    <RowTemplate>
+                                                        <MudTd  Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #424242">
+                                                            
+                                                            @items.ActionValue </MudTd>
+                                                </RowTemplate>
+                                                    </MudTable>
+                                                </MudTr>
+                                                    </ChildRowContent>
+                                          </MudTable>
+                                    
+                                      </div>
+                             @*   @foreach(var menu in template.sMenu){
+                                    <div class="d-flex flex-row pb-3 justify-space-between">
+
+                                        <MudText Color="Color.Secondary" Class="fontContent" style="font-size:16px">@menu.MenuName</MudText>
+                                    <div class="d-flex flex-row">
+                                        <MudText Color="Color.Secondary" Class="fontContent" Style="font-size:14px">@menu.Items.Count عناصر</MudText>
+                                        @if(menu.displayTemplateDetails=="none"){
+                                                <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowDown" Size="Size.Small" Color="Color.Secondary" Class="mx-2" OnClick="@(()=>showDetails(menu.MenuName,template.Id))" />
+
+                                        }
+                                            else if(menu.displayTemplateDetails=="block"){
+                                                <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowUp" Size="Size.Small" Color="Color.Secondary" Class="mx-2" OnClick="@(()=>hideDetails(menu.MenuName,template.Id))" />
+
+                                            }
+                                       
+                               </div>
+                                    </div>*@
+                                 @*   @foreach (var item in menu.Items ){
+
+                                  
+                                    <div style=" display: @menu.displayTemplateDetails;">
+                                            <MudText Color="Color.Secondary" Class="fontContent pb-3" Style="font-size:14px">@item.ActionValue</MudText>
+                                    </div>
+                                    }*@
+                                }
+                                
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton DisableElevation="true" Class="fontContent" Variant="Variant.Filled" Color="Color.Primary" OnClick="@(()=>defualtMenu(template.Id))">@_localizer["lbl_Add"]</MudButton>
+                            </MudCardActions>
+                    </MudCard>
+                </MudItem>
+                
+                }
+            </MudGrid>
+       
+    </MudItem>
+    }
+    else{
+
+        @*<div class="pa-15 justify-content-center">
+            
+        <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5" Align="Align.Center">لا يوجد قوائم جاهزة</MudText>
+        
+        </div>*@
+    }
+    </MudGrid>
+
+@code {
+    ResponseModel<TemplateModel> templates;
+    [Parameter]
+    public int botId { set; get; }
+    [Parameter]
+    public EventCallback OnAddOREditMenu { set; get; }
+    public List<TextModel> text_Q { get; set; }
+    private bool isVisible;
+    protected override async Task OnInitializedAsync(){
+        try{
+            templates = await menuService.GetTemplate();
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    public void showDetails( int tempId)
+    {
+
+        //MenuModel tempMenu = templates.Content.First(t => t.Id == tempId).sMenu.First(m => m.MenuName == menuName);
+        TemplateModel temp = templates.Content.First(t => t.Id == tempId);
+        
+        temp.displayTemplateDetails = "block";
+        Console.WriteLine($"menu {temp.name}");
+        
+
+        foreach (var menu in temp.sMenu){
+            foreach (var item in menu.Items){
+                GetActionValue(item);
+            }
+            
+        }
+        //Console.WriteLine($"temp {temp.name}");
+        StateHasChanged();
+    }
+    public void hideDetails( int tempId){
+
+        TemplateModel temp = templates.Content.First(t => t.Id == tempId);
+        temp.displayTemplateDetails = "none";
+
+        StateHasChanged();
+    }
+    public async Task GetActionValue(MenuItemModel item)
+    {
+        Console.WriteLine($"value {item.ActionValue} action {item.Action}");
+        //separate from here to method and send action as a parameter because will use this method in update as well
+        //to perevent duplicated code twice
+        MenuItemModel menuItem = item;
+
+        if (item.Action == "S^T^Q^1000")
+        {
+            item.ActionValue = _localizer["lbl_Send"] + " " + _localizer["lbl_balanceText"];
+        }
+        else
+        {
+            string actionValue = item.Action.Substring(0, 6); 
+            int eventMenuId;
+            int eventTextId;
+            int eventReportG;
+            ResponseModel<MenuModel> MenusForEvent;
+            ResponsGeneric<ReportCollectionModel> reportGForEvent;
+      
+            Console.WriteLine($" sub action {actionValue}");
+            if (actionValue == "N^M^S^")
+            {
+                eventMenuId = Convert.ToInt32(item.Action.Substring(6));
+                MenusForEvent = await menuService.GetMenuById(eventMenuId);
+                item.ActionValue = _localizer["lbl_MoveToMenus"] + " " + MenusForEvent.Content[0].MenuName;
+            }
+            else if (actionValue == "N^M^Q^")
+            {
+                eventMenuId = Convert.ToInt32(item.Action.Substring(6));
+                MenusForEvent = await menuService.GetMenuById(eventMenuId);
+                item.ActionValue = _localizer["lbl_MoveToMenus"] + " " + MenusForEvent.Content[0].MenuName;
+            }
+            else if (actionValue == "S^M^Q^")
+            {
+                item.ActionValue = _localizer["lbl_Send"] +" "+ _localizer["lbl_AccountStatement"];
+            }
+            else if (actionValue == "S^T^S^")
+            {
+                item.ActionValue = _localizer["lbl_SendTextt"] +" "+ item.Action.ToString().Substring(6);
+            }
+            else if (actionValue == "S^T^Q^")
+            {
+                eventTextId= Convert.ToInt32(item.Action.Substring(6));
+    @foreach (var items_txtQ in text_Q)
+                {
+                    if (items_txtQ.id == eventTextId)
+                    {
+                        item.ActionValue = _localizer["lbl_SendQText"] + " " + items_txtQ.name;
+                    }
+                }
+                
+            }
+            else if (actionValue == "S^M^S^")
+            {
+                //Console.WriteLine($"aaa{action}");
+                item.ActionValue = _localizer["lbl_Send"]+" " + _localizer["lbl_Photo"];
+            }
+            else if (actionValue == "N^M^R^")
+            {
+                eventReportG = Convert.ToInt32(item.Action.Substring(6));
+                reportGForEvent = await reportCollectionServices.GetReportCollectionById(eventReportG);
+                item.ActionValue = _localizer["lbl_MoveToReportColl"] + " " + reportGForEvent.Content.name;
+            }
+            else
+            {
+
+            }
+
+        }
+        StateHasChanged();
+
+    }
+    public async Task defualtMenu(int temId)
+    {
+        Console.WriteLine($" defualt menu {botId} - tempid {temId}");
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        try
+        {
+            ResponseModel<MenuModel> res = await menuService.SetDefaultMenu(botId, temId);
+            Console.WriteLine($" defualt menu {botId}");
+            if(res.Code==0)
+            {
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertSaved"], Severity.Success);
+                await OnAddOREditMenu.InvokeAsync();
+
+                StateHasChanged();
+            }
+            else if(res.Code==3003){
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertSavedandUpdate"], Severity.Success);
+                await OnAddOREditMenu.InvokeAsync();
+                StateHasChanged();
+            }
+            else if (res.Code == 3001)
+            {
+
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+                //await OnAddOREditMenu.InvokeAsync();
+                StateHasChanged();
+                navigationManager.NavigateTo("/SeeMoreSubscription");
+
+            }
+            else if (res.Code == 4004)
+            {
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_FSavePackageExpired"], Severity.Success);
+                
+                await OnAddOREditMenu.InvokeAsync();
+
+                StateHasChanged();
+
+
+            }
+            else
+            {
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+            StateHasChanged();
+        }
+
+    }
+    
+}

@@ -1,0 +1,67 @@
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\appsettings.json
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.staticwebassets.runtime.json
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.exe
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.deps.json
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.runtimeconfig.json
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\my portfolio.pdb
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.AssemblyInfo.cs
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.RazorAssemblyInfo.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.RazorAssemblyInfo.cs
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets\msbuild.my portfolio.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets\msbuild.build.my portfolio.props
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.my portfolio.props
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.my portfolio.props
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\scopedcss\bundle\my portfolio.styles.css
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\scopedcss\projectbundle\my portfolio.bundle.scp.css
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\refint\my portfolio.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.pdb
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.genruntimeconfig.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\ref\my portfolio.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.AspNetCore.Components.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.CodeAnalysis.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\Radzen.Blazor.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\bin\Debug\net7.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portfolio.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\my portfolio\my portfolio\obj\Debug\net7.0\my portf.200CC1A6.Up2Date

@@ -1,0 +1,394 @@
+﻿@page "/ApplicationPage/{botId:int}"
+@using System.ComponentModel.DataAnnotations;
+@inject IApplicationService ApplicationService
+@inject IDialogService DialogService
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+<style>
+    .mud-picker-calendar-container {
+        display: flex;
+        width: 310px;
+        flex-direction: column;
+        background-color: #292929;
+        color: white;
+       
+    }
+    .mud-picker-calendar-header-switch > .mud-icon-button {
+        z-index: 1;
+        padding: 8px;
+        margin: 6px;
+        background-color: #d0d0d0;
+    }
+    .mud-picker-calendar-header-day .mud-day-label {
+        color: #ffffff96;
+        width: 36px;
+        margin: 0 2px;
+        text-align: center;
+    }
+    .mud-picker-calendar .mud-day {
+        color: #bebebe;
+        width: 36px;
+        height: 36px;
+        margin: 0 2px;
+        padding: 0;
+        font-size: .75rem;
+        font-weight: 500;
+    }
+    .just{
+        display: flex;
+        height: 80vh;
+        width: 100%;
+        align-items: center;
+    }
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+</MudOverlay>
+<div style="">
+@if (response != null)
+{
+    <MudGrid Class="pa-2" >
+        @if (isShow)
+        {
+            <MudItem sm="11" xs="11" md="11">
+                <MudButton Variant="Variant.Filled" Class="fontContent" Color="Color.Primary" OnClick="show">@_localizer["lbl_AddApplication"]</MudButton>
+            </MudItem>
+        }
+        @if (isShowEditForm)
+        {
+            <MudItem sm="11" xs="11" md="11">
+                <div class="just" >
+                    <EditForm Model="applicationModel" OnValidSubmit="HandelSubment">
+                        <DataAnnotationsValidator />
+                        <MudGrid Class="pa-5">
+                            <MudItem sm="8" xs="11" md="7">
+                                <MudText Color="Color.Secondary" Class="fontContent">@lbl_name</MudText>
+                            </MudItem>
+                            <MudItem sm="8" xs="11" md="6">
+                                <MudText Color="Color.Secondary" Class="fontContent" Typo="Typo.h3">@_localizer["lbl_nameApplication"]</MudText>
+                            </MudItem>
+                            <MudItem sm="8" xs="11" md="7">
+                                @if (applicationModel.name == null || applicationModel.name == string.Empty)
+                                {
+                                    <MudTextField Class="fontContent" Immediate Style="font-size:30px;color:#c8cacd" @bind-Value="applicationModel.name" Placeholder="@_localizer["lbl_EnterApplicationName"]" For="@(() => applicationModel.name)" InputType="InputType.Text" Margin="Margin.Dense" T="string" Variant="Variant.Text" />
+                                }
+                                else
+                                {
+                                    <MudTextField Class="fontContent" Style="color:#c8cacd" AutoFocus Immediate @bind-Value="applicationModel.name" Label="@_localizer["lbl_ApplicationName"]" For="@(() => applicationModel.name)" InputType="InputType.Text" Margin="Margin.Dense" T="string" Variant="Variant.Outlined" />
+                                }
+                            </MudItem>
+                            <MudItem sm="8" xs="11" md="7">
+                                    <MudDatePicker Class="fontContent" AdornmentColor="Color.Secondary" Color="Color.Secondary" Style="color:#c8cacd;" PickerVariant="PickerVariant.Dialog" @bind-Date="applicationModel.timeRefreshToken" For="@(() => applicationModel.timeRefreshToken)" DateFormat="yyyy-MM-ddThh:mm:ss" DisableToolbar="true" />
+                                @*<MudTextField T="DateTime?" InputType="InputType.DateTimeLocal" Format="('YYYY-MM-DDTHH:mm:ss')" @bind-value="(applicationModel.timeRefreshToken)" />*@
+                            </MudItem>
+                            <MudItem sm="8" xs="11" md="7">
+
+                                <MudButton Class="fontContent" Variant="Variant.Filled" ButtonType="ButtonType.Submit" Color="Color.Primary">@name_btn</MudButton>
+                                <MudButton Class="fontContent" Variant="Variant.Filled" Color="Color.Secondary" OnClick="Close">@_localizer["lbl_Cancelbtn"]</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    </EditForm>
+                </div>
+            </MudItem>
+        }
+        @if (isShow)
+        {
+            <MudItem sm="11" xs="11" md="11">
+                <MudGrid Justify="Justify.FlexStart">
+                    @foreach(var app in response.Content){
+                        <MudItem sm="4" xs="11" md="3">
+                            <MudCard Elevation="25" Class="rounded-lg" Style="background-color:#343535;">
+                                <MudCardContent>
+                                    <div class="d-flex justify-center">
+                                            <MudImage Src="img/app-.png" Height="100" Width="100" />
+                                    </div>
+                                    <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.h6">@app.name</MudText>
+                                    <MudText Color="Color.Secondary" Align="Align.Center" class="pt-3">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="()=>showApp(app)" Color="Color.Primary"/>
+                                            @if(app.inactive==true){
+                                            <MudIconButton OnClick="()=>active(app)" Icon="@Icons.Material.Filled.PowerSettingsNew" Color="Color.Primary" />
+                                            }
+                                            else{
+                                            <MudIconButton OnClick="()=>active(app)" Icon="@Icons.Material.Filled.PowerSettingsNew" Color="Color.Secondary" />
+                                            }
+                                    </MudText>
+                                    <MudText Color="Color.Secondary" Align="Align.Center" class="pt-5">
+                                        <MudButton Class="fontContent" Color="Color.Primary" Variant="Variant.Filled" OnClick="()=>Refresh(app.id)">@_localizer["lbl_RefreshSecretKey"]</MudButton>
+                                        @*<MudButton Variant="Variant.Filled" Color="Color.Primary">@_localizer["lbl_Show"]</MudButton>*@
+                                    </MudText>
+                                </MudCardContent>
+                                    
+                                
+                            </MudCard>
+                        </MudItem>
+                    }
+                    
+                </MudGrid>
+                @*<MudTable Items="response.Content" Hover="true" Breakpoint="Breakpoint.Xs">
+                    <HeaderContent>
+                        <MudTh><b>@_localizer["lbl_Name"]</b></MudTh>
+                        <MudTh><b>@_localizer["lbl_appId"]</b></MudTh>
+                        <MudTh><b>@_localizer["lbl_timeRefreshToken"]</b></MudTh>
+                        <MudTh><b>@_localizer["lbl_Inactive"]</b></MudTh>
+                        <MudTh><b>@_localizer["lbl_secretKey"]</b></MudTh>
+
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="@_localizer["lbl_Name"]">@context.name</MudTd>
+                        <MudTd DataLabel="@_localizer["lbl_appId"]">@context.appId</MudTd>
+                        <MudTd DataLabel="@_localizer["lbl_timeRefreshToken"]">@context.timeRefreshToken</MudTd>
+                        <MudTd DataLabel="@_localizer["lbl_Inactive"]">@context.inactive</MudTd>
+                        <MudTd DataLabel="@_localizer["lbl_secretKey"]">@context.secretKey</MudTd>
+                        
+                        <MudTd>
+                            <MudMenu Icon="@Icons.Material.Filled.MoreVert" DisableElevation="true">
+                                <MudMenuItem OnTouch="()=>EditApp(context)" OnClick="()=>EditApp(context)">@_localizer["lbl_BtnEdit"]</MudMenuItem>
+                                <MudMenuItem OnTouch="()=>DeleteApp(context.id)" OnClick="()=>DeleteApp(context.id)">@_localizer["lbl_Deletebtn"]</MudMenuItem>
+                            </MudMenu>
+                        </MudTd>
+
+                    </RowTemplate>
+                </MudTable>*@
+            </MudItem>
+        }
+    </MudGrid>
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Class="d-flex mx-auto" Indeterminate="true" />
+}
+</div>
+
+@code {
+    [Parameter]
+    public int clientId { get; set; }
+    IMask mask1 = new DateMask("yyyy-MM-ddT00:00:00");
+    string NameProject;
+    public string name_btn { get; set; }
+    public string lbl_name { get; set; }
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private bool isVisible;
+    private bool isShow;
+    private bool isShowEditForm;
+    public string msgalert { get; set; }
+    ResponseModel<ApplicationModel> response;
+    ApplicationModel applicationModel = new ApplicationModel();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        isShow = true;
+        isShowEditForm = false;
+        name_btn = _localizer["lbl_BtnSave"];
+        lbl_name = _localizer["lbl_CreateApplication"];
+        try{
+        response = await ApplicationService.GetById(clientId);
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    public async void HandelSubment()
+    {
+        isVisible = true;
+
+        //applicationModel.timeRefreshToken = DateTime.Today;
+        applicationModel.clientId = clientId;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(500);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            Console.WriteLine("hbjmhv: " + DateTime.Today);
+            try
+            {
+                await ApplicationService.Create(applicationModel);
+                isVisible = false;
+                response = await ApplicationService.GetById(clientId);
+                msgalert = _localizer["msg_AlertSaved"];
+                Snackbar.Add(msgalert, Severity.Success);
+                isShow = true;
+                isShowEditForm = false;
+                applicationModel = new ApplicationModel();
+                StateHasChanged();
+
+            }
+            catch (Exception x)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFSaved"];
+                Snackbar.Add(msgalert, Severity.Error);
+                //auto = await AutomessageService.GetById(botId);
+                //autoMessageModel = new AutoMessageModel();
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+        else
+        {
+            try
+            {
+                await ApplicationService.Update(applicationModel.id,applicationModel);
+                name_btn = _localizer["lbl_BtnSave"];
+                lbl_name = _localizer["lbl_CreateApplication"];
+                isVisible = false;
+                response = await ApplicationService.GetById(clientId);
+                msgalert = _localizer["msg_AlertModified"];
+                Snackbar.Add(msgalert, Severity.Success);
+                isShow = true;
+                isShowEditForm = false;
+                applicationModel = new ApplicationModel();
+                StateHasChanged();
+
+            }
+            catch (Exception x)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFModified"];
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+    }
+    public void show()
+    {
+        isShowEditForm = true;
+        isShow = false;
+        StateHasChanged();
+    }
+    public async void EditApp(ApplicationModel applicationModels)
+    {
+        applicationModel = applicationModels;
+        isShowEditForm = true;
+        isShow = false;
+        lbl_name = _localizer["lbl_EditApplication"];
+        name_btn = _localizer["lbl_BtnEdit"];
+        StateHasChanged();
+
+    }
+    public async void showApp(ApplicationModel app){
+        var options = new DialogOptions()
+            {
+                DisableBackdropClick = true,
+                Position = DialogPosition.Center,
+                CloseButton = false,
+                FullWidth = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("title", app.name);
+        parameters.Add("id", app.id);
+        parameters.Add("clientId", app.clientId);
+        parameters.Add("Secret_Key", app.secretKey);
+        parameters.Add("AppCode", app.appId);
+        parameters.Add("Active", app.inactive);
+        parameters.Add("Date", app.timeRefreshToken);
+        parameters.Add("name_btn", _localizer["lbl_Ok"].ToString());
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedApp));
+        var dialog = await DialogService.ShowAsync<ApplicationDialog>(null, parameters,options );
+        var res =await dialog.Result;
+        var x = res.Data.ToString();
+        if(x=="edit"){
+            EditApp(app);
+        }
+        if (x=="delete")
+        {
+            DeleteApp(app.id);
+        }
+    }
+    async void Close(){
+        isShowEditForm = false;
+        isShow = true;
+        applicationModel = new ApplicationModel();
+        StateHasChanged();
+    }
+    async Task DeletedApp()
+    {
+        try{
+        response = await ApplicationService.GetById(clientId);
+    }
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+    }
+}
+    public async void DeleteApp(int Id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteApplication"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeleteApp"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", Id);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedApp));
+
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+
+    }
+    public async void active(ApplicationModel apps){
+        
+        isVisible = true;
+        applicationModel.clientId = clientId;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(500);
+        try{
+            if (apps.inactive == true)
+            {
+                apps.inactive = false;
+            }
+            else
+            {
+                apps.inactive = true;
+            }
+            await ApplicationService.Update(apps.id, apps);
+            isVisible = false;
+            response = await ApplicationService.GetById(clientId);
+            msgalert = _localizer["msg_AlertModified"];
+            Snackbar.Add(msgalert, Severity.Success);
+            applicationModel = new ApplicationModel();
+            StateHasChanged();
+        }
+        catch (Exception x)
+        {
+            isVisible = false;
+            msgalert = _localizer["msg_AlertFModified"];
+            Snackbar.Add(msgalert, Severity.Error);
+            StateHasChanged();
+            Console.WriteLine($"{x.Message}, {x.StackTrace}");
+        }
+
+    }
+    async void Refresh(int ids)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_UpdateSecretKey"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmUpdateSecretkey"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Ok"].ToString());
+        parameters.Add("Id", ids);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedApp));
+
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.AppConfirmationDialog>(null, parameters, options);
+    }
+}

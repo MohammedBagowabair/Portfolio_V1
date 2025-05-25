@@ -1,0 +1,966 @@
+﻿@inject IPeriodService PeriodService
+@inject ILocalStorageService _localStorageService
+@inject IStringLocalizer<Resource> _localizer
+@inject CustomHttp Http
+@inject IPackagesService packagesService
+@inject IListPackagesByUserId _ListPackagesByUserId
+@inject IDialogService DialogService
+@using System.Security.Claims
+@using Ultimate.WebApp.Listpackages
+@using Ultimate.WebApp.ListPackagesByUserId
+@inject IListPackagesService ListPackagesService
+<MudOverlay Visible="isVisible" DarkBackground=true ZIndex="9999">
+    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+</MudOverlay>
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .plan {
+        border-radius: 16px;
+        box-shadow: 9px 8px 200px -13px #4aa47e;
+        padding: 10px;
+        background-color: #434545;
+        color: #dcddde;
+        max-width: 290px;
+        margin: 8px;
+        width:100%;
+    }
+
+        .plan strong {
+            font-weight: 600;
+            color: #e8e8e8;
+        }
+
+        .plan .inner {
+            align-items: center;
+            padding: 20px;
+            padding-top: 40px;
+            background-color: #3a3a3a;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .plan .pricing {
+            position: absolute;
+            top: 0;
+    @right_left background-color: #42bc89;
+    @border_radius display: flex;
+            align-items: center;
+            padding: 0.625em 0.75em;
+            font-size: 1.20rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+            .plan .pricing small {
+                color: #707a91;
+                font-size: 0.70em;
+    @margin_left
+            }
+
+        .plan .title {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #e7e8ea;
+        }
+
+            .plan .title + * {
+                margin-top: 0.75rem;
+            }
+
+        .plan .info + * {
+            margin-top: 1rem;
+        }
+
+        .plan .features {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .plan .features li {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+                .plan .features li + * {
+                    margin-top: 0.75rem;
+                }
+
+            .plan .features .icon {
+                background-color: #4aa47e;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+            }
+
+                .plan .features .icon svg {
+                    width: 14px;
+                    height: 14px;
+                }
+
+            .plan .features + * {
+                margin-top: 1.25rem;
+            }
+
+        .plan .action {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+        }
+
+    .text-dark {
+        --bs-text-opacity: 1;
+        color: whitesmoke;
+        text-decoration-line: none;
+    }
+
+    .plan .button {
+        background-color: #4aa47e;
+        border-radius: 6px;
+        color: #f9f3f3;
+        font-weight: 500;
+        font-size: 1.125rem;
+        text-align: center;
+        border: 0;
+        outline: 0;
+        width: 100%;
+        padding: 0.625em 0.75em;
+        text-decoration: none;
+    }
+
+        .plan .button:hover, .plan .button:focus {
+            background-color: #9e9ea0;
+        }
+
+</style>
+<section>
+    <MudGrid Justify="Justify.FlexStart" Style="padding-bottom:40px;background-color:#3a3b3b">
+        <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+
+        <MudItem xs="12" sm="12" md="12">
+            <MudText Align="Align.Center" Style=" text-align:center;font-size:50px;margin-bottom:50px; color:white" Class="fontTitle pt-3"><span class="fontTitle" style="color:#4aa47e">@_localizer["lbl_Our"]</span> @_localizer["lbl_OurPackages"]</MudText>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12">
+            <MudButton Href="/SeeMoreSubscription" Class="mx-5">
+                <MudText Align="Align.Start" Class="fontContent" Color="Color.Primary"><b>@_localizer["lbl_Seemore"]</b></MudText>
+            </MudButton>
+        </MudItem>
+        @if (result != null)
+        {
+            @foreach (PackagesModel pck1 in result.Content)
+            {
+                counterOfFree = result.Content.Count(e => e.status == "free");
+                if (pck1.status == "free")
+                {
+                    <MudItem xs="11" sm="3" md="3" Class="d-flex align-self-stretch">
+                        <div class="plan">
+                            <div class="inner" style="height:100%">
+                                <AuthorizeView>
+                                    <Authorized>
+                                        <span class="pricing">
+                                            <span class="fontContent">
+                                                @{
+                                                    double totalPrice;
+                                                    totalPrice = pck1.packageServices.Sum(x => x.price * x.qty);
+                                                    double PriceAfterDiscount;
+                                                    PriceAfterDiscount = totalPrice - totalPrice * (pck1.disCount / 100);
+
+                                                }
+                                                $@PriceAfterDiscount
+                                                @if (periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().value == 1)
+                                                {
+                                                    int? x = periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().value;
+                                                    @if (periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().type == "Monthly")
+                                                    {
+                                                        <small class="fontContent">/@_localizer["lbl_Month"] @x</small>
+                                                    }
+                                                    else if (periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().type == "Yearly")
+                                                    {
+                                                        <small class="fontContent">/@_localizer["lbl_Year"] @x</small>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    int? x = periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().value;
+                                                    @if (periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().type == "Monthly")
+                                                    {
+                                                        <small class="fontContent">/@_localizer["lbl_Months"] @x</small>
+                                                    }
+                                                    else if (periodlist.Where(x => x.id == pck1.periodId).FirstOrDefault().type == "Yearly")
+                                                    {
+                                                        <small class="fontContent">/@_localizer["lbl_Years"] @x</small>
+                                                    }
+                                                }
+                                            </span>
+                                        </span>
+                                    </Authorized>
+                                </AuthorizeView>
+
+                                <MudText Class="title fontContent mt-2">
+                                    @if (selectedCulture.Contains("ar"))
+                                    {
+                                        if (pck1.name == null)
+                                        {
+                                            <div class="pt-7"></div>
+                                        }
+                                        else
+                                        {
+                                            <span>@pck1.name</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (pck1.foreignName == null)
+                                        {
+                                            <div class="pt-7"></div>
+                                        }
+                                        else
+                                        {
+                                            <span>@pck1.foreignName</span>
+                                        }
+                                    }
+                                </MudText>
+                                @if (selectedCulture.Contains("ar"))
+                                {
+                                    if (pck1.description == null)
+                                    {
+                                        <div class="pt-10 mt-5"></div>
+                                    }
+                                    else if (pck1.description.Contains('\n'))
+                                    {
+                                        List<string> c = pck1.description.Split('\n').ToList();
+                                        if (c.Count <= 2)
+                                        {
+                                            foreach (var i in c)
+                                            {
+                                                <MudText Class="fontContent">@i</MudText>
+                                            }
+                                        }
+                                        else if (c.Count > 2)
+                                        {
+                                            <MudText Class="fontContent">@(c[0])</MudText>
+                                            <MudText Class="fontContent">
+                                                @(c[1])
+                                                @if (pck1.isShowDetails)
+                                                {
+                                                    List<string> p = pck1.description.Split('\n').ToList();
+                                                    p.RemoveAt(0);
+                                                    p.RemoveAt(0);
+                                                    <span>
+                                                        @foreach (var x in p)
+                                                        {
+                                                            <MudText Class="fontContent">@x</MudText>
+                                                        }
+                                                    </span>
+                                                }
+                                                <MudLink OnClick="()=>ReadMore(pck1.id)">
+                                                    @if (pck1.lessMore == "m")
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_more"]
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_less"]
+                                                        </span>
+                                                    }
+                                                </MudLink>
+                                            </MudText>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        string txt;
+                                        if (pck1.description.Length < 40)
+                                        {
+                                            txt = pck1.description;
+                                        }
+                                        else
+                                        {
+                                            txt = pck1.description.Substring(0, 40);
+
+                                        }
+
+
+                                        <span class="mt-5">@txt</span>
+                                        @if (pck1.isShowDetails)
+                                        {
+                                            <span>
+                                                @pck1.description.Substring(40)
+                                            </span>
+                                        }
+                                        @if (pck1.description.Length > 40)
+                                        {
+                                            <MudLink OnClick="()=>ReadMore(pck1.id)">
+                                                @if (pck1.lessMore == "m")
+                                                {
+                                                    <span class="fontContent">
+                                                        @_localizer["lbl_more"]
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="fontContent">
+                                                        @_localizer["lbl_less"]
+                                                    </span>
+                                                }
+                                            </MudLink>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="pt-10"></div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (pck1.foreignDescription == null)
+                                    {
+                                        <div class="pt-10 mt-5"></div>
+                                    }
+                                    else if (pck1.foreignDescription.Contains('\n'))
+                                    {
+                                        List<string> c = pck1.foreignDescription.Split('\n').ToList();
+                                        if (c.Count <= 2)
+                                        {
+                                            foreach (var i in c)
+                                            {
+                                                <MudText Class="fontContent">@i</MudText>
+                                            }
+                                        }
+                                        else if (c.Count > 2)
+                                        {
+                                            <MudText Class="fontContent">@(c[0])</MudText>
+                                            <MudText Class="fontContent">
+                                                @(c[1])
+                                                @if (pck1.isShowDetails)
+                                                {
+                                                    List<string> p = pck1.foreignDescription.Split('\n').ToList();
+                                                    p.RemoveAt(0);
+                                                    p.RemoveAt(0);
+                                                    <span>
+                                                        @foreach (var x in p)
+                                                        {
+                                                            <MudText Class="fontContent">@x</MudText>
+                                                        }
+                                                    </span>
+                                                }
+                                                <MudLink OnClick="()=>ReadMore(pck1.id)">
+                                                    @if (pck1.lessMore == "m")
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_more"]
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_less"]
+                                                        </span>
+                                                    }
+                                                </MudLink>
+                                            </MudText>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        string txt;
+                                        if (pck1.foreignDescription.Length < 40)
+                                        {
+                                            txt = pck1.foreignDescription;
+                                        }
+                                        else
+                                        {
+                                            txt = pck1.foreignDescription.Substring(0, 40);
+
+                                        }
+
+
+                                        <span class="mt-5">@txt</span>
+                                        @if (pck1.isShowDetails)
+                                        {
+                                            <span>
+                                                @pck1.foreignDescription.Substring(40)
+                                            </span>
+                                        }
+                                        @if (pck1.foreignDescription.Length > 40)
+                                        {
+                                            <MudLink OnClick="()=>ReadMore(pck1.id)">
+                                                @if (pck1.lessMore == "m")
+                                                {
+                                                    <span class="fontContent">
+                                                        @_localizer["lbl_more"]
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="fontContent">
+                                                        @_localizer["lbl_less"]
+                                                    </span>
+                                                }
+                                            </MudLink>
+
+                                        }
+                                        else
+                                        {
+                                            <div class="pt-10"></div>
+                                        }
+                                    }
+                                }
+
+                                <div class="features">
+                                    @{
+                                        serviceAddPackge.Clear();
+                                    }
+                                    @foreach (packageServicesModel pckService in pck1.packageServices)
+                                    {
+
+                                        if (services.Contains(pckService.serviceName))
+                                        {
+                                            serviceAddPackge.Add(pckService.serviceName);
+                                            <div class="d-flex flex-row">
+                                                <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Primary" Class="mx-3" />
+                                                <MudText Class="fontContent"><strong class="fontContent">@pckService.qty</strong> @servicesModel.Where(x=>x.serviceApi==pckService.serviceName).FirstOrDefault().serviceName</MudText>
+                                            </div>
+
+                                        }
+                                    }
+                                    @foreach (string s in services)
+                                    {
+                                        if (serviceAddPackge.Contains(s))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <div class="d-flex flex-row">
+                                                <MudIcon Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Secondary" Class="mx-3" />
+                                                @{
+                                                    string serviceInLang = servicesModel.Where(x => x.serviceApi == s).FirstOrDefault().serviceName;
+                                                }
+                                                <MudText Class="fontContent"><strong class="fontContent">0</strong> @serviceInLang</MudText>
+
+
+                                            </div>
+                                        }
+                                    }
+                                    @*<li>
+
+                        <span><strong>20</strong> team members</span>
+                        </li>*@
+
+
+                                </div>
+                                <div class="action">
+                                    <AuthorizeView Roles="User">
+                                        <Authorized>
+                                            <MudButton Class="button px-3 mud-card fontContent" OnClick="()=>HandelSubment(pck1)">@_localizer["lbl_Select"]</MudButton>
+                                        </Authorized>
+                                        <NotAuthorized>
+                                            <MudButton Class="button px-3 mud-card fontContent" Href="/register">@_localizer["lbl_Select"]</MudButton>
+                                        </NotAuthorized>
+                                    </AuthorizeView>
+
+                                </div>
+                            </div>
+                        </div>
+                    </MudItem>
+                }
+            }
+            int counter = counterOfFree;
+            @foreach (PackagesModel pck in result.Content)
+            {
+
+                @*Console.WriteLine(result.Content[i].name);*@
+                if (pck.status != "free")
+                {
+
+                    if (counter < 4)
+                    {
+                        Console.WriteLine("xxxxxxxxxxxxxxx: " + counter);
+                        Console.WriteLine("xxxxxxxxxxxxxxx: " + pck.name);
+                        <MudItem xs="11" sm="3" md="3" Class="d-flex align-self-stretch">
+                            <div class="plan">
+                                <div class="inner" style="height:100%">
+                                    <AuthorizeView>
+                                        <Authorized>
+                                            <span class="pricing">
+                                                <span class="fontContent">
+                                                    @{
+                                                        double totalPrice;
+                                                        totalPrice = pck.packageServices.Sum(x => x.price * x.qty);
+                                                        double PriceAfterDiscount;
+                                                        PriceAfterDiscount = totalPrice - totalPrice * (pck.disCount / 100);
+
+                                                    }
+                                                    $@PriceAfterDiscount
+                                                    @if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().value == 1)
+                                                    {
+                                                        int? x = periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().value;
+                                                        @if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Monthly")
+                                                        {
+                                                            <small class="fontContent">/@_localizer["lbl_Month"]</small>
+                                                        }
+                                                        else if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Yearly")
+                                                        {
+                                                            <small class="fontContent">/@_localizer["lbl_Year"]</small>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        int? x = periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().value;
+                                                        @if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Monthly")
+                                                        {
+                                                            <small class="fontContent">/@_localizer["lbl_Months"] @x</small>
+                                                        }
+                                                        else if (periodlist.Where(x => x.id == pck.periodId).FirstOrDefault().type == "Yearly")
+                                                        {
+                                                            <small class="fontContent">/@_localizer["lbl_Years"] @x</small>
+                                                        }
+                                                    }
+                                                </span>
+                                            </span>
+                                        </Authorized>
+                                    </AuthorizeView>
+
+                                    <MudText Class="title fontContent mt-2">
+                                        @if (selectedCulture.Contains("ar"))
+                                    {
+                                        if (pck.name == null)
+                                        {
+                                            <div class="pt-7"></div>
+                                        }
+                                        else
+                                        {
+                                            <span>@pck.name</span>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (pck.foreignName == null)
+                                        {
+                                            <div class="pt-7"></div>
+                                        }
+                                        else
+                                        {
+                                            <span>@pck.foreignName</span>
+                                        }
+                                    }
+                                    </MudText>
+
+                                    @if (selectedCulture.Contains("ar"))
+                                    {
+                                        if (pck.description == null)
+                                        {
+                                            <div class="pt-10 mt-5"></div>
+                                        }
+                                        else if (pck.description.Contains('\n'))
+                                        {
+                                            List<string> c = pck.description.Split('\n').ToList();
+                                            if (c.Count <= 2)
+                                            {
+                                                foreach (var i in c)
+                                                {
+                                                    <MudText Class="fontContent">@i</MudText>
+                                                }
+                                            }
+                                            else if (c.Count > 2)
+                                            {
+                                                <MudText Class="fontContent">@(c[0])</MudText>
+                                                <MudText Class="fontContent">
+                                                    @(c[1])
+                                                    @if (pck.isShowDetails)
+                                                    {
+                                                        List<string> p = pck.description.Split('\n').ToList();
+                                                        p.RemoveAt(0);
+                                                        p.RemoveAt(0);
+                                                        <span>
+                                                            @foreach (var x in p)
+                                                            {
+                                                                <MudText Class="fontContent">@x</MudText>
+                                                            }
+                                                        </span>
+                                                    }
+                                                    <MudLink OnClick="()=>ReadMore(pck.id)">
+                                                        @if (pck.lessMore == "m")
+                                                        {
+                                                            <span class="fontContent">
+                                                                @_localizer["lbl_more"]
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="fontContent">
+                                                                @_localizer["lbl_less"]
+                                                            </span>
+                                                        }
+                                                    </MudLink>
+                                                </MudText>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string txt;
+                                            if (pck.description.Length < 40)
+                                            {
+                                                txt = pck.description;
+                                            }
+                                            else
+                                            {
+                                                txt = pck.description.Substring(0, 40);
+
+                                            }
+
+
+                                            <span class="mt-5">@txt</span>
+                                            @if (pck.isShowDetails)
+                                            {
+                                                <span>
+                                                    @pck.description.Substring(40)
+                                                </span>
+                                            }
+                                            @if (pck.description.Length > 40)
+                                            {
+                                                <MudLink OnClick="()=>ReadMore(pck.id)">
+                                                    @if (pck.lessMore == "m")
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_more"]
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_less"]
+                                                        </span>
+                                                    }
+                                                </MudLink>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="pt-10"></div>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (pck.foreignDescription == null)
+                                        {
+                                            <div class="pt-10 mt-5"></div>
+                                        }
+                                        else if (pck.foreignDescription.Contains('\n'))
+                                        {
+                                            List<string> c = pck.foreignDescription.Split('\n').ToList();
+                                            if (c.Count <= 2)
+                                            {
+                                                foreach (var i in c)
+                                                {
+                                                    <MudText Class="fontContent">@i</MudText>
+                                                }
+                                            }
+                                            else if (c.Count > 2)
+                                            {
+                                                <MudText Class="fontContent">@(c[0])</MudText>
+                                                <MudText Class="fontContent">
+                                                    @(c[1])
+                                                    @if (pck.isShowDetails)
+                                                    {
+                                                        List<string> p = pck.foreignDescription.Split('\n').ToList();
+                                                        p.RemoveAt(0);
+                                                        p.RemoveAt(0);
+                                                        <span>
+                                                            @foreach (var x in p)
+                                                            {
+                                                                <MudText Class="fontContent">@x</MudText>
+                                                            }
+                                                        </span>
+                                                    }
+                                                    <MudLink OnClick="()=>ReadMore(pck.id)">
+                                                        @if (pck.lessMore == "m")
+                                                        {
+                                                            <span class="fontContent">
+                                                                @_localizer["lbl_more"]
+                                                            </span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="fontContent">
+                                                                @_localizer["lbl_less"]
+                                                            </span>
+                                                        }
+                                                    </MudLink>
+                                                </MudText>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string txt;
+                                            if (pck.foreignDescription.Length < 40)
+                                            {
+                                                txt = pck.foreignDescription;
+                                            }
+                                            else
+                                            {
+                                                txt = pck.foreignDescription.Substring(0, 40);
+
+                                            }
+
+
+                                            <span class="mt-5">@txt</span>
+                                            @if (pck.isShowDetails)
+                                            {
+                                                <span>
+                                                    @pck.foreignDescription.Substring(40)
+                                                </span>
+                                            }
+                                            @if (pck.foreignDescription.Length > 40)
+                                            {
+                                                <MudLink OnClick="()=>ReadMore(pck.id)">
+                                                    @if (pck.lessMore == "m")
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_more"]
+                                                        </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="fontContent">
+                                                            @_localizer["lbl_less"]
+                                                        </span>
+                                                    }
+                                                </MudLink>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="pt-10"></div>
+                                            }
+                                        }
+                                    }
+
+
+                                    <div class="features">
+                                        @{
+                                            serviceAddPackge.Clear();
+                                        }
+                                        @foreach (packageServicesModel pckService in pck.packageServices)
+                                        {
+
+                                            if (services.Contains(pckService.serviceName))
+                                            {
+                                                serviceAddPackge.Add(pckService.serviceName);
+                                                <div class="d-flex flex-row">
+                                                    <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Primary" Class="mx-3" />
+                                                    <MudText Class="fontContent"><strong class="fontContent">@pckService.qty</strong> @servicesModel.Where(x=>x.serviceApi==pckService.serviceName).FirstOrDefault().serviceName</MudText>
+                                                </div>
+
+                                            }
+                                        }
+                                        @foreach (string s in services)
+                                        {
+                                            if (serviceAddPackge.Contains(s))
+                                            {
+
+                                            }
+                                            else
+                                            {
+                                                <div class="d-flex flex-row">
+                                                    <MudIcon Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Secondary" Class="mx-3" />
+                                                    @{
+                                                        string serviceInLang = servicesModel.Where(x => x.serviceApi == s).FirstOrDefault().serviceName;
+                                                    }
+                                                    <MudText Class="fontContent"><strong class="fontContent">0</strong> @serviceInLang</MudText>
+
+
+                                                </div>
+                                            }
+                                        }
+                                        @*<li>
+
+                        <span><strong>20</strong> team members</span>
+                        </li>*@
+
+
+                                    </div>
+                                    <div class="action">
+                                        <AuthorizeView Roles="User">
+                                            <Authorized>
+                                                <MudButton Class="button fontContent px-3 mud-card" OnClick="()=>HandelSubment(pck)">@_localizer["lbl_Select"]</MudButton>
+                                            </Authorized>
+                                            <NotAuthorized>
+                                                <MudButton Class="button fontContent px-3 mud-card" Href="/register">@_localizer["lbl_Select"]</MudButton>
+                                            </NotAuthorized>
+                                        </AuthorizeView>
+                                    </div>
+                                </div>
+                            </div>
+                        </MudItem>
+                        counter++;
+                    }
+                }
+            }
+            @*@foreach (PackagesModel pck in result.Content)
+        {
+        if(pck.status != "free"){
+        if (
+        result.Content.IndexOf(pck) == 0 ||
+        result.Content.IndexOf(pck) == 1 ||
+        result.Content.IndexOf(pck) == 2
+        )
+        {
+
+        }
+        }
+        }*@
+        }
+        else
+        {
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+        }
+    </MudGrid>
+</section>
+
+
+@code {
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+    bool isVisible;
+    ResponseModel<PackagesModel> result;
+    PackagesModel package = new PackagesModel();
+    packageServicesModel packageServicesModel = new packageServicesModel();
+    PackageRelation packageRelation = new PackageRelation();
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string border;
+    string border_radius;
+    string margin_left;
+    int UserId;
+    int counterOfFree;
+    string right_left;
+    string MoreLess;
+    ResponsGeneric<PackagesModel> packageById;
+    ResponseModel<PeriodModel> periods;
+    PeriodModel period = new PeriodModel();
+    List<PeriodModel> periodlist = new List<PeriodModel>();
+    List<PackageRelation> packages = new List<PackageRelation>();
+    List<string> services = new List<string>();
+    List<string> serviceAddPackge = new List<string>();
+    private ServicesModel[]? servicesModel;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            periods = await PeriodService.GetAll();
+            periodlist = periods.Content;
+            MoreLess = _localizer["lbl_more"];
+            if (selectedCulture.Contains("en"))
+            {
+                servicesModel = await Http.HttpClient.GetFromJsonAsync<ServicesModel[]>("Service/ServicesEN.json");
+                border_radius = "border-top-left-radius:50px; border-bottom-left-radius:50px;";
+                right_left = "right:0;";
+                margin_left = "margin-left:0.25em;";
+                border = "border-top-right-radius:50px; border-bottom-right-radius:50px;";
+            }
+            else
+            {
+                if (selectedCulture.Contains("ar"))
+                {
+                    servicesModel = await Http.HttpClient.GetFromJsonAsync<ServicesModel[]>("Service/Services.json");
+                    border_radius = "border-top-right-radius:50px; border-bottom-right-radius:50px;";
+                    right_left = "left:0;";
+                    margin_left = "margin-right:0.25em;";
+                    border = "border-top-left-radius:50px; border-bottom-left-radius:50px;";
+
+                }
+            }
+            foreach (var x in servicesModel)
+            {
+                services.Add(x.serviceApi);
+            }
+            result = await packagesService.GetPackages();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    public async void ReadMore(int id)
+    {
+        PackagesModel pp = result.Content.Where(p => p.id == id).FirstOrDefault();
+        Console.WriteLine($"ppaspsp {pp.name}");
+        pp.isShowDetails = !pp.isShowDetails;
+        if (pp.isShowDetails == true)
+        {
+            pp.lessMore = "l";
+        }
+        else
+        {
+            pp.lessMore = "m";
+        }
+
+        StateHasChanged();
+    }
+
+    public async void HandelSubment(PackagesModel pck)
+    {
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = int.Parse(identity.FindFirst("UserId").Value);
+        if (pck.status == "free")
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("title", _localizer["lbl_packageFree"].ToString());
+            parameters.Add("SubscriptionConfirmation", _localizer["lbl_subPackageFree"].ToString());
+            parameters.Add("buttonText", _localizer["lbl_Ok"].ToString());
+            parameters.Add("package", pck);
+            var options = new DialogOptions { FullWidth = true };
+            DialogService.Show<Ultimate.WebApp.Pages.Index.SubFreeDialog>(null, parameters, options);
+        }
+        else
+        {
+            var parameters = new DialogParameters();
+            if (selectedCulture.Contains("en"))
+            {
+                parameters.Add("title", pck.foreignName);
+            }
+            else
+            {
+                parameters.Add("title", pck.name);
+            }
+            parameters.Add("SubscriptionConfirmation", _localizer["lbl_SubscriptionConfirmation"].ToString());
+            parameters.Add("buttonText", _localizer["lbl_Ok"].ToString());
+            parameters.Add("package", pck);
+            var options = new DialogOptions { FullWidth = true };
+            var dialog =DialogService.Show<Ultimate.WebApp.Pages.Index.SubFreeDialog>(null, parameters, options);
+
+
+
+            //await ListPackagesService.AddToListPackages(packageRelation);
+            //await _ListPackagesByUserId.AddToListPackagesByUserId(packageRelation, UserId);
+            //isVisible = false;
+
+            //StateHasChanged();
+        }
+    }
+
+}
+

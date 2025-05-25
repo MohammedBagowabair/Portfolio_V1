@@ -1,0 +1,225 @@
+﻿@*@page "/verification/{userId:int}/{email}"*@
+@*@page "/verification"*@
+@page "/verification/{userId:int}"
+@page "/verification/{userId:int}/{email}"
+@inject ISendVerifyCodeService SendVerifyCodeService
+@inject IAuthService IAuthservice
+@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager _navigationManager
+@using System.Timers
+<PageTitle>Verification</PageTitle>
+<style>
+    .ju {
+        height: 88vh;
+        width: 100%;
+        display: flex;
+        /*justify-content: center;*/
+        align-items: center
+    }
+
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<div class="ju">
+<MudGrid Spacing="0" Class="mt-5" Justify="Justify.SpaceAround">
+
+    <LogoPage />
+
+    <MudItem xs="11" sm="8" md="7" Class="mt-10 ">
+        <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+
+        <MudGrid Spacing="0" Justify="Justify.Center">
+            <MudItem sm="8" xs="11" md="7" Class="mt-7">
+            <MudPaper Elevation="5" Square="true" Style="background-color:#424242;box-shadow:9px 8px 200px -13px #4aa47e" Class="Justify.Center pa-5" >
+                <EditForm Model="@verificationCode" OnValidSubmit="verifyCode" >
+                            <DataAnnotationsValidator/>
+                        <MudText Typo="Typo.h3" Align="Align.Center"  Class="fontContent" Style=" color:#c8cacd">@_localizer["lbl_Verify"]</MudText>
+                        <MudText Align="Align.Center" Style="font-size:20px; color:#c8cacd" Class="fontContent">@_localizer["lbl_Verification"]</MudText>
+                        <MudText Align="Align.Center" Typo="Typo.subtitle2" Class="fontContent" Style=" color:#c8cacd">@email</MudText>
+                <br />
+                <br />
+                <br />
+                <br />
+
+                
+                    <div>
+                        <div class=" d-flex flex-row gap-3">
+                                    <MudTextField Variant="Variant.Outlined" T="string" Margin="Margin.Dense" MaxLength="6" @bind-Value="verificationCode.code" For="@(()=>verificationCode.code)" Class="fontContent" Style="color:#c8cacd"></MudTextField>
+                                   
+
+                                </div>
+                    </div>
+
+
+                
+
+                <br />
+                <br />
+                        <MudText Align="Align.Center" Class="fontContent" Style=" color:#c8cacd">@_localizer["lbl_SendingCode"]</MudText>
+                        <MudText Align="Align.Center" Class="fontContent" Color="Color.Primary">@timeValue @_localizer["lbl_Second"]</MudText>
+                <br />
+                <br />
+                <br />
+                        <MudButton ButtonType="ButtonType.Submit" FullWidth DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Style="font-size:20px;" EndIcon="@Icons.Material.Filled.Check" Disabled="@(!isDisabled)" >@_localizer["lbl_Verifybtn"]</MudButton>
+                        <span class="text-danger fontContent" style="visibility:@error">@message</span>
+                <br />
+                <br />
+                <br />
+                </EditForm>
+                <div class="d-flex flex-row gap-1" style="justify-content:center" >
+                            <MudText Align="Align.Center" Style="font-size:17px; color:#c8cacd" Class="fontContent">@_localizer["lbl_Verifyfialed"]</MudText>
+                    @*<div class="mt-5 d-flex justify-center align-center" style="font-size:17px">*@
+                    @if (isDisabled == true)
+                        {
+                        <MudElement HtmlTag="button"
+                                @onclick="resendCode"
+                                        Style="color: #343535; font-weight:200; font-size:18px; "
+                                disabled=@isDisabled
+                                        Class="pointer-events-none fontTitle">
+                            @_localizer["lbl_NewVerify"]
+                        </MudElement>
+                        }
+                        else
+                    {
+                        <MudElement HtmlTag="button"
+                                 @onclick="resendCode"
+                                        Style="color:#4aa47e;font-weight:200; font-size:18px;" Class="fontTitle">
+                            @_localizer["lbl_NewVerify"]
+                        </MudElement>
+                        }
+                       
+                    @*</div>*@
+@*                    <MudText Align="Align.Center" Color="Color.Primary">@_localizer["lbl_NewVerify"]</MudText>
+*@                </div>
+                @*<h1>@verificationCode.code</h1>*@
+            </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+
+    </MudItem>
+</MudGrid>
+</div>
+@code {
+    [Parameter]
+    public int userId { set; get; }
+    [Parameter]
+    public string email { set; get; }
+    DTOModel verificationCode = new DTOModel();
+    ResponseModel<SendVerifyCodeModel> VerifyCode;
+    private string result = "";
+    private bool isVisible;
+    bool error;
+    protected string message = String.Empty;
+    private Timer timer;
+    private int timeCounter = 300;
+    private string timeValue { set; get; } = "00:00";
+    bool isDisabled=true;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        StartTimer();
+    }
+    public void StartTimer()
+    {
+        timer = new Timer(1000);
+        timer.Elapsed += CountDownTimer;
+        timer.Enabled = true;
+    }
+    private void CountDownTimer(object sender, ElapsedEventArgs e)
+    {
+        if (timeCounter>0)
+        {
+            timeCounter -= 1;
+            timeValue = TimeSpan.FromSeconds(timeCounter).ToString(@"mm\:ss");
+        }
+        else
+        {   
+            timer.Enabled = false;
+            isDisabled = false;
+        }
+        InvokeAsync(StateHasChanged);
+
+    }
+    private async Task verifyCode()
+    {
+        message = null;
+        error = false;
+        isVisible = true;
+        await Task.Delay(1000);
+
+        try
+        {
+            verificationCode.id = userId;
+            Console.WriteLine("test");
+            //Console.WriteLine(verificationCode.code);
+
+            ResponsePost<string> res = await IAuthservice.Verify(verificationCode);
+
+
+            result = res.Message;
+            Console.WriteLine(res.Message);
+
+            isVisible = false;
+            StateHasChanged();
+
+            _navigationManager.NavigateTo("/login");
+            //content = response.Content;
+        }
+        catch (Exception e)
+        {
+
+            if (e.Message == "Account Not Verified ")
+            {
+                message = _localizer["msg_Verification"];
+                isVisible = false;
+                error = true;
+                StateHasChanged();
+
+            }
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+
+
+        }
+
+    }
+    private async void resendCode()
+    {
+        try
+        {
+            timeCounter = 300;
+            StartTimer();
+            isDisabled = true;
+            ResponsePost<string> res = await SendVerifyCodeService.Create(userId);
+
+            Console.WriteLine(res.Message);
+            StateHasChanged();
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    
+
+}

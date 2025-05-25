@@ -1,0 +1,41 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@*<h3>Blog</h3>*@
+@page "/CategoryBlog"
+@*<MudAlert/>*@
+<MudOverlay Visible="isVisible" LightBackground=true ZIndex="9999">
+    <MudText Align="Align.Center">
+        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+    </MudText>
+</MudOverlay>
+<MudGrid Justify="Justify.FlexStart" Class="pa-5" Spacing="1">
+    <MudItem sm="11" xs="11" md="11">
+        <MudText Typo="Typo.h6" Class="px-2">اسم الفئة:</MudText>
+    </MudItem>
+    <MudItem sm="7" xs="8" md="6">
+        <MudTextField @bind-Value="CategoryName" Margin="Margin.Dense" T="String" Variant="Variant.Outlined" InputType="InputType.Text" />   
+    </MudItem>
+    <MudItem sm="2" xs="3" md="2">
+        <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Class="mt-1">حفظ</MudButton>
+        @*<MudButton DisableElevation="true" OnClick="Cancelbtn" Variant="Variant.Outlined" Color="Color.Primary" Class="demo-form-button">@_localizer["lbl_Cancelbtn"]</MudButton>*@
+    </MudItem>
+</MudGrid>
+@*<MudTable Items="subscriptions.Content" Hover="true" Breakpoint="Breakpoint.Xs">
+    <HeaderContent>
+        <MudTh><b>@_localizer["lbl_PackageName"]</b></MudTh>
+        <MudTh></MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@_localizer["lbl_PackageName"]">@context.package.name</MudTd>
+        <MudTd>
+            <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary">@_localizer["lbl_ChangePackage"]</MudButton>
+        </MudTd>
+        <MudTd>
+            <MudButton Variant="Variant.Outlined" Size="Size.Medium" Color="Color.Primary">@_localizer["lbl_ChangePackage"]</MudButton>
+        </MudTd>
+    </RowTemplate>
+</MudTable>*@
+@code {
+    string CategoryName;
+    bool isVisible;
+}

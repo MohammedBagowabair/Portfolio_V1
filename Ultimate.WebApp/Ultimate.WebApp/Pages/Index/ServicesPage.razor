@@ -1,0 +1,63 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager _navigationManager
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .mud-grid-spacing-xs-3 {
+        /* width: calc(100% + 24px); */
+        /* margin: -12px
+            px
+            ; */
+        margin: 0;
+        width: auto;
+    }
+</style>
+<div style="background-color:#343535">
+    <br />
+    <MudText Class="fontTitle" Style=" text-align:center;font-size:50px;margin-bottom:50px;margin-top:50px; color:white"><span style="color:#4aa47e">@_localizer["lbl_Our"]</span>@_localizer["lbl_Services_"]</MudText>
+
+    <br />
+    <hr style="background-color:#52AA85" />
+    <MudContainer>
+        <MudGrid Justify="Justify.FlexStart" Spacing="1">
+            <MudItem xs="11" sm="10" md="6">
+                <MudImage Fluid="true" Src="img/Dgital.png"/>
+            </MudItem>
+            <MudItem xs="11" sm="10" md="5" Class="mt-10">
+                <div class="d-flex mud-theme-primary py-2 mb-3 rounded-circle" style="height:60px; width:60px">
+                    <MudImage Src="img/Vector1.png" Class="mx-2" Style="height: 50px;width: 50px;" Fluid />
+                </div>
+                <MudText Class="fontContent" Style="font-size:20px;font-weight:bold;">@_localizer["lbl_services1"]</MudText>
+                <MudText Class="px-2 fontContent" Align="Align.Justify" Style="font-size:20px;font-weight:300;">@_localizer["lbl_services11"]</MudText>
+                <MudLink Underline="Underline.None" OnClick="msgBot" Class="px-2 fontContent" Style="font-size:20px;font-weight:300;">@_localizer["lbl_Seemore"]</MudLink>
+
+                <div class="d-flex mud-theme-primary py-2 my-3 rounded-circle" style="height:60px; width:60px">
+                        <MudImage Src="img/Vector2.png" Class="mx-2" Style="" Fluid />
+                </div>
+                <MudText Class="fontContent" Style="font-size:20px;font-weight:bold;">@_localizer["lbl_services2"]</MudText>
+                <MudText Class="px-2 fontContent" Align="Align.Justify" Style="font-size:20px;font-weight:300;">@_localizer["lbl_services21"]</MudText>
+                <MudLink Underline="Underline.None" OnClick="apiBot" Class="px-2 fontContent" Style="font-size:20px;font-weight:300;">@_localizer["lbl_Seemore"]</MudLink>
+            </MudItem>
+            
+        </MudGrid>
+    </MudContainer>
+</div>
+@code {
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+    void msgBot(){
+        _navigationManager.NavigateTo("/ServiceMessageBot");
+    }
+    void apiBot()
+    {
+        _navigationManager.NavigateTo("/ChatApiBot");
+    }
+}

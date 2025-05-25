@@ -1,0 +1,15 @@
+[
+  {
+    "serviceId": 1,
+    "serviceName": "Client",
+    "serviceApi": "Client"
+
+  },
+  {
+    "serviceId": 2,
+    "serviceName": "Menu",
+    "serviceApi": "Menu"
+
+  }
+
+]

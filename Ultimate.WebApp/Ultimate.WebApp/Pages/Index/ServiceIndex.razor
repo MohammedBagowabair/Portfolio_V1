@@ -1,0 +1,236 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+        @font_Title
+    }
+    .fontContent{
+        @font_Content
+    }
+
+    .mud-grid-spacing-xs-3 {
+        /* width: calc(100% + 24px); */
+        /* margin: -12px
+        px
+        ; */
+        margin: 0;
+        width: auto;
+    }
+</style>
+<div style="background-color:#343535">
+<br />
+    <MudText Class="fontTitle" Style=" text-align:center;font-size:50px;margin-bottom:50px; color:white"><span style="color:#4aa47e">@_localizer["lbl_Our"]</span>@_localizer["lbl_Services_"]</MudText>
+
+<br />
+<hr style="background-color:#52AA85" />
+@*<section class="">*@
+    <MudContainer>
+        <MudGrid Justify="Justify.Center" Spacing="0">
+            @*<MudItem xs="11" sm="10" md="8" Style="margin-top:70px;">
+                <MudText Class="fontTitle" Style="font-size:50px;margin-bottom:1px; color:white"><span style="color:#52AA85">@_localizer["lbl_T"]</span>@_localizer["lbl_Technicalsupport"]</MudText>
+                <MudText Class="fontContent" Style="font-size:20px;font-weight:300; color:white">
+                    @_localizer["lbl_OurServices11"]
+                </MudText>
+            </MudItem>
+            <MudItem xs="11" sm="10" md="3">
+                <MudImage Height="300" Width="300" Src="img/Computer troubleshooting-amico (2).png" />
+                
+            </MudItem>*@
+
+            @*<MudItem xs="12" sm="12" md="12">
+            <hr style="background-color:#52AA85" />
+            </MudItem>*@
+
+            <MudItem xs="11" sm="10" md="3">
+                    <MudImage Height="300" Width="300" Src="img/Webinar-pana.png" Fluid />
+            </MudItem>
+
+            <MudItem xs="11" sm="10" md="8" Style="margin-top:90px;">
+                <MudText Class="fontTitle" Style="font-size:50px;margin-bottom:1px; color:white"><span style="color:#52AA85">@_localizer["lbl_C"]</span>@_localizer["lbl_consultingservices"]</MudText>
+                <MudText Class="fontContent" Style="font-size:20px;font-weight:300; color:white">
+                   @_localizer["lbl_OurServices21"]
+                </MudText>
+            </MudItem>
+
+            <MudItem xs="12" sm="12" md="12">
+            <hr style="background-color:#52AA85" />
+            </MudItem>
+
+            <MudItem xs="11" sm="10" md="8" Style="margin-top:70px;">
+                <MudText Class="fontTitle" Style="font-size:50px;margin-bottom:1px; color:white"><span style="color:#52AA85">@_localizer["lbl_U"]</span>@_localizer["lbl_usertraining"]</MudText>
+                <MudText Class="fontContent" Style="font-size:20px;font-weight:300; color:white">
+                    @_localizer["lbl_OurServices31"]
+
+                </MudText>
+            </MudItem>
+            <MudItem xs="11" sm="10" md="3">
+                <MudImage Height="300" Fluid Width="300" Src="img/Inbox cleanup-pana.png" />
+                
+            </MudItem>
+
+            <MudItem xs="12" sm="12" md="12">
+            <hr style="background-color:#52AA85" />
+            </MudItem>
+        </MudGrid>
+
+    
+
+    <MudGrid Justify="Justify.Center">
+             <MudItem xs="11" sm="6" md="3" Class="d-flex align-self-stretch">
+                <MudCard Style="background-color:#4aa47e;width: 18rem; margin:7px">
+                    <MudCardMedia Image="img/Inbox cleanup-pana.png"  alt="Card image cap" />
+            <MudCardContent>
+
+                        <MudText Class="fontTitle" Typo="Typo.h6" Style="margin-bottom:1px; color:white"><span style="color:#c8cacd">@_localizer["lbl_U"]</span>@_localizer["lbl_OurServices9"]</MudText>
+                        <MudText Class="fontContent" Style="color:white">@_localizer["lbl_OurServices91"]</MudText>
+
+            </MudCardContent>
+        </MudCard>
+        </MudItem>
+                <MudItem xs="11" sm="6" md="3" Class="d-flex align-self-stretch">
+                <MudCard Style="background-color:#4aa47e;width: 18rem; margin:7px">
+                    <MudCardMedia Image="img/Speed test-rafiki.png" alt="Card image cap" />
+                <MudCardContent>
+                        <MudText Class="fontTitle" Typo="Typo.h6" Style="margin-bottom:1px; color:white"><span style="color:#c8cacd">@_localizer["lbl_S"]</span>@_localizer["lbl_speedservices"]</MudText>
+                        <MudText Class="fontContent" Style="color:white">@_localizer["lbl_OurServices51"]</MudText>
+                    <br />
+            </MudCardContent>
+        </MudCard>
+        
+        </MudItem>
+                <MudItem xs="11" sm="6" md="3" Class="d-flex align-self-stretch">
+                <MudCard Style="background-color:#4aa47e;width: 18rem; margin:7px">
+
+                    <MudCardMedia Image="img/Responsive-amico.png" alt="Card image cap" />
+                <MudCardContent>
+                        <MudText Class="fontTitle" Typo="Typo.h6" Style="margin-bottom:1px; color:white"><span style="color:#c8cacd">@_localizer["lbl_F"]</span>@_localizer["lbl_flexibleservices"]</MudText>
+                        <MudText Class="fontContent" Style="color:white">@_localizer["lbl_OurServices61"]</MudText>
+                    <br />
+            </MudCardContent>
+        </MudCard>
+        </MudItem>
+                <MudItem xs="11" sm="6" md="3" Class="d-flex align-self-stretch">
+                <MudCard Style="background-color:#4aa47e;width: 18rem; margin:7px">
+
+                    <MudCardMedia Image="img/Business ethics-pana.png" alt="Card image cap" />
+                    <MudCardContent>
+                        <MudText Class="fontTitle" Typo="Typo.h6" Style="margin-bottom:1px; color:white"><span style="color:#c8cacd">@_localizer["lbl_B"]</span>@_localizer["lbl_balance_services"]</MudText>
+                        <MudText Class="fontContent" Style="color:white">@_localizer["lbl_OurServices71"]</MudText>
+                    <br />
+            </MudCardContent>
+        </MudCard>
+        </MudItem>
+    </MudGrid>
+
+    </MudContainer>
+
+
+@*</section>*@
+
+
+
+
+@*<MudContainer Class="mt-16">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">@_localizer["lbl_OurServicesTitle"]</MudText>
+    <MudText Align="Align.Center">@_localizer["lbl_OurServicesSubTitle"]</MudText>
+    <MudGrid Class="mt-8" Justify="Justify.SpaceBetween" Style="background-color:#F5F5F5">
+        <MudItem xs="12" sm="4" md="4">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/11.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices1"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices11"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="4">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/22.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices2"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices21"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="4">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/33.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices3"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices31"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/44.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices4"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices41"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/55.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices5"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices51"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/66.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices6"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices61"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+        <MudItem xs="12" sm="4" md="3">
+            <div class="mud-card">
+                <MudCard Elevation="25" Class="rounded-lg pb-4">
+                    <MudCardContent>
+                        <div class="d-flex justify-center">
+                            <MudImage Src="images/77.png" Height="100" Width="100" />
+                        </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6">@_localizer["lbl_OurServices7"]</MudText>
+                        <MudText Align="Align.Center">@_localizer["lbl_OurServices71"].ToString().Substring(0,40)</MudText>
+                    </MudCardContent>
+                </MudCard>
+            </div>
+        </MudItem>
+    </MudGrid>
+</MudContainer>*@
+</div>
+@code{
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+}
+

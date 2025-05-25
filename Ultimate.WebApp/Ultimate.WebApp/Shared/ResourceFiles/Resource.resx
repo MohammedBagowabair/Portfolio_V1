@@ -1,0 +1,1557 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="exp_1001" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="lbl_AboutBot" xml:space="preserve">
+    <value>يمكنك الآن التواصل مع عملائك عبر جميع الشبكات المحلية من خلال الدردشة الفورية على نطاق واسع من خلال تحقيق التوازن بين تلبية طلبات العملاء في نفس الوقت ، بشكل سريع ومفيد.</value>
+  </data>
+  <data name="lbl_AboutBotTitle" xml:space="preserve">
+    <value>الدردشة هي وسيلة للتواصل مع العملاء من خلال عنصر واجهة مستخدم للمراسلة على موقع الويب الخاص بك. إنها مثل المراسلة الفورية التي اعتدت عليها على الفيسبوك و الانستقرام و الواتساب وما إلى ذلك ولكن بين النشاط التجاري وزوار موقع الويب.</value>
+  </data>
+  <data name="lbl_AboutProjectSubTitle" xml:space="preserve">
+    <value>نضع عالم عملك بين يديك من خلال تطبيقاتنا لمتابعة وإدارة التقارير ومعالجة المهام.</value>
+  </data>
+  <data name="lbl_AboutProjectTitle" xml:space="preserve">
+    <value>تطبيقاتنا</value>
+  </data>
+  <data name="lbl_Accept" xml:space="preserve">
+    <value>قبول</value>
+  </data>
+  <data name="lbl_AcceptedOrders" xml:space="preserve">
+    <value>الطلبات المقبولة</value>
+  </data>
+  <data name="lbl_AccountDetails" xml:space="preserve">
+    <value>تفاصيل الحساب</value>
+  </data>
+  <data name="lbl_AccountManagement" xml:space="preserve">
+    <value>إدارة الحساب</value>
+  </data>
+  <data name="lbl_AccountsManagement" xml:space="preserve">
+    <value>إدارة الحسابات</value>
+  </data>
+  <data name="lbl_AccountStatement" xml:space="preserve">
+    <value>كشف الحساب</value>
+  </data>
+  <data name="lbl_Active" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="lbl_ActiveName" xml:space="preserve">
+    <value>اسم النشاط</value>
+  </data>
+  <data name="lbl_ActiveType" xml:space="preserve">
+    <value>نوع النشاط</value>
+  </data>
+  <data name="lbl_Add" xml:space="preserve">
+    <value>إضافة</value>
+  </data>
+  <data name="lbl_AddApplication" xml:space="preserve">
+    <value>إضافة تطبيق</value>
+  </data>
+  <data name="lbl_AddEvent" xml:space="preserve">
+    <value>إضافة حدث</value>
+  </data>
+  <data name="lbl_AddInitiMsg" xml:space="preserve">
+    <value>إضافة رسالة ترحيبية</value>
+  </data>
+  <data name="lbl_AddNo" xml:space="preserve">
+    <value>إضافة رقم</value>
+  </data>
+  <data name="lbl_AddPackage" xml:space="preserve">
+    <value>إضافة باقة</value>
+  </data>
+  <data name="lbl_AddPeriod" xml:space="preserve">
+    <value>إضافة فترة</value>
+  </data>
+  <data name="lbl_AddReply" xml:space="preserve">
+    <value>إضافة رد</value>
+  </data>
+  <data name="lbl_AddReplyOrNote" xml:space="preserve">
+    <value>إضافة رد أو ملاحظة</value>
+  </data>
+  <data name="lbl_AddText" xml:space="preserve">
+    <value>إضافة نص</value>
+  </data>
+  <data name="lbl_Admin" xml:space="preserve">
+    <value>المسؤول</value>
+  </data>
+  <data name="lbl_AdminManagement" xml:space="preserve">
+    <value>إدارة النظام</value>
+  </data>
+  <data name="lbl_AdminNo" xml:space="preserve">
+    <value>رقم المسؤول</value>
+  </data>
+  <data name="lbl_AllSubscribers" xml:space="preserve">
+    <value>المشتركين</value>
+  </data>
+  <data name="lbl_AllSubscriptions" xml:space="preserve">
+    <value>الاشتراكات</value>
+  </data>
+  <data name="lbl_AllUsers" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+  <data name="lbl_AllUserSubscriptions" xml:space="preserve">
+    <value>مجموع الاشتراكات</value>
+  </data>
+  <data name="lbl_appId" xml:space="preserve">
+    <value>رمز التطبيق</value>
+  </data>
+  <data name="lbl_Application" xml:space="preserve">
+    <value>التطبيقات</value>
+  </data>
+  <data name="lbl_ApplicationName" xml:space="preserve">
+    <value>اسم التطبيق</value>
+  </data>
+  <data name="lbl_attachImage" xml:space="preserve">
+    <value>إرفاق صورة</value>
+  </data>
+  <data name="lbl_attachThePaymentVoucher" xml:space="preserve">
+    <value>إرفاق سند الدفع</value>
+  </data>
+  <data name="lbl_attachTheVoucher" xml:space="preserve">
+    <value>إرفاق السند</value>
+  </data>
+  <data name="lbl_AutoMessage" xml:space="preserve">
+    <value>الرد التلقائي</value>
+  </data>
+  <data name="lbl_AutoMessages" xml:space="preserve">
+    <value>الردود التلقائية</value>
+  </data>
+  <data name="lbl_B" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_balanceText" xml:space="preserve">
+    <value>نص الرصيد</value>
+  </data>
+  <data name="lbl_balance_services" xml:space="preserve">
+    <value>التوازن</value>
+  </data>
+  <data name="lbl_Body" xml:space="preserve">
+    <value>المحتوى</value>
+  </data>
+  <data name="lbl_bot" xml:space="preserve">
+    <value>بوت</value>
+  </data>
+  <data name="lbl_BtnEdit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="lbl_BtnSave" xml:space="preserve">
+    <value>حفظ</value>
+  </data>
+  <data name="lbl_Button" xml:space="preserve">
+    <value>زر</value>
+  </data>
+  <data name="lbl_ButtonText" xml:space="preserve">
+    <value>نص الزر</value>
+  </data>
+  <data name="lbl_C" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_Cancelbtn" xml:space="preserve">
+    <value>إلغاء</value>
+  </data>
+  <data name="lbl_ChangePackage" xml:space="preserve">
+    <value>تغيير الباقة</value>
+  </data>
+  <data name="lbl_ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
+  <data name="lbl_ChooseGroupReports" xml:space="preserve">
+    <value>أختيار مجموعة تقارير</value>
+  </data>
+  <data name="lbl_ChooseMedia" xml:space="preserve">
+    <value>أختر الوسائط</value>
+  </data>
+  <data name="lbl_ChooseMenu" xml:space="preserve">
+    <value>أختر القائمة</value>
+  </data>
+  <data name="lbl_ChooseService" xml:space="preserve">
+    <value>أختر خدمة</value>
+  </data>
+  <data name="lbl_ChooseText" xml:space="preserve">
+    <value>أختر النص المرمز</value>
+  </data>
+  <data name="lbl_Client" xml:space="preserve">
+    <value>العميل</value>
+  </data>
+  <data name="lbl_ClientNo" xml:space="preserve">
+    <value>رقم العميل</value>
+  </data>
+  <data name="lbl_clients" xml:space="preserve">
+    <value>العملاء</value>
+  </data>
+  <data name="lbl_ClientWhatsappNo" xml:space="preserve">
+    <value>رقم الواتس اب</value>
+  </data>
+  <data name="lbl_Cmessage" xml:space="preserve">
+    <value>رسالة العميل*</value>
+  </data>
+  <data name="lbl_CodeValidation" xml:space="preserve">
+    <value>يجب ادخال الرمز</value>
+  </data>
+  <data name="lbl_CofirmDelete" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه القائمة؟</value>
+  </data>
+  <data name="lbl_CofirmDeleteApp" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذا التطبيق؟</value>
+  </data>
+  <data name="lbl_CofirmDeleteAuto" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذا الرد التلقائي؟</value>
+  </data>
+  <data name="lbl_CofirmDeleteClient" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الرقم؟</value>
+  </data>
+  <data name="lbl_CofirmDeletePackage" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه الباقة؟</value>
+  </data>
+  <data name="lbl_CofirmDeletePeriod" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه الفترة؟</value>
+  </data>
+  <data name="lbl_CofirmDeleteReportCollection" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه المجموعة؟</value>
+  </data>
+  <data name="lbl_CofirmDeleteSubscription" xml:space="preserve">
+    <value>هل أنت متأكد من إلغاء الاشتراك؟</value>
+  </data>
+  <data name="lbl_CofirmRenewSub" xml:space="preserve">
+    <value>هل أنت متأكد من تجديد هذه الباقة؟</value>
+  </data>
+  <data name="lbl_CofirmResendSub" xml:space="preserve">
+    <value>هل أنت متأكد من إعادة إرسال هذه الباقة؟</value>
+  </data>
+  <data name="lbl_CofirmUpdateSecretkey" xml:space="preserve">
+    <value>هل أنت متأكد من تحديث هذا المفتاح السري؟</value>
+  </data>
+  <data name="lbl_Collection" xml:space="preserve">
+    <value>المجموعة</value>
+  </data>
+  <data name="lbl_Confirm" xml:space="preserve">
+    <value>تأكيد</value>
+  </data>
+  <data name="lbl_ConfirmAccount" xml:space="preserve">
+    <value>تأكيد حساب</value>
+  </data>
+  <data name="lbl_Confirmation" xml:space="preserve">
+    <value>تأكيد الطلب</value>
+  </data>
+  <data name="lbl_ConfirmDeleteReport" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه التقرير؟</value>
+  </data>
+  <data name="lbl_ConfirmDeleteText" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذا النص؟</value>
+  </data>
+  <data name="lbl_confirmPassword" xml:space="preserve">
+    <value>تأكيد كلمة المرور</value>
+  </data>
+  <data name="lbl_ConfrimCodeSending" xml:space="preserve">
+    <value>تم إرسال الرمز</value>
+  </data>
+  <data name="lbl_consultingservices" xml:space="preserve">
+    <value>الخدمات الاستشارية</value>
+  </data>
+  <data name="lbl_contactUs" xml:space="preserve">
+    <value>تواصل معنا</value>
+  </data>
+  <data name="lbl_ContentMenu" xml:space="preserve">
+    <value>محتوى قائمة</value>
+  </data>
+  <data name="lbl_CopyRight" xml:space="preserve">
+    <value>جميع الحقوق محفوظة لـ </value>
+  </data>
+  <data name="lbl_CopyrightYear" xml:space="preserve">
+    <value>©2023</value>
+  </data>
+  <data name="lbl_CountAuto" xml:space="preserve">
+    <value>عدد الردود</value>
+  </data>
+  <data name="lbl_CountMenus" xml:space="preserve">
+    <value>عدد القوائم</value>
+  </data>
+  <data name="lbl_CountServices" xml:space="preserve">
+    <value>عدد الخدمات</value>
+  </data>
+  <data name="lbl_CreateApplication" xml:space="preserve">
+    <value>إنشاء تطبيق</value>
+  </data>
+  <data name="lbl_CreateMenu" xml:space="preserve">
+    <value>إنشاء قائمة جديدة</value>
+  </data>
+  <data name="lbl_CreateNewCollection" xml:space="preserve">
+    <value>إنشاء مجموعة جديدة</value>
+  </data>
+  <data name="lbl_CreateNewReport" xml:space="preserve">
+    <value>إنشاء تقرير جديد</value>
+  </data>
+  <data name="lbl_CreatePackage" xml:space="preserve">
+    <value>إنشاء باقة جديدة</value>
+  </data>
+  <data name="lbl_CreateText" xml:space="preserve">
+    <value>إنشاء نص</value>
+  </data>
+  <data name="lbl_CurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+  </data>
+  <data name="lbl_CurrentSubscription" xml:space="preserve">
+    <value>الاشتراكات الحالية</value>
+  </data>
+  <data name="lbl_Dashboard" xml:space="preserve">
+    <value>لوحة القيادة</value>
+  </data>
+  <data name="lbl_Date" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="lbl_DaysNO" xml:space="preserve">
+    <value>عدد الأيام</value>
+  </data>
+  <data name="lbl_DaysUserValidation" xml:space="preserve">
+    <value>يجب ادخال عدد الأيام او  تحديد مستخدم</value>
+  </data>
+  <data name="lbl_DeleteApplication" xml:space="preserve">
+    <value>حذف التطبيق</value>
+  </data>
+  <data name="lbl_DeleteAutoMessage" xml:space="preserve">
+    <value>حذف رد تلقائي</value>
+  </data>
+  <data name="lbl_Deletebtn" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="lbl_DeleteClient" xml:space="preserve">
+    <value>حذف رقم</value>
+  </data>
+  <data name="lbl_DeleteEncodingReport" xml:space="preserve">
+    <value>حذف تقرير</value>
+  </data>
+  <data name="lbl_DeleteMenu" xml:space="preserve">
+    <value>حذف قائمة</value>
+  </data>
+  <data name="lbl_DeletePackage" xml:space="preserve">
+    <value>حذف باقة</value>
+  </data>
+  <data name="lbl_DeletePeriod" xml:space="preserve">
+    <value>حذف فترة</value>
+  </data>
+  <data name="lbl_DeleteReportCollection" xml:space="preserve">
+    <value>حذف مجموعة</value>
+  </data>
+  <data name="lbl_DeleteSubscription" xml:space="preserve">
+    <value>إلغاء الاشتراك</value>
+  </data>
+  <data name="lbl_DeleteText" xml:space="preserve">
+    <value>حذف نص</value>
+  </data>
+  <data name="lbl_Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
+  <data name="lbl_Details" xml:space="preserve">
+    <value>التفاصيل</value>
+  </data>
+  <data name="lbl_Discount" xml:space="preserve">
+    <value>خصم</value>
+  </data>
+  <data name="lbl_DiscountAmount" xml:space="preserve">
+    <value>الخصم</value>
+  </data>
+  <data name="lbl_Don'tHaveAccount" xml:space="preserve">
+    <value>ليس لديك حساب؟</value>
+  </data>
+  <data name="lbl_Done" xml:space="preserve">
+    <value>تم</value>
+  </data>
+  <data name="lbl_Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="lbl_EditActivity" xml:space="preserve">
+    <value>تعديل الحالة</value>
+  </data>
+  <data name="lbl_EditActivityConfrim" xml:space="preserve">
+    <value>هل تريد بالفعل تعديل حالتك؟</value>
+  </data>
+  <data name="lbl_EditApplication" xml:space="preserve">
+    <value>تعديل التطبيق</value>
+  </data>
+  <data name="lbl_EditDone" xml:space="preserve">
+    <value>تم التعديل</value>
+  </data>
+  <data name="lbl_EditEvent" xml:space="preserve">
+    <value>تعديل حدث</value>
+  </data>
+  <data name="lbl_EditNo" xml:space="preserve">
+    <value>تعديل الرقم</value>
+  </data>
+  <data name="lbl_EditPeriod" xml:space="preserve">
+    <value>تعديل الفترة</value>
+  </data>
+  <data name="lbl_EditText" xml:space="preserve">
+    <value>تعديل النص</value>
+  </data>
+  <data name="lbl_Email" xml:space="preserve">
+    <value>البريد الإلكتروني</value>
+  </data>
+  <data name="lbl_emailAddress" xml:space="preserve">
+    <value>support@malybot</value>
+  </data>
+  <data name="lbl_EmailIsIncorrect" xml:space="preserve">
+    <value>البريد الالكتروني غير صحيح</value>
+  </data>
+  <data name="lbl_EncodingMenus" xml:space="preserve">
+    <value>ترميز القوائم</value>
+  </data>
+  <data name="lbl_EncodingReports" xml:space="preserve">
+    <value>ترميز التقارير</value>
+  </data>
+  <data name="lbl_EndDate" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="lbl_EnterApplicationName" xml:space="preserve">
+    <value>ادخل اسم التطبيق</value>
+  </data>
+  <data name="lbl_EnterConfirmationCode" xml:space="preserve">
+    <value>ادخل رمز التأكيد المرسل لمعرفة كل جديد ومفيد </value>
+  </data>
+  <data name="lbl_EnterText" xml:space="preserve">
+    <value>ادخل النص</value>
+  </data>
+  <data name="lbl_EnterTheName" xml:space="preserve">
+    <value>ادخل الاسم</value>
+  </data>
+  <data name="lbl_ERPSystems" xml:space="preserve">
+    <value>أنظمة ERP</value>
+  </data>
+  <data name="lbl_EstablishedNumbers" xml:space="preserve">
+    <value>الأرقام المنشأة</value>
+  </data>
+  <data name="lbl_Event" xml:space="preserve">
+    <value>الحدث</value>
+  </data>
+  <data name="lbl_EventType" xml:space="preserve">
+    <value>نوع الحدث</value>
+  </data>
+  <data name="lbl_Exit" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="lbl_Extend" xml:space="preserve">
+    <value>تمديد</value>
+  </data>
+  <data name="lbl_ExtendSubscriptions" xml:space="preserve">
+    <value>تمديد الاشتراكات</value>
+  </data>
+  <data name="lbl_ExtendSubscriptionsSuccessfully" xml:space="preserve">
+    <value>تم تمديد الاشترك بنجاح</value>
+  </data>
+  <data name="lbl_F" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_Faileduploadedtobot" xml:space="preserve">
+    <value>فشل الرفع الى البوت</value>
+  </data>
+  <data name="lbl_FinishedSubscriptions" xml:space="preserve">
+    <value>الاشتراكات المنتهية</value>
+  </data>
+  <data name="lbl_flexibleservices" xml:space="preserve">
+    <value>المرونة</value>
+  </data>
+  <data name="lbl_Footer" xml:space="preserve">
+    <value>التذييل</value>
+  </data>
+  <data name="lbl_FooterAbout" xml:space="preserve">
+    <value>دردشة MalyBot</value>
+  </data>
+  <data name="lbl_FooterAbout1" xml:space="preserve">
+    <value>تم تطوير حلول دردشة MalyBot والإدارية لتلبية جميع التغييرات في جميع قطاعات وأنشطة الأعمال المختلفة في إدارة الموارد المالية والبشرية.</value>
+  </data>
+  <data name="lbl_FooterLinked" xml:space="preserve">
+    <value>روابط مهمة:</value>
+  </data>
+  <data name="lbl_FooterLinked1" xml:space="preserve">
+    <value>يمن سوفت</value>
+  </data>
+  <data name="lbl_FooterLinked2" xml:space="preserve">
+    <value>الحلول النهائية</value>
+  </data>
+  <data name="lbl_FooterLinked3" xml:space="preserve">
+    <value>الحلول الذكية</value>
+  </data>
+  <data name="lbl_FooterLinked4" xml:space="preserve">
+    <value>ألتمت أكاديمي</value>
+  </data>
+  <data name="lbl_FooterOurProducts" xml:space="preserve">
+    <value>منتجاتنا:</value>
+  </data>
+  <data name="lbl_FooterOurProducts1" xml:space="preserve">
+    <value>أونكس برو</value>
+  </data>
+  <data name="lbl_FooterOurProducts2" xml:space="preserve">
+    <value>المتكامل برو</value>
+  </data>
+  <data name="lbl_FooterOurProducts3" xml:space="preserve">
+    <value>المتكامل بلاس</value>
+  </data>
+  <data name="lbl_FooterOurProducts4" xml:space="preserve">
+    <value>المتكامل سيلفر</value>
+  </data>
+  <data name="lbl_FooterOurProducts5" xml:space="preserve">
+    <value>المحاسب الأول</value>
+  </data>
+  <data name="lbl_ForeignDescription" xml:space="preserve">
+    <value>الوصف بالإنجليزي </value>
+  </data>
+  <data name="lbl_ForeignPackageName" xml:space="preserve">
+    <value>اسم الباقة بالإنجليزي</value>
+  </data>
+  <data name="lbl_ForeignPeriodName" xml:space="preserve">
+    <value>اسم الفترة بالإنجليزي</value>
+  </data>
+  <data name="lbl_free" xml:space="preserve">
+    <value>مجانية</value>
+  </data>
+  <data name="lbl_FromDate" xml:space="preserve">
+    <value>من تاريخ:</value>
+  </data>
+  <data name="lbl_Getconnected" xml:space="preserve">
+    <value>تواصل معنا على الشبكات الاجتماعية:</value>
+  </data>
+  <data name="lbl_Gmail" xml:space="preserve">
+    <value>البريد الالكتروني</value>
+  </data>
+  <data name="lbl_GroupReports" xml:space="preserve">
+    <value>مجموعة التقارير:</value>
+  </data>
+  <data name="lbl_HaveAccount" xml:space="preserve">
+    <value>لديك حساب؟</value>
+  </data>
+  <data name="lbl_Hide" xml:space="preserve">
+    <value>إخفاء</value>
+  </data>
+  <data name="lbl_HideDetail" xml:space="preserve">
+    <value>إخفاء التفاصيل</value>
+  </data>
+  <data name="lbl_home" xml:space="preserve">
+    <value>الرئيسية</value>
+  </data>
+  <data name="lbl_id" xml:space="preserve">
+    <value>الرمز</value>
+  </data>
+  <data name="lbl_ImageNotLoad" xml:space="preserve">
+    <value>لايمكن تحميل الصورة</value>
+  </data>
+  <data name="lbl_imageValidations" xml:space="preserve">
+    <value>يجب اختيار صورة</value>
+  </data>
+  <data name="lbl_Inactive" xml:space="preserve">
+    <value>غير نشط</value>
+  </data>
+  <data name="lbl_initMsg" xml:space="preserve">
+    <value>الرسالة الترحيبية</value>
+  </data>
+  <data name="lbl_ItemData" xml:space="preserve">
+    <value>بيانات العناصر</value>
+  </data>
+  <data name="lbl_ItemTitle" xml:space="preserve">
+    <value>عنوان العنصر</value>
+  </data>
+  <data name="lbl_joinBtn" xml:space="preserve">
+    <value>انضم معنا الان</value>
+  </data>
+  <data name="lbl_less" xml:space="preserve">
+    <value>أقل</value>
+  </data>
+  <data name="lbl_List" xml:space="preserve">
+    <value>عناصر</value>
+  </data>
+  <data name="lbl_location" xml:space="preserve">
+    <value>اليمن، حضرموت، المكلا</value>
+  </data>
+  <data name="lbl_login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="lbl_logout" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="lbl_Media" xml:space="preserve">
+    <value>الوسائط: </value>
+  </data>
+  <data name="lbl_Menu" xml:space="preserve">
+    <value>القائمة:</value>
+  </data>
+  <data name="lbl_MenuData" xml:space="preserve">
+    <value>بيانات القائمة</value>
+  </data>
+  <data name="lbl_MenuName" xml:space="preserve">
+    <value>اسم القائمة:</value>
+  </data>
+  <data name="lbl_Menus" xml:space="preserve">
+    <value>القوائم</value>
+  </data>
+  <data name="lbl_MenusUsed" xml:space="preserve">
+    <value>القوائم المستخدمة</value>
+  </data>
+  <data name="lbl_MenuTemplates" xml:space="preserve">
+    <value>قوائم جاهزة</value>
+  </data>
+  <data name="lbl_MenuType" xml:space="preserve">
+    <value>نوع القائمة</value>
+  </data>
+  <data name="lbl_Messages" xml:space="preserve">
+    <value>الرسائل</value>
+  </data>
+  <data name="lbl_Month" xml:space="preserve">
+    <value>شهراً</value>
+  </data>
+  <data name="lbl_Monthly" xml:space="preserve">
+    <value>اشتراك شهري</value>
+  </data>
+  <data name="lbl_Monthly1" xml:space="preserve">
+    <value>شهري</value>
+  </data>
+  <data name="lbl_Months" xml:space="preserve">
+    <value>شهور</value>
+  </data>
+  <data name="lbl_more" xml:space="preserve">
+    <value>...أكثر</value>
+  </data>
+  <data name="lbl_MoveToAutomessage" xml:space="preserve">
+    <value>الانتقال الى الردود التلقائية</value>
+  </data>
+  <data name="lbl_MoveToMenus" xml:space="preserve">
+    <value>انتقال إلى قائمة</value>
+  </data>
+  <data name="lbl_MoveToReportColl" xml:space="preserve">
+    <value>انتقال إلى مجموعة التقارير</value>
+  </data>
+  <data name="lbl_MsgNo" xml:space="preserve">
+    <value>رقم الرسالة</value>
+  </data>
+  <data name="lbl_Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="lbl_nameApplication" xml:space="preserve">
+    <value>لنبدأ باسم التطبيق الخاص بك</value>
+  </data>
+  <data name="lbl_Nameperiods" xml:space="preserve">
+    <value>اسم الفترة</value>
+  </data>
+  <data name="lbl_NewPassword" xml:space="preserve">
+    <value>كلمة المرور الجديدة</value>
+  </data>
+  <data name="lbl_NewVerify" xml:space="preserve">
+    <value>إرسال رمز جديد</value>
+  </data>
+  <data name="lbl_NoItem" xml:space="preserve">
+    <value>لاتوجد عناصر</value>
+  </data>
+  <data name="lbl_NoItems" xml:space="preserve">
+    <value>لاتوجد لديك عناصر</value>
+  </data>
+  <data name="lbl_NotActive" xml:space="preserve">
+    <value>غير نشط</value>
+  </data>
+  <data name="lbl_Note" xml:space="preserve">
+    <value>ملاحظة</value>
+  </data>
+  <data name="lbl_Notifications" xml:space="preserve">
+    <value>الاشعارات</value>
+  </data>
+  <data name="lbl_NotificationsSending" xml:space="preserve">
+    <value>تم الإرسال</value>
+  </data>
+  <data name="lbl_NotificationType" xml:space="preserve">
+    <value>نوع الاشعار</value>
+  </data>
+  <data name="lbl_NotificationTypeMedia" xml:space="preserve">
+    <value>وسائط</value>
+  </data>
+  <data name="lbl_NotificationTypeText" xml:space="preserve">
+    <value>نص</value>
+  </data>
+  <data name="lbl_notmatchpassword" xml:space="preserve">
+    <value>كلمة المرور غير متطابقة</value>
+  </data>
+  <data name="lbl_NotOnline" xml:space="preserve">
+    <value>غير متصل</value>
+  </data>
+  <data name="lbl_Number" xml:space="preserve">
+    <value>الرقم</value>
+  </data>
+  <data name="lbl_NumberConfirmationText" xml:space="preserve">
+    <value>يرجى إدخال رقمك...لتصلك آخر الأخبار</value>
+  </data>
+  <data name="lbl_NumberConfirmed" xml:space="preserve">
+    <value>تم تأكيد الرقم</value>
+  </data>
+  <data name="lbl_NumberForConfirm" xml:space="preserve">
+    <value>اكتب الرقم المراد تأكيده</value>
+  </data>
+  <data name="lbl_NumberManagement" xml:space="preserve">
+    <value>إدارة الأرقام</value>
+  </data>
+  <data name="lbl_Numbers" xml:space="preserve">
+    <value>الأرقام</value>
+  </data>
+  <data name="lbl_NumbersUsed" xml:space="preserve">
+    <value>الأرقام المستخدمة</value>
+  </data>
+  <data name="lbl_NumberValidations" xml:space="preserve">
+    <value>يجب ادخال الرقم</value>
+  </data>
+  <data name="lbl_Ok" xml:space="preserve">
+    <value>موافق</value>
+  </data>
+  <data name="lbl_OnelUser" xml:space="preserve">
+    <value>مستخدم</value>
+  </data>
+  <data name="lbl_OneMenu" xml:space="preserve">
+    <value>قائمة</value>
+  </data>
+  <data name="lbl_OneOrder" xml:space="preserve">
+    <value>طلب</value>
+  </data>
+  <data name="lbl_OneSubscription" xml:space="preserve">
+    <value>اشتراك</value>
+  </data>
+  <data name="lbl_Online" xml:space="preserve">
+    <value>متصل الان</value>
+  </data>
+  <data name="lbl_OrderAccepted" xml:space="preserve">
+    <value>تم قبول الطلب</value>
+  </data>
+  <data name="lbl_OrderDate" xml:space="preserve">
+    <value>تاريخ الطلب</value>
+  </data>
+  <data name="lbl_OrderNotAccepted" xml:space="preserve">
+    <value>تعذر قبول الطلب ...لعدم تجاوز العدد المسموح</value>
+  </data>
+  <data name="lbl_OrderRejected" xml:space="preserve">
+    <value>تم الرفض</value>
+  </data>
+  <data name="lbl_OrderReturned" xml:space="preserve">
+    <value>تم الارجاع</value>
+  </data>
+  <data name="lbl_Orders" xml:space="preserve">
+    <value>الطلبات</value>
+  </data>
+  <data name="lbl_Others" xml:space="preserve">
+    <value>الاخرى</value>
+  </data>
+  <data name="lbl_Our" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_OurPackages" xml:space="preserve">
+    <value>باقاتنا</value>
+  </data>
+  <data name="lbl_OurPackages1" xml:space="preserve">
+    <value>تتيح الحزمة للعملاء الوصول إلى منتج أو خدمة لفترة من الوقت وتحصل على مزايا إضافية.</value>
+  </data>
+  <data name="lbl_OurServices1" xml:space="preserve">
+    <value>الدعم الفني</value>
+  </data>
+  <data name="lbl_OurServices11" xml:space="preserve">
+    <value>خدمة فنية مستمرة لكم كونكم عملائنا في ألتمت ، ينفذها مهندسون متخصصون في البرمجيات وهندسة الحاسبات وخبراء في تنفيذ الأنظمة المحاسبية والإدارية.</value>
+  </data>
+  <data name="lbl_OurServices2" xml:space="preserve">
+    <value>الخدمات الاستشارية</value>
+  </data>
+  <data name="lbl_OurServices21" xml:space="preserve">
+    <value>ندرس بيئة عملكم ونقدم لكم الإستشارة لمساعدتكم في قرار حوسبة ونمو أعمالكم.</value>
+  </data>
+  <data name="lbl_OurServices3" xml:space="preserve">
+    <value>تدريب المستخدمين</value>
+  </data>
+  <data name="lbl_OurServices31" xml:space="preserve">
+    <value>يقوم خبراؤنا بتدريب فريقك على كل ميزة ووظيفة للنظام ، مع التأكد من حصولك على أقصى استفادة منه.</value>
+  </data>
+  <data name="lbl_OurServices4" xml:space="preserve">
+    <value>تنفيذ الأنظمة للعملاء</value>
+  </data>
+  <data name="lbl_OurServices41" xml:space="preserve">
+    <value>يتم بواسطة وإشراف استشاري تنفيذ أنظمة ألتمت لمساعدتكم على تجاوز مراحل تهيئة الأنظمة وبناء الادلة وتنظيم المجموعات وضبط الصلاحيات بما يناسب طبيعة العمل.</value>
+  </data>
+  <data name="lbl_OurServices5" xml:space="preserve">
+    <value>السرعة</value>
+  </data>
+  <data name="lbl_OurServices51" xml:space="preserve">
+    <value>لدردشة MalyBot في تأثير نتائجه ومرونة إعداداته وسهولة استخدامه.​</value>
+  </data>
+  <data name="lbl_OurServices6" xml:space="preserve">
+    <value>المرونة</value>
+  </data>
+  <data name="lbl_OurServices61" xml:space="preserve">
+    <value>لامتلاك برامج دردشة MalyBot ستلاحظ المرونة في التوسع والقوة في الأداء.​</value>
+  </data>
+  <data name="lbl_OurServices7" xml:space="preserve">
+    <value>توازن​</value>
+  </data>
+  <data name="lbl_OurServices71" xml:space="preserve">
+    <value>لتحقيق النمـو المـتوازن في نشاطك وفي البناء المؤسسي لمنشأتك.​</value>
+  </data>
+  <data name="lbl_OurServices9" xml:space="preserve">
+    <value>دعم العملاء</value>
+  </data>
+  <data name="lbl_OurServices91" xml:space="preserve">
+    <value>نقدم أفضل تجربة للعملاء مع MalyBot منصة دعم عملاء متعددة القنوات وتحقيق رضا العملاء</value>
+  </data>
+  <data name="lbl_OurServicesSubTitle" xml:space="preserve">
+    <value>نصنع لكم منظومة إدارية متكاملة ونقدم حلولنا التقنية والمحاسبية لتغيير مستقبل اعمالكم وتحقيق النجاح والنمو فيها وجعلها أكثر سلاسة واستدامة ، وجودة الخدمات المقدمة هي أولويتنا القصوى .</value>
+  </data>
+  <data name="lbl_OurServicesTitle" xml:space="preserve">
+    <value>خدماتنا</value>
+  </data>
+  <data name="lbl_Package" xml:space="preserve">
+    <value>الباقة</value>
+  </data>
+  <data name="lbl_PackageDetails" xml:space="preserve">
+    <value>تفاصيل الباقة</value>
+  </data>
+  <data name="lbl_PackageDiscount" xml:space="preserve">
+    <value>الخصم</value>
+  </data>
+  <data name="lbl_packageFree" xml:space="preserve">
+    <value>باقة مجانية</value>
+  </data>
+  <data name="lbl_PackageName" xml:space="preserve">
+    <value>اسم الباقة</value>
+  </data>
+  <data name="lbl_Packages" xml:space="preserve">
+    <value>الباقات</value>
+  </data>
+  <data name="lbl_packagesCount" xml:space="preserve">
+    <value>عدد الباقات</value>
+  </data>
+  <data name="lbl_packageServices" xml:space="preserve">
+    <value>خدمات الباقة</value>
+  </data>
+  <data name="lbl_Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="lbl_paymentprocess" xml:space="preserve">
+    <value>عملية الدفع</value>
+  </data>
+  <data name="lbl_PaymentsVouchers" xml:space="preserve">
+    <value>سندات الدفع</value>
+  </data>
+  <data name="lbl_PaymentVoucher" xml:space="preserve">
+    <value>سند الدفع</value>
+  </data>
+  <data name="lbl_Paymentvouchers" xml:space="preserve">
+    <value>سندات الصرف</value>
+  </data>
+  <data name="lbl_PayVouchers" xml:space="preserve">
+    <value>سندات الدفع</value>
+  </data>
+  <data name="lbl_Period" xml:space="preserve">
+    <value>الفترة</value>
+  </data>
+  <data name="lbl_PeriodDuration" xml:space="preserve">
+    <value>المدة </value>
+  </data>
+  <data name="lbl_phoneInfo" xml:space="preserve">
+    <value>1117754323 60+</value>
+  </data>
+  <data name="lbl_PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="lbl_Photo" xml:space="preserve">
+    <value>صورة</value>
+  </data>
+  <data name="lbl_PleaseChooseImage" xml:space="preserve">
+    <value>يرجى اختيار صورة..</value>
+  </data>
+  <data name="lbl_Price" xml:space="preserve">
+    <value>السعر</value>
+  </data>
+  <data name="lbl_PriceADiscount" xml:space="preserve">
+    <value>صافي السعر</value>
+  </data>
+  <data name="lbl_QAbout1" xml:space="preserve">
+    <value>01 دردشة MalyBot – لماذا؟</value>
+  </data>
+  <data name="lbl_QAbout11" xml:space="preserve">
+    <value>لإدارة منشأتك بحلول تحقق دقة الأداء والاستثمار الأفضل لمواردك.</value>
+  </data>
+  <data name="lbl_QAbout12" xml:space="preserve">
+    <value>لتحقيق النمو المتوازن في نشاطك وفي البناء المؤسسي لمنشأتك.</value>
+  </data>
+  <data name="lbl_QAbout13" xml:space="preserve">
+    <value>لامتلاك برامج MalyBot المرونة في التوسع والقوة في الأداء.</value>
+  </data>
+  <data name="lbl_QAbout2" xml:space="preserve">
+    <value>02 كيفية إدارة MalyBot؟</value>
+  </data>
+  <data name="lbl_QAbout21" xml:space="preserve">
+    <value>الرقابة على الأعمال باستعراض تفاصيل حركة العمليات حسب الوقت أو المستخدم أو الفرع</value>
+  </data>
+  <data name="lbl_QAbout22" xml:space="preserve">
+    <value>أنشاء ردود تلقائية للعملاء وعمل قوائم</value>
+  </data>
+  <data name="lbl_QAbout23" xml:space="preserve">
+    <value>أضافة عملاء للبوت الواحد</value>
+  </data>
+  <data name="lbl_QAbout3" xml:space="preserve">
+    <value>03 ما هي الأدوات المساعدة للنظام؟</value>
+  </data>
+  <data name="lbl_QAbout31" xml:space="preserve">
+    <value>خدمات الرسائل:</value>
+  </data>
+  <data name="lbl_QAbout32" xml:space="preserve">
+    <value>أو البريد الإلكتروني آلياً بعد تهيئة وإعداد معلومات الرسائل والتنبيهات ووسائل الإرسال والمستلمين لها، وأهم فوائد تلك الرسائل:</value>
+  </data>
+  <data name="lbl_QAbout33" xml:space="preserve">
+    <value>الوصول الآني لإشعارات الحركة لذوي العلاقة والاهتمام.</value>
+  </data>
+  <data name="lbl_QAbout34" xml:space="preserve">
+    <value>الحصول على المعلومات المطلوبة بدون الدخول للبرنامج.</value>
+  </data>
+  <data name="lbl_QAbout35" xml:space="preserve">
+    <value>تقديم أرصدة الحسابات بعد كل حركة تتم في مختلف العمليات.</value>
+  </data>
+  <data name="lbl_Qty" xml:space="preserve">
+    <value>الكمية</value>
+  </data>
+  <data name="lbl_Reason" xml:space="preserve">
+    <value>السبب</value>
+  </data>
+  <data name="lbl_Receiptvouchers" xml:space="preserve">
+    <value>سندات القبض</value>
+  </data>
+  <data name="lbl_RefreshSecretKey" xml:space="preserve">
+    <value>تحديث المفتاح السري</value>
+  </data>
+  <data name="lbl_register" xml:space="preserve">
+    <value>تسجيل جديد</value>
+  </data>
+  <data name="lbl_Reject" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="lbl_RejectedOrders" xml:space="preserve">
+    <value>الطلبات المرفوضة</value>
+  </data>
+  <data name="lbl_RejectSubscription" xml:space="preserve">
+    <value>الاشتراكات المرفوضة</value>
+  </data>
+  <data name="lbl_RemainingSubscriptions" xml:space="preserve">
+    <value>الاشتراكات المتبقية</value>
+  </data>
+  <data name="lbl_RenewalSubscription" xml:space="preserve">
+    <value>تجديد الاشتراك</value>
+  </data>
+  <data name="lbl_Report" xml:space="preserve">
+    <value>التقرير</value>
+  </data>
+  <data name="lbl_ReportCollections" xml:space="preserve">
+    <value>مجموعات التقرير</value>
+  </data>
+  <data name="lbl_Reports" xml:space="preserve">
+    <value>التقارير</value>
+  </data>
+  <data name="lbl_ReqeustSubscription" xml:space="preserve">
+    <value>الاشتراكات قيد الطلب</value>
+  </data>
+  <data name="lbl_RequestDate" xml:space="preserve">
+    <value>تاريخ الطلب</value>
+  </data>
+  <data name="lbl_RequestedOrders" xml:space="preserve">
+    <value>الطلبات قيد الطلب</value>
+  </data>
+  <data name="lbl_requestFsent" xml:space="preserve">
+    <value>فشل إرسال طلبك.</value>
+  </data>
+  <data name="lbl_requestsending" xml:space="preserve">
+    <value>يتم إرسال طلبك...</value>
+  </data>
+  <data name="lbl_requestsent" xml:space="preserve">
+    <value>تم ارسال طلبك.</value>
+  </data>
+  <data name="lbl_Resend_subscription" xml:space="preserve">
+    <value>إعادة إرسال الاشتراك</value>
+  </data>
+  <data name="lbl_Return" xml:space="preserve">
+    <value>ارجاع</value>
+  </data>
+  <data name="lbl_ReturnedOrders" xml:space="preserve">
+    <value>الطلبات المرجّعة</value>
+  </data>
+  <data name="lbl_Run" xml:space="preserve">
+    <value>تشغيل</value>
+  </data>
+  <data name="lbl_S" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_Salesinvoices" xml:space="preserve">
+    <value>فواتير المبيعات</value>
+  </data>
+  <data name="lbl_Salesreturns" xml:space="preserve">
+    <value>مردودات الممبيعات</value>
+  </data>
+  <data name="lbl_SearchForUser" xml:space="preserve">
+    <value>البحث عن مستخدم</value>
+  </data>
+  <data name="lbl_Second" xml:space="preserve">
+    <value>ث</value>
+  </data>
+  <data name="lbl_secretKey" xml:space="preserve">
+    <value>مفتاح سري</value>
+  </data>
+  <data name="lbl_Seemore" xml:space="preserve">
+    <value>رؤية المزيد</value>
+  </data>
+  <data name="lbl_Select" xml:space="preserve">
+    <value>اختيار</value>
+  </data>
+  <data name="lbl_SelectCollection" xml:space="preserve">
+    <value>حدد المجموعة</value>
+  </data>
+  <data name="lbl_SelectReport" xml:space="preserve">
+    <value>حدد التقرير</value>
+  </data>
+  <data name="lbl_Send" xml:space="preserve">
+    <value>إرسال</value>
+  </data>
+  <data name="lbl_SendAgain" xml:space="preserve">
+    <value>إعادة الإرسال</value>
+  </data>
+  <data name="lbl_SendingCode" xml:space="preserve">
+    <value>يتم إرسال الرمز في:</value>
+  </data>
+  <data name="lbl_SendNotificationBy" xml:space="preserve">
+    <value>إرسال الاشعارات عبر:</value>
+  </data>
+  <data name="lbl_SendNotifications" xml:space="preserve">
+    <value>إرسال اشعارات</value>
+  </data>
+  <data name="lbl_SendQText" xml:space="preserve">
+    <value>ارسال نص مرمز</value>
+  </data>
+  <data name="lbl_SendTextt" xml:space="preserve">
+    <value>ارسال نص</value>
+  </data>
+  <data name="lbl_Service" xml:space="preserve">
+    <value>الخدمة</value>
+  </data>
+  <data name="lbl_Service1" xml:space="preserve">
+    <value>خدمات</value>
+  </data>
+  <data name="lbl_serviceApi1" xml:space="preserve">
+    <value>خدمة  الربط مع ال API في منصة MalyBot</value>
+  </data>
+  <data name="lbl_serviceApi2" xml:space="preserve">
+    <value>نُقدّم خدمة رائعة وفريدة من نوعها، حيث نربط جميع الأنظمة بمختلف أنواعها وتقنياتها مع خدمتنا خدمة MalyBot، بكل سهولة وتكامل واحترافية مطلقة.</value>
+  </data>
+  <data name="lbl_serviceApi3" xml:space="preserve">
+    <value>ارسال التقارير والنتائج والإشعارات، أو أي معلومات أخرى إلى جميع عملائك عبر تطبيق (WhatsApp) تلقائياً، بناءً على إعداداتك المفضلة.</value>
+  </data>
+  <data name="lbl_serviceApi4" xml:space="preserve">
+    <value>توفير الوقت والجهد المبذول في الإعداد اليدوي للتقارير، وإعدادها وارسالها للعملاء بجميع بياناتها المجمّعة من النظام، سواء كانت (تقارير أو نتائج اختبارات أو كشف حسابات) عبر WhatsApp.</value>
+  </data>
+  <data name="lbl_serviceApi5" xml:space="preserve">
+    <value>ارسال الإشعارات الفورية للعملاء، سواء كانت إشعارات حول (التحديثات، تأكيد الدفع، حالة الطلب، حالة طارئة) على سبيل المثال، وغيرها من المعلومات.</value>
+  </data>
+  <data name="lbl_serviceApi6" xml:space="preserve">
+    <value>تحقيق تجربة مستخدم متميزة عن طريق تخصيص الرسائل وتصميمها واستخدام الأوامر المخصصة والقوالب والتنسيقات المناسبة، وفقاً للاحتياجات المطلوبة.</value>
+  </data>
+  <data name="lbl_serviceMsg1" xml:space="preserve">
+    <value>خدمة رسائل واتساب المقدمة من منصة MalyBot</value>
+  </data>
+  <data name="lbl_serviceMsg2" xml:space="preserve">
+    <value>تقدم الخدمة إمكانية الرد التلقائي على طلبات العملاء، مما يسهل عليك التفاعل السريع والفعّال معهم</value>
+  </data>
+  <data name="lbl_serviceMsg3" xml:space="preserve">
+    <value>يُمكنك بسهولة تحسين الخدمات الذاتية للعملاء الخاصة بك من خلال الرد التلقائي على طلباتهم واستفساراتهم من خلال استخدام الخدمة مع تطبيق الواتس اب</value>
+  </data>
+  <data name="lbl_serviceMsg4" xml:space="preserve">
+    <value>من خلال استخدام هذه الخدمة، يمكنك تحسين تجربة العملاء والتفاعل معهم بشكل سريع وفعّال. عندما يتواصل العملاء معك عبر واتساب، يتلقون ردًا تلقائيًا يمكن أن يحتوي على معلومات مفيدة أو إشارة إلى الخدمات الذاتية المتاحة.</value>
+  </data>
+  <data name="lbl_serviceMsg5" xml:space="preserve">
+    <value>يعتبر الرد التلقائي على طلبات العملاء عبر واتساب وسيلة مفيدة لتوفير الدعم الذاتي والإجابة على الأسئلة الشائعة بشكل فوري، وتخفيف الضغط عن فريق الدعم البشري. كما يمكنك تخصيص رسائل الرد التلقائي وفقًا لاحتياجاتك ومتطلبات عملك.</value>
+  </data>
+  <data name="lbl_services" xml:space="preserve">
+    <value>الخدمات</value>
+  </data>
+  <data name="lbl_services1" xml:space="preserve">
+    <value>خدمة رسائل واتساب</value>
+  </data>
+  <data name="lbl_services11" xml:space="preserve">
+    <value>خدمة رسائل واتساب المقدمة من منصة MalyBot توفر الرد التلقائي على طلبات العملاء، مما يسهل التفاعل السريع والفعال معهم. باستخدام هذه الخدمة، يمكنك تخصيص رسائل الرد التلقائي وفقاً لاحتياجاتك ومتطلبات عملك.</value>
+  </data>
+  <data name="lbl_services2" xml:space="preserve">
+    <value>خدمة الربط ال (ِAPI):</value>
+  </data>
+  <data name="lbl_services21" xml:space="preserve">
+    <value>إرسال الشعارات والتنبيهات لجميع عملائك عبر الربط ب API، الخدمة المقدمة من منصة MalyBot كخدمة مرنة جداً، وبغض النظر عن اللغة البرمجة المستخدمة في نظامك</value>
+  </data>
+  <data name="lbl_Services_" xml:space="preserve">
+    <value>خدماتنا</value>
+  </data>
+  <data name="lbl_Show" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="lbl_ShowDetail" xml:space="preserve">
+    <value>إظهار التفاصيل</value>
+  </data>
+  <data name="lbl_Smessage" xml:space="preserve">
+    <value>رسالة النظام*</value>
+  </data>
+  <data name="lbl_speedservices" xml:space="preserve">
+    <value>السرعة</value>
+  </data>
+  <data name="lbl_Status" xml:space="preserve">
+    <value>الحالة:</value>
+  </data>
+  <data name="lbl_Status2" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="lbl_StayUpdated" xml:space="preserve">
+    <value>ابق على اطلاع</value>
+  </data>
+  <data name="lbl_subPackageFree" xml:space="preserve">
+    <value>هل أنت متأكد من الاشتراك في الباقة المجانية؟</value>
+  </data>
+  <data name="lbl_subscribedSuccessfully" xml:space="preserve">
+    <value>تم الاشتراك بنجاح</value>
+  </data>
+  <data name="lbl_Subscriber" xml:space="preserve">
+    <value>مشترك</value>
+  </data>
+  <data name="lbl_Subscribers" xml:space="preserve">
+    <value>المشتركين</value>
+  </data>
+  <data name="lbl_SubscribersNumber" xml:space="preserve">
+    <value>عدد المشتركين</value>
+  </data>
+  <data name="lbl_Subscription" xml:space="preserve">
+    <value>الاشتراك</value>
+  </data>
+  <data name="lbl_SubscriptionConfirmation" xml:space="preserve">
+    <value>هل أنت متأكد من الاشتراك في هذه الباقة؟</value>
+  </data>
+  <data name="lbl_SubscriptionDate" xml:space="preserve">
+    <value>بدأ الاشتراك</value>
+  </data>
+  <data name="lbl_SubscriptionDetails" xml:space="preserve">
+    <value>تفاصيل الإشتراك</value>
+  </data>
+  <data name="lbl_SubscriptionManagement" xml:space="preserve">
+    <value>إدارة الإشتراكات</value>
+  </data>
+  <data name="lbl_SubscriptionOrders" xml:space="preserve">
+    <value>طلبات الاشتراك</value>
+  </data>
+  <data name="lbl_SubscriptionPackages" xml:space="preserve">
+    <value>باقات الإشتراك</value>
+  </data>
+  <data name="lbl_SubscriptionPeriods" xml:space="preserve">
+    <value>فترات الإشتراكات</value>
+  </data>
+  <data name="lbl_SubscriptionsDetails" xml:space="preserve">
+    <value>تفاصيل الاشتراكات</value>
+  </data>
+  <data name="lbl_System" xml:space="preserve">
+    <value>النظام:</value>
+  </data>
+  <data name="lbl_systemsdevelopment" xml:space="preserve">
+    <value>تطوير الأنظمة</value>
+  </data>
+  <data name="lbl_T" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_Technicalsupport" xml:space="preserve">
+    <value>الدعم الفني</value>
+  </data>
+  <data name="lbl_Template" xml:space="preserve">
+    <value>النموذج</value>
+  </data>
+  <data name="lbl_Text" xml:space="preserve">
+    <value>النص : </value>
+  </data>
+  <data name="lbl_text1" xml:space="preserve">
+    <value>أنشئ تواصلًا مبتكرا مع عملائك من خلال ربط موقعك الإلكتروني، متجرك الإلكتروني، تطبيقك، أو أنظمة المبيعات الخاصة بك مع واتساب، البرنامج الأكثر شيوعا للمحادثات حول العالم.</value>
+  </data>
+  <data name="lbl_text11" xml:space="preserve">
+    <value>ارسال رسائل واتساب لعدد غير محدود يومياً.</value>
+  </data>
+  <data name="lbl_text12" xml:space="preserve">
+    <value>قناة اتصال أمنه ومشفره ولا يمكن لطرف ثاني الوصول لمعلوماتك</value>
+  </data>
+  <data name="lbl_text13" xml:space="preserve">
+    <value>توفير العديد من القوائم الجاهزة التي تتماشى مع نطاق عملك ونشاطك التجاري.</value>
+  </data>
+  <data name="lbl_text21" xml:space="preserve">
+    <value>امكانية ارسال الوسائط النصية والمرئية.</value>
+  </data>
+  <data name="lbl_text22" xml:space="preserve">
+    <value>واجهة بسيطة وسهلة الاستخدام.</value>
+  </data>
+  <data name="lbl_text23" xml:space="preserve">
+    <value>قوالب نصية معدة مسبقاً لمراسلاتك.</value>
+  </data>
+  <data name="lbl_text31" xml:space="preserve">
+    <value>يعمل 24 ساعة دون توقف.</value>
+  </data>
+  <data name="lbl_text32" xml:space="preserve">
+    <value>تقارير دقيقه حقيقية لحالة الرسائل والارقام</value>
+  </data>
+  <data name="lbl_text33" xml:space="preserve">
+    <value>توفر التكاليف وتزيد من الكفاءة.</value>
+  </data>
+  <data name="lbl_texts" xml:space="preserve">
+    <value>النصوص</value>
+  </data>
+  <data name="lbl_textValidations" xml:space="preserve">
+    <value>يجب ادخال النص</value>
+  </data>
+  <data name="lbl_TheDiscount" xml:space="preserve">
+    <value>الخصم</value>
+  </data>
+  <data name="lbl_timeRefreshToken" xml:space="preserve">
+    <value>وقت تحديث الرمز</value>
+  </data>
+  <data name="lbl_Title" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="lbl_ToDate" xml:space="preserve">
+    <value>إلى تاريخ:</value>
+  </data>
+  <data name="lbl_Total" xml:space="preserve">
+    <value>المجموع</value>
+  </data>
+  <data name="lbl_TotalPrice" xml:space="preserve">
+    <value>اجمالي السعر</value>
+  </data>
+  <data name="lbl_TotalQuantity" xml:space="preserve">
+    <value>اجمالي الكمية</value>
+  </data>
+  <data name="lbl_txt" xml:space="preserve">
+    <value>النص</value>
+  </data>
+  <data name="lbl_TypeConfirmationCode" xml:space="preserve">
+    <value>اكتب الرمز</value>
+  </data>
+  <data name="lbl_Typeperiods" xml:space="preserve">
+    <value>نوع الفترة</value>
+  </data>
+  <data name="lbl_U" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lbl_UBot" xml:space="preserve">
+    <value>MalyBOT</value>
+  </data>
+  <data name="lbl_UBot1" xml:space="preserve">
+    <value>روبوت المحادثة هو برنامج يحاكي المحادثات المشابهة للإنسان مع المستخدمين عبر الدردشة. وتتمثل مهمتها الأساسية في الرد على أسئلة المستخدم بالرسائل الفورية.  </value>
+  </data>
+  <data name="lbl_UBot12" xml:space="preserve">
+    <value>مع المستخدمين عبر الدردشة. وتتمثل مهمتها الأساسية </value>
+  </data>
+  <data name="lbl_UBot13" xml:space="preserve">
+    <value>في الرد على أسئلة المستخدم بالرسائل الفورية.</value>
+  </data>
+  <data name="lbl_UpdateSecretKey" xml:space="preserve">
+    <value>تحديث المفتاح السري</value>
+  </data>
+  <data name="lbl_uploadedtobot" xml:space="preserve">
+    <value>تم الرفع الى البوت</value>
+  </data>
+  <data name="lbl_User" xml:space="preserve">
+    <value>المستخدم</value>
+  </data>
+  <data name="lbl_UserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="lbl_Users" xml:space="preserve">
+    <value>المستخدمين</value>
+  </data>
+  <data name="lbl_UsersManagement" xml:space="preserve">
+    <value>إدارة المستخدمين</value>
+  </data>
+  <data name="lbl_usertraining" xml:space="preserve">
+    <value>تدريب المستخدم</value>
+  </data>
+  <data name="lbl_UserValidations" xml:space="preserve">
+    <value>يجب تحديد مستخدم</value>
+  </data>
+  <data name="lbl_Valueperiods" xml:space="preserve">
+    <value>قيمة الفترة</value>
+  </data>
+  <data name="lbl_Verification" xml:space="preserve">
+    <value>ادخل رمز التحقق الذي تم إرساله إلى</value>
+  </data>
+  <data name="lbl_Verify" xml:space="preserve">
+    <value>التحقق</value>
+  </data>
+  <data name="lbl_Verifybtn" xml:space="preserve">
+    <value>تحقق</value>
+  </data>
+  <data name="lbl_Verifyfialed" xml:space="preserve">
+    <value>لم يتم إرسال الرمز؟</value>
+  </data>
+  <data name="lbl_video1" xml:space="preserve">
+    <value>نحن نقدم لكم أدوات مبتكرة لنقل المعرفة والتواصل مع جمهوركم بشكل سهل وجذاب. من خلال الفديوهات التعليمية و دليل للاستخدام</value>
+  </data>
+  <data name="lbl_video11" xml:space="preserve">
+    <value>فيديوهات تتم فيها شرح عمليه الاشتراك.</value>
+  </data>
+  <data name="lbl_video12" xml:space="preserve">
+    <value>فيديوهات تتم فيها شرح كيفية التعامل مع البوت وانشاء الرقم وغيره.</value>
+  </data>
+  <data name="lbl_videobtn" xml:space="preserve">
+    <value>تنزيل ملف (دليل الاستخدام)</value>
+  </data>
+  <data name="lbl_Welcome" xml:space="preserve">
+    <value>مرحباً بك</value>
+  </data>
+  <data name="lbl_WelcomeToTheAutoMessage" xml:space="preserve">
+    <value>مرحبا بك في دردشة الردود التلقائية</value>
+  </data>
+  <data name="lbl_WhatsApp" xml:space="preserve">
+    <value>الواتس اب</value>
+  </data>
+  <data name="lbl_WhatsAppGmail" xml:space="preserve">
+    <value>الواتس اب والبريد الالكتروني</value>
+  </data>
+  <data name="lbl_WhatsappNo" xml:space="preserve">
+    <value>رقم الواتس</value>
+  </data>
+  <data name="lbl_why" xml:space="preserve">
+    <value>لماذا</value>
+  </data>
+  <data name="lbl_YCompany" xml:space="preserve">
+    <value>شركة يمن سوفت</value>
+  </data>
+  <data name="lbl_Year" xml:space="preserve">
+    <value>سنة</value>
+  </data>
+  <data name="lbl_Yearly" xml:space="preserve">
+    <value>اشتراك سنوي</value>
+  </data>
+  <data name="lbl_Yearly1" xml:space="preserve">
+    <value>سنوي</value>
+  </data>
+  <data name="lbl_Years" xml:space="preserve">
+    <value>سنين</value>
+  </data>
+  <data name="msg_AlertdDeleted" xml:space="preserve">
+    <value>تم الحذف</value>
+  </data>
+  <data name="msg_AlertdFDeleted" xml:space="preserve">
+    <value>فشل الحذف</value>
+  </data>
+  <data name="msg_AlertFModified" xml:space="preserve">
+    <value>فشل التعديل</value>
+  </data>
+  <data name="msg_AlertFSaved" xml:space="preserve">
+    <value>فشل الحفظ</value>
+  </data>
+  <data name="msg_AlertModified" xml:space="preserve">
+    <value>تم التعديل</value>
+  </data>
+  <data name="msg_AlertModifiedandUpdate" xml:space="preserve">
+    <value>تم التعديل، يرجى تحديث MalyBot</value>
+  </data>
+  <data name="msg_AlertSaved" xml:space="preserve">
+    <value>تم الحفظ</value>
+  </data>
+  <data name="msg_AlertSavedandUpdate" xml:space="preserve">
+    <value>تم الحفظ، يرجى تحديث MalyBot</value>
+  </data>
+  <data name="msg_alreadySubscribed" xml:space="preserve">
+    <value>لقد اشتركت بالفعل في هذه الباقة</value>
+  </data>
+  <data name="msg_alreadyWaiting" xml:space="preserve">
+    <value>يرجى الانتظار حتى يتم الموافقة على طلبك السابق</value>
+  </data>
+  <data name="msg_cancelledFSubscription" xml:space="preserve">
+    <value>فشل إلغاء الاشتراك</value>
+  </data>
+  <data name="msg_cancelledSubscription" xml:space="preserve">
+    <value>تم إلغاء الاشتراك</value>
+  </data>
+  <data name="msg_CannotRunBot" xml:space="preserve">
+    <value>عذراً... لا يمكنك تشغيل البوت. ليس لديك اشتراك.</value>
+  </data>
+  <data name="msg_CheckOnline" xml:space="preserve">
+    <value>يرجى التحقق من الانترنت</value>
+  </data>
+  <data name="msg_DataRequired" xml:space="preserve">
+    <value>يجب ادخال جميع البيانات</value>
+  </data>
+  <data name="msg_DonotHaveSubscription" xml:space="preserve">
+    <value>لايمكنك الاضافة ليس لديك اشتراك</value>
+  </data>
+  <data name="msg_ExitError" xml:space="preserve">
+    <value>لايمكن الخروج لوجود مشكلة</value>
+  </data>
+  <data name="msg_ExitSuccess" xml:space="preserve">
+    <value>تم الخروج بنجاح</value>
+  </data>
+  <data name="msg_Fail" xml:space="preserve">
+    <value>فشل </value>
+  </data>
+  <data name="msg_FModifiedPackageExpired" xml:space="preserve">
+    <value>فشل التعديل، انتهت صلاحية باقتك</value>
+  </data>
+  <data name="msg_FSavePackageExpired" xml:space="preserve">
+    <value>فشل الحفظ، انتهت صلاحية باقتك</value>
+  </data>
+  <data name="msg_initMsg" xml:space="preserve">
+    <value>مرحباً بك في دردشة MalyBot</value>
+  </data>
+  <data name="msg_InlTelValidation" xml:space="preserve">
+    <value>الرقم غير صحيح</value>
+  </data>
+  <data name="msg_ItemsRequired" xml:space="preserve">
+    <value>يجب إضافة عنصر على الاقل</value>
+  </data>
+  <data name="msg_LoginError" xml:space="preserve">
+    <value>البريد الإلكتروني أو كلمة المرور غير صحيحة</value>
+  </data>
+  <data name="msg_LogoutFail" xml:space="preserve">
+    <value>لا يمكنك تسجيل الخروج</value>
+  </data>
+  <data name="msg_LogoutSuccess" xml:space="preserve">
+    <value>تم تسجيل خروجك بنجاح</value>
+  </data>
+  <data name="msg_numberLarger" xml:space="preserve">
+    <value>عدد العملاء أكبر من المسموح به في الباقة الجديدة</value>
+  </data>
+  <data name="msg_PackageServiceRequired" xml:space="preserve">
+    <value>يجب إضافة خدمة على الاقل</value>
+  </data>
+  <data name="msg_RegisterExists" xml:space="preserve">
+    <value>الايميل مستخدم مسبقاً</value>
+  </data>
+  <data name="msg_Required" xml:space="preserve">
+    <value>هذا الحقل مطلوب</value>
+  </data>
+  <data name="msg_RunError" xml:space="preserve">
+    <value>لايمكن التشغيل لوجود مشكلة</value>
+  </data>
+  <data name="msg_RunSuccess" xml:space="preserve">
+    <value>تم التشغيل بنجاح</value>
+  </data>
+  <data name="msg_SelectCollectionOrTemplate" xml:space="preserve">
+    <value>يجب تحديد مجموعة أو نموذج</value>
+  </data>
+  <data name="msg_unauthorizedWarning" xml:space="preserve">
+    <value>عذراً لست مخولاَ للوصول إلى هذه الصفحة فضلاً قم بتسجيل الدخول للاستمرار </value>
+  </data>
+  <data name="msg_usedPackageFree" xml:space="preserve">
+    <value>عذراً، لقد استخدمت باقتك المجانية</value>
+  </data>
+  <data name="msg_Verification" xml:space="preserve">
+    <value>لم يتم التحقق يرجى التأكد من الرمز</value>
+  </data>
+</root>

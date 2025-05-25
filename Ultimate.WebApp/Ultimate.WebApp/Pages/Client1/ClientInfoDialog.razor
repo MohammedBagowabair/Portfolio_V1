@@ -1,0 +1,96 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+ /*   @@media only screen and (max-width: 620px)
+    {
+ .dialogSm
+ {
+      width: 100%;
+ }
+    }*/
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+    .dialogSm
+    {
+        /*border-radius: 50px;*/
+        width:300px;
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Class="dialogSm" Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <DialogContent>
+            <div class="d-flex gap-2">
+                <MudAvatar Color=@color Size="Size.Medium" Variant="Variant.Filled">
+                    <MudText Align="Align.Center">@cln.WhatsappNumber.ToString().Substring(0,2)</MudText>
+                </MudAvatar>
+                <div class="d-flex flex-column align-content-start pb-5">
+                    <MudText Class="fontContent" Color="Color.Secondary" Style="font-size:18px "><b>@cln.WhatsappNumber</b></MudText>
+                    <MudText Class="fontContent" Color="Color.Secondary" Style="font-size:14px">@cln.Name</MudText>
+                    @*<MudText Typo="Typo.subtitle2" Class="mt-n1">@(cln.isConnected == true ? "متصل الان" : "غير متصل ")</MudText>*@
+                        
+                    </div>
+                </div>
+            <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.subtitle2">@cln.Description</MudText>
+            <MudDivider Class="my-3"></MudDivider>
+                <div>
+                <MudGrid Spacing="1">
+                  
+                    
+                    <MudItem xs="12" sm="12" md="12"><MudText Class="fontContent" Color="Color.Secondary" Style="font-size:18px">@cln.NameAdmin</MudText></MudItem>
+                    <MudItem xs="12" sm="12" md="12"><MudText Class="fontContent" Color="Color.Primary" Style=" font-size:13px">@_localizer["lbl_Admin"]</MudText></MudItem>
+                    
+                    <MudItem xs="12" sm="12" md="12"><MudDivider></MudDivider></MudItem>
+                    <MudItem xs="12" sm="12" md="12"><MudText Class="fontContent" Color="Color.Secondary" Style="font-size:18px">@cln.PhoneAdmin</MudText></MudItem>
+                    <MudItem xs="12" sm="12" md="12"><MudText Class="fontContent" Color="Color.Primary" Style=" font-size:13px">@_localizer["lbl_AdminNo"]</MudText></MudItem>
+                    
+                    <MudItem xs="12" sm="12" md="12"><MudDivider></MudDivider></MudItem>
+                    @*<MudItem md="12">المستخدم</MudItem>
+                    <MudItem md="12">@cln.UserModel.Email</MudItem>
+                    <MudItem md="12"><MudDivider></MudDivider></MudItem>*@
+                </MudGrid>
+                </div>
+        </DialogContent>
+        
+        @*<DialogContent>
+           
+        </DialogContent>*@
+        <DialogActions>
+            
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    string font_Title;
+    string font_Content;
+    string direction;
+    bool IsRTL;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    Color color;
+    [Parameter]
+    public ClientModel cln { set; get; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        color = cln.isConnected == true ? Color.Primary : Color.Default;
+        if (selectedCulture.Contains("ar"))
+        {
+            direction = "rtl";
+            IsRTL = true;
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+        
+
+    }
+}

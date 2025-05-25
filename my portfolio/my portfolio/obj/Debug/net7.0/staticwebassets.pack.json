@@ -1,0 +1,313 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\my portfolio.bundle.scp.css",
+      "PackagePath": "staticwebassets\\my portfolio.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "PackagePath": "staticwebassets\\css\\open-iconic"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\README.md",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\README.md"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "PackagePath": "staticwebassets\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\AI\\ArtficialIntelligence.png",
+      "PackagePath": "staticwebassets\\images\\AI\\ArtficialIntelligence.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\AI\\BusinessIntelligenceBI.png",
+      "PackagePath": "staticwebassets\\images\\AI\\BusinessIntelligenceBI.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\AI\\DataAnlytics.png",
+      "PackagePath": "staticwebassets\\images\\AI\\DataAnlytics.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\AI\\DataVisualization.png",
+      "PackagePath": "staticwebassets\\images\\AI\\DataVisualization.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Academic\\AcademicCertificate.png",
+      "PackagePath": "staticwebassets\\images\\Academic\\AcademicCertificate.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Courses\\UC-f5a42b04-5c04-467f-a3fe-031283c5b2f5.jpg",
+      "PackagePath": "staticwebassets\\images\\Courses\\UC-f5a42b04-5c04-467f-a3fe-031283c5b2f5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\DotNetCoreMvc.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\DotNetCoreMvc.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\EntityFrameWork.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\EntityFrameWork.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\LINQ.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\LINQ.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\api.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\api.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\blazor.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\blazor.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\c.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\c.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\clean.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\clean.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\DotNetCourses\\oop.png",
+      "PackagePath": "staticwebassets\\images\\DotNetCourses\\oop.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\AddAmenity.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddAmenity.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\AddVillNumber.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddVillNumber.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\AddVilla.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\AddVilla.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\Booking.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Booking.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\CustomerMangement.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\CustomerMangement.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\Dashboard.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Dashboard.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\Detials.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Detials.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\Login.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Login.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\Register.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\Register.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\checkout.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\checkout.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\invoice.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\invoice.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\payments.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\payments.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bookly\\poerpoint.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bookly\\poerpoint.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\3.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\3.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\4.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\4.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\5.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\5.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\6.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\6.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\Bulky\\7.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\Bulky\\7.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\2.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\2.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\3.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\3.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\4.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\4.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\5.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\5.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\6.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\6.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\7.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\7.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\YumBlazor\\8.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\YumBlazor\\8.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\goDelivery\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\goDelivery\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\Projects\\realstate\\1.png",
+      "PackagePath": "staticwebassets\\images\\Projects\\realstate\\1.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\SocialMedia\\GitHub_logo.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\GitHub_logo.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\SocialMedia\\logo-linkedin-icon-4096.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\logo-linkedin-icon-4096.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\SocialMedia\\whatsapp-icon.png",
+      "PackagePath": "staticwebassets\\images\\SocialMedia\\whatsapp-icon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\english\\english.png",
+      "PackagePath": "staticwebassets\\images\\english\\english.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\profile\\logo.png",
+      "PackagePath": "staticwebassets\\images\\profile\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\profile\\logoface.png",
+      "PackagePath": "staticwebassets\\images\\profile\\logoface.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\profile\\myProfileImage.png",
+      "PackagePath": "staticwebassets\\images\\profile\\myProfileImage.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\images\\profile\\personal.jpg",
+      "PackagePath": "staticwebassets\\images\\profile\\personal.jpg"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\pdf\\mohammedbagowabair-software-engineer.pdf",
+      "PackagePath": "staticwebassets\\pdf\\mohammedbagowabair-software-engineer.pdf"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.my portfolio.props",
+      "PackagePath": "build\\my portfolio.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.my portfolio.props",
+      "PackagePath": "buildMultiTargeting\\my portfolio.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.my portfolio.props",
+      "PackagePath": "buildTransitive\\my portfolio.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.my portfolio.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

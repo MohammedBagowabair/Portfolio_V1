@@ -1,0 +1,194 @@
+﻿@page "/accountmanagement"
+@using System.ComponentModel.DataAnnotations
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@inject IAuthService AuthService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Account Management</PageTitle>
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999" >
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+        <div class="ju">
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="11" sm="8" md="8">
+
+
+            <MudPaper Style="background-color:#424242;box-shadow:9px 8px 200px -13px #4aa47e">
+<MudForm Class="mt-16 px-5" @bind-IsValid="@success">
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="11" sm="11" md="11">
+                            <MudText Class="mx-3 fontContent" Style="color:#c8cacd"><b>@_localizer["lbl_CurrentPassword"]:</b></MudText>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+                            <MudTextField Class="fontContent" Style="color:#c8cacd" @bind-Value="CurrentPassword" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" Required=true RequiredError="@_localizer["msg_Required"]" Placeholder="@_localizer["lbl_CurrentPassword"]" InputType="@PasswordInput"AdornmentAriaLabel="Show Password"></MudTextField>
+        </MudItem>
+        <MudItem xs="11" sm="11" md="11">
+                            <MudText Class="mx-3 fontContent" Style="color:#c8cacd"><b>@_localizer["lbl_NewPassword"]:</b></MudText>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+                            <MudTextField Class="fontContent" Style="color:#c8cacd" @bind-Value="NewPassword" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" Required=true RequiredError="@_localizer["msg_Required"]" Placeholder="@_localizer["lbl_NewPassword"]" InputType="@PasswordInput1" AdornmentAriaLabel="Show Current Password"></MudTextField>
+        </MudItem>
+        <MudItem xs="11" sm="11" md="11">
+                            <MudText Class="mx-3 fontContent" Style="color:#c8cacd"><b>@_localizer["lbl_confirmPassword"]:</b></MudText>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+            @*<MudTextField @bind-Value="periodModel.name" For="@(() => periodModel.name)" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" InputType="InputType.Text" Placeholder="@_localizer["lbl_Nameperiods"]"></MudTextField>*@
+                            <MudTextField Class="fontContent" Style="color:#c8cacd" Immediate=true @bind-Value="confirmPassword" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" Required=true RequiredError="@_localizer["msg_Required"]" Validation="new Func<string,string>(PasswordMatch)" InputType="@PasswordInput2" AdornmentAriaLabel="Show New Password" AdornmentColor="Color.Secondary" Placeholder="@_localizer["lbl_confirmPassword"]"></MudTextField>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+                            <MudButton Disabled="@(!success)" FullWidth Color="Color.Primary" Class="mt-5 fontContent" Variant="Variant.Filled" Style="font-size:20px;color:#c8cacd" OnClick="HandelSubment">@_localizer["lbl_BtnSave"]</MudButton>
+
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+            <span class="text-danger fontContent" style="visibility:@error">@message</span>
+        </MudItem>
+    </MudGrid>
+</MudForm>
+</MudPaper>
+    </MudItem>
+</MudGrid>
+</div>
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+
+    bool error;
+    bool success;
+    private bool isVisible;
+    public string msgalert { get; set; }
+    public string message { set; get; }
+    public string CurrentPassword { set; get; }
+    public string NewPassword { set; get; }
+    [Compare(nameof(NewPassword))]
+    public string confirmPassword { set; get; }
+    bool isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+
+    InputType PasswordInput1 = InputType.Password;
+    string PasswordInputIcon1 = Icons.Material.Filled.VisibilityOff;
+
+    InputType PasswordInput2 = InputType.Password;
+    string PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+    public async void HandelSubment()
+    { 
+        message = null;
+        isVisible = true;
+        error = false;
+        await Task.Delay(1000);
+
+        ChangePasswordModel changePassword = new ChangePasswordModel()
+            {
+                oldPassword = CurrentPassword,
+                newPassword = NewPassword,
+
+            };
+
+        var res = await AuthService.Change(changePassword);
+        
+        if (res.Code != 0)
+        {
+            if (res.Message == "Password is not matched")
+            {
+                message = _localizer["lbl_notmatchpassword"];
+                isVisible = false;
+                error = true;
+                StateHasChanged();
+                //Console.WriteLine(res.Message);
+                return;
+                
+            }
+            else{
+                isVisible = false;
+                message = _localizer["msg_CheckOnline"];
+                error = true;
+                StateHasChanged();
+                return;
+            }
+        }
+        else
+        {
+            isVisible = false;
+            message = string.Empty;
+            msgalert = _localizer["msg_AlertModified"];
+            Snackbar.Add(msgalert, Severity.Success);
+            Console.WriteLine(res.Message);
+            StateHasChanged();
+        }
+    }
+    void ButtonTestclick()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+
+    void ButtonTestclick1()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon1 = Icons.Material.Filled.VisibilityOff;
+            PasswordInput1 = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon1 = Icons.Material.Filled.Visibility;
+            PasswordInput1 = InputType.Text;
+        }
+    }
+    void ButtonTestclick2()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon2 = Icons.Material.Filled.VisibilityOff;
+            PasswordInput2 = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon2 = Icons.Material.Filled.Visibility;
+            PasswordInput2 = InputType.Text;
+        }
+    }
+    private string PasswordMatch(string cPassword)
+    {
+        if (cPassword != NewPassword)
+            return _localizer["lbl_notmatchpassword"];
+        return null;
+    }
+}

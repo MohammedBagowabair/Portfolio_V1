@@ -1,0 +1,66 @@
+body {
+    font-family: 'Noto Kufi Arabic';
+    
+
+}
+::deep .link-hover{
+    color: #c8cacd !important;
+}
+::deep .link-hover:hover {
+    color: #c8cacd !important;
+    border-bottom: solid 3px #4aa47e;
+    border-radius: 5px;
+    padding: .5px;
+}
+
+::deep .login-hover {
+    background-color: #4aa47e !important;
+    color: #c8cacd !important;
+}
+
+    ::deep .login-hover:hover {
+        background-color: #c8cacd !important;
+        color: #343535 !important;
+    }
+
+::deep .register-hover {
+    background-color: #c8cacd !important;
+    color: #343535 !important;
+}
+
+    ::deep .register-hover:hover {
+        background-color: #4aa47e !important;
+        color: #c8cacd !important;
+    }
+
+::deep .link-active:active {
+    border-bottom: solid 3px #7995be;
+    background: red;
+    border-radius: 5px;
+    padding: .5px;
+}
+
+
+
+
+::deep .screen-full {
+    visibility: visible;
+}
+
+::deep .screen-small {
+    visibility: hidden;
+}
+
+@media (max-width: 858px) {
+    ::deep .screen-full {
+        visibility: hidden;
+    }
+
+    ::deep .screen-small {
+        visibility: visible;
+    }
+
+    ::deep .img {
+        justify-content: center;
+    }
+}

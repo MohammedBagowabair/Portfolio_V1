@@ -1,0 +1,260 @@
+﻿@using Ultimate.Bot.Application.DTO
+@inject IStringLocalizer<Resource> _localizer
+@inject IAutomessageService AutomessageService
+@inject ISnackbar Snackbar
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5">@title</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+            </MudOverlay>
+            <EditForm Model="autoMessageDto">
+                <DataAnnotationsValidator />
+                <MudGrid Justify="Justify.FlexStart" Class="pa-2">
+                    <MudItem sm="11" xs="8" md="11">
+                        <MudText Class="fontContent"Color="Color.Secondary">@_localizer["lbl_initMsg"]:</MudText>
+                        <MudTextField Immediate Class="px-2 fontContent" @bind-Value="@autoMessageDto.Message"
+                                          For="@(() => autoMessageDto.Message)" Placeholder="@_localizer["lbl_initMsg"]"
+                                          Margin="Margin.Dense" Variant="Variant.Outlined"
+                                      Style=" margin-top:-0px;width:100%;color:#c8cacd" ErrorText="@_localizer["msg_Required"]" />
+                       
+                    </MudItem>
+                    <MudItem sm="11" xs="8" md="11">
+                            <Events @ref="_events" botId="@botId" name_btns="@name_btn" keyses="@autoMessageDto.Actionn"> </Events>
+                        </MudItem>
+                    @*<MudItem sm="2" xs="3" md="2">
+                        <div class="d-flex justify-center align-center">
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth Class="mt-2"
+                                       Size="Size.Medium" Color="Color.Primary" Style="font-size:18px">
+                                <b>@name_btn</b>
+                            </MudButton>
+                        </div>
+                    </MudItem>*@
+                    @*<MudItem sm="2" xs="3" md="2">
+                        <div class="d-flex justify-center align-center @btnCancleInit">
+
+                            <MudButton Variant="Variant.Text" FullWidth Class=""
+                                       Size="Size.Large" Style="color:#00AF37; font-size:18px" OnClick="HandelCancleInit">
+                                <b>@_localizer["lbl_Cancelbtn"]</b>
+                            </MudButton>
+                        </div>
+                    </MudItem>*@
+                </MudGrid>
+            </EditForm>
+        </DialogContent>
+        <DialogActions>
+            @if (autoMessageDto.Message != null && autoMessageDto.Message != "")
+            {
+                <MudButton Variant="Variant.Filled" FullWidth Class="mt-2 fontContent" OnClick="HandelSubmentSystem"
+                                       Size="Size.Medium" Color="Color.Primary" Style="font-size:18px">
+                                <b>@name_btn</b>
+            </MudButton>
+            }
+            else{
+                <MudButton Disabled Variant="Variant.Filled" FullWidth Class="mt-2 fontContent" OnClick="HandelSubmentSystem"
+                       Size="Size.Medium" Color="Color.Primary" Style="font-size:18px">
+                    <b>@name_btn</b>
+                </MudButton>
+            }
+            <MudButton Variant="Variant.Filled" FullWidth Class="mt-2 fontContent"
+                       Size="Size.Medium" Color="Color.Secondary" Style="font-size:18px" OnClick="Cancel">
+                                <b>@_localizer["lbl_Cancelbtn"]</b>
+            </MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    bool IsRTL;
+    string direction;
+    string msgalert;
+    Events _events;
+    private bool isVisible;
+    AutoMessageDto autoMessageDto = new AutoMessageDto();
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    ResponseModel<AutoMessageModel> auto;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public int botId { set; get; }
+    [Parameter] public int AutoId { set; get; }
+    [Parameter] public EventCallback OnShow { set; get; }
+    [Parameter] public string name_btn { set; get; }
+    [Parameter] public string title { set; get; }
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            direction = "rtl";
+            IsRTL = true;
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+        if (AutoId > 0)
+        {
+            try{
+                auto=await AutomessageService.GetById(botId);
+                foreach(var au in auto.Content){
+                    if(au.Id==AutoId){
+                        autoMessageDto.Id = au.Id;
+                        autoMessageDto.Message = au.Message;
+                        autoMessageDto.Actionn = au.Actionn;
+                    }
+                }
+            }
+            catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    public async void HandelSubmentSystem()
+    {
+        isVisible = true;
+        autoMessageDto.BotId = botId;
+        autoMessageDto.MsgType = "0";
+        autoMessageDto.Actionn = _events.getAction();
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        if (AutoId==0)
+        {
+            try
+            {
+                var res=await AutomessageService.CreateDto(autoMessageDto);
+                if (res.Code == 0)
+                {
+                    isVisible = false;
+                    await OnShow.InvokeAsync();
+                    msgalert = _localizer["msg_AlertSaved"];
+
+                    MudDialog.Close(DialogResult.Ok(true));
+                    Snackbar.Add(msgalert, Severity.Success);
+                    autoMessageDto = new AutoMessageDto();
+                    StateHasChanged();
+                }
+                else if (res.Code == 3003)
+                {
+                    isVisible = false;
+                    await OnShow.InvokeAsync();
+                    msgalert = _localizer["msg_AlertSavedandUpdate"];
+
+                    MudDialog.Close(DialogResult.Ok(true));
+                    Snackbar.Add(msgalert, Severity.Success);
+                    autoMessageDto = new AutoMessageDto();
+                    StateHasChanged();
+                }
+                else if (res.Code == 4004)
+                {
+                    isVisible = false;
+                    msgalert = _localizer["msg_FSavePackageExpired"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    autoMessageDto = new AutoMessageDto();
+                    StateHasChanged();
+                }
+                else
+                {
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertFSaved"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    //autoMessageModel = new AutoMessageModel();
+                    Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFSaved"];
+                Snackbar.Add(msgalert, Severity.Error);
+                //autoMessageModel = new AutoMessageModel();
+                StateHasChanged();
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+        }
+        else
+        {
+            try
+            {
+                var res=await AutomessageService.UpdateDto(autoMessageDto);
+                //Console.WriteLine(AutomessageService.Update(autoMessageModel));
+                if (res.Code == 0)
+                {
+                    name_btn = _localizer["lbl_BtnSave"];
+                    isVisible = false;
+                    await OnShow.InvokeAsync();
+                    msgalert = _localizer["msg_AlertModified"];
+                    MudDialog.Close(DialogResult.Ok(true));
+                    Snackbar.Add(msgalert, Severity.Success);
+                    //showCallAlert = false;
+                    autoMessageDto = new AutoMessageDto();
+                    StateHasChanged();
+                }
+                else if (res.Code == 3003)
+                {
+                    name_btn = _localizer["lbl_BtnSave"];
+                    isVisible = false;
+                    await OnShow.InvokeAsync();
+                    msgalert = _localizer["msg_AlertModifiedandUpdate"];
+                    MudDialog.Close(DialogResult.Ok(true));
+                    Snackbar.Add(msgalert, Severity.Success);
+                    //showCallAlert = false;
+                    autoMessageDto = new AutoMessageDto();
+                    StateHasChanged();
+                }
+                else if (res.Code == 4004)
+                {
+                    name_btn = _localizer["lbl_BtnSave"];
+                    isVisible = false;
+                    await OnShow.InvokeAsync();
+                    msgalert = _localizer["msg_FModifiedPackageExpired"];
+                    MudDialog.Close(DialogResult.Ok(true));
+                    Snackbar.Add(msgalert, Severity.Error);
+                    //showCallAlert = false;
+                    autoMessageDto = new AutoMessageDto();
+                    auto = await AutomessageService.GetById(botId);
+                    StateHasChanged();
+                }
+                else
+                {
+                    isVisible = false;
+                    msgalert = _localizer["msg_AlertFModified"];
+                    Snackbar.Add(msgalert, Severity.Error);
+                    StateHasChanged();
+                    Console.WriteLine($"{res.Message}, {res.Code}");
+                }
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFModified"];
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+        }
+    }
+}

@@ -1,0 +1,522 @@
+﻿@using System.Security.Claims
+@inject ISubscriptionService SubscriptionService
+@inject IOrdersService ordersService
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject ILocalStorageService _localStorageService
+@page "/SubscriptionOrders"
+@page "/SubscriptionOrders/{dashboardStatus}/{dashboardHeadline}"
+
+<head>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
+    <style>
+        .hoverLnk:hover {
+            color: #4aa47e;
+        }
+
+        .fontTitle {
+        @font_Title
+        }
+
+        .fontContent {
+        @font_Content
+        }
+    </style>
+
+</head>
+<PageTitle>Subscription Orders</PageTitle>
+<MudGrid>
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+
+    <MudItem xs="11" sm="11" md="8">
+        <MudButtonGroup Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled" Class="mt-5">
+            <MudButton Class="fontContent" OnClick="@(()=>ordBystatus("requested",@_localizer["lbl_Orders"]))">@_localizer["lbl_Orders"]</MudButton>
+            <MudButton Class="fontContent" OnClick="@(()=>ordBystatus("accepted",@_localizer["lbl_AcceptedOrders"]))">@_localizer["lbl_AcceptedOrders"]</MudButton>
+            <MudButton Class="fontContent" OnClick="@(()=>ordBystatus("rejected",@_localizer["lbl_RejectedOrders"]))">@_localizer["lbl_RejectedOrders"]</MudButton>
+            <MudButton Class="fontContent" OnClick="@(()=>ordBystatus("returned",@_localizer["lbl_ReturnedOrders"]))">@_localizer["lbl_ReturnedOrders"]</MudButton>
+        </MudButtonGroup>
+    </MudItem>
+
+    @if (Orders != null)
+    {
+
+
+        
+        <MudItem xs="11" sm="11" md="11">
+            <MudText Typo="Typo.h6" Class="mt-3 fontContent" Color="Color.Secondary">@headline</MudText>
+        </MudItem>
+        <MudItem>
+            <MudTable Items="Orders.Content" Breakpoint="Breakpoint.Xs" Class="mt-3" Style="background-color:#393939;">
+                <ColGroup>
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+
+
+                    <col />
+                </ColGroup>
+
+                <HeaderContent>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_User"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_OrderDate"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Packages"]</b></MudTh>
+
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848" hidden="@isHidden"></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848" hidden="@isHidden"></MudTh>
+
+
+                </HeaderContent>
+
+                <RowTemplate>
+                    <MudTd DataLabel="@_localizer["lbl_User"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.user.Email</MudTd>
+                    <MudTd DataLabel="@_localizer["lbl_OrderDate"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.orderTime</MudTd>
+
+                    <MudTd DataLabel="@_localizer["lbl_Price"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+                        @*  to calculate order total price:
+                    packageTotalPrice-packageTotalPrice*discount/100*@
+
+                        @context.packageRelations.Sum(
+                    x=>x.package.packageServices.Sum(x => x.price * x.qty)-
+                    x.package.packageServices.Sum(x => x.price * x.qty)*
+                    x.package.disCount/100)
+                    </MudTd>
+
+                    <MudTd DataLabel="@_localizer["lbl_Packages"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.packageRelations.Count()</MudTd>
+
+                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848">
+                        <MudButton Variant="Variant.Filled" Size="Size.Small" OnClick="@(()=>ShowDetails(context.id,"details"))" Class="fontContent" Style="color:#c8cacd"><b>@(context.isShowDetails == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton>
+
+                    </MudTd>
+                    <MudTd hidden="@isHidden" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+                        <MudHidden Breakpoint="Breakpoint.MdAndDown" Invert="true" hidden="@isHidden">
+                            <MudMenu Icon="@Icons.Material.Filled.MoreVert" DisableElevation="true">
+                                <MudMenuItem OnTouch="()=>ordAccepted(context)" OnClick="()=>ordAccepted(context)"><span style="color:#c8cacd" class="fontContent">@_localizer["lbl_Accept"]</span></MudMenuItem>
+                                <MudMenuItem OnTouch="()=>ordRejected(context)" OnClick="()=>ordRejected(context)"><span style="color:#c8cacd" class="fontContent">@_localizer["lbl_Reject"]</span></MudMenuItem>
+                                <MudMenuItem OnTouch="()=>Returned(context.id)" OnClick="()=>Returned(context.id)"><span style="color:#c8cacd" class="fontContent">@(context.isReturned == true ? _localizer["lbl_Hide"] : _localizer["lbl_Return"])</span></MudMenuItem>
+                                <MudMenuItem OnTouch="@(()=>ShowDetails(context.id,"payment"))" OnClick="@(()=>ShowDetails(context.id,"payment"))"><span style="color:#c8cacd" class="fontContent">@_localizer["lbl_PaymentsVouchers"]</span></MudMenuItem>
+                            </MudMenu>
+                        </MudHidden>
+                    </MudTd>
+                    <MudTd hidden="@isHidden" Class="fontContent" Style="border-bottom:1px solid #4b4848">
+                        <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert="true">
+                            <MudButton Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" OnClick="()=>ordAccepted(context)" class="fontContent">@_localizer["lbl_Accept"]</MudButton>
+                            <MudButton Variant="Variant.Filled" Size="Size.Medium" OnClick="()=>ordRejected(context)" class="fontContent" Style="color:#c8cacd">@_localizer["lbl_Reject"]</MudButton>
+                            <MudButton Variant="Variant.Filled" Size="Size.Medium" OnClick="()=>Returned(context.id)" class="fontContent" Style="color:#c8cacd">@(context.isReturned == true ? _localizer["lbl_Hide"] : _localizer["lbl_Return"])</MudButton>
+                                <MudIconButton Icon="fas fa-regular fa-file-invoice-dollar fa-1x" Color="Color.Primary" OnClick="@(()=>ShowDetails(context.id,"payment"))" class="fontContent"></MudIconButton>
+                            </MudHidden>
+                        </MudTd>
+
+                    </RowTemplate>
+                    <ChildRowContent>
+
+                        <MudTr Style="background-color:#424242;">
+                            <td colspan="6">
+
+                                <MudCard Elevation="0" Style="background-color:#424242;">
+
+                                @if (context.isShowDetails)
+                                {
+
+                                    @if (context.packageRelations != null)
+                                    {
+                                        <MudTable Items="context.packageRelations" Context="pck" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=true Style="background-color:#424242;">
+
+                                            <HeaderContent>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_PackageName"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Period"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_services"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Price"]</b></MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                @*@if (pck.package.period != null)
+                                    {
+                                    *@
+
+
+                                                <MudTd DataLabel="@_localizer["lbl_PackageName"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.name</MudTd>
+                                        @if (pck.package.period.value == 1)
+                                        {
+                                            @if (pck.package.period.type == "Monthly")
+                                            {
+                                                <MudTd DataLabel="@_localizer["lbl_Period"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.period.value @_localizer["lbl_Month"]</MudTd>
+                                            }
+                                            else if (pck.package.period.type == "Yearly")
+                                            {
+                                                <MudTd DataLabel="@_localizer["lbl_Period"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.period.value @_localizer["lbl_Year"]</MudTd>
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            @if (pck.package.period.type == "Monthly")
+                                            {
+                                                <MudTd DataLabel="@_localizer["lbl_Period"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.period.value @_localizer["lbl_Months"]</MudTd>
+                                            }
+                                            else if (pck.package.period.type == "Yearly")
+                                            {
+                                                <MudTd DataLabel="@_localizer["lbl_Period"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.period.value @_localizer["lbl_Years"]</MudTd>
+                                            }
+                                        }
+                                        <MudTd DataLabel="@_localizer["lbl_services"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@pck.package.packageServices.Count()</MudTd>
+                                        <MudTd DataLabel="@_localizer["lbl_Price"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+                                            @(
+                                            pck.package.packageServices.Sum(p => p.price * p.qty) -
+                                            pck.package.packageServices.Sum(p => p.price * p.qty) *
+                                            pck.package.disCount / 100
+                                            )
+                                        </MudTd>
+                                        @*}*@
+
+                                    </RowTemplate>
+                                </MudTable>
+                                    }
+                                    else
+                                    {
+                                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                                    }
+
+
+
+
+                                }
+                                else if (context.isShowPayment)
+                                {
+                                    <MudTable Items="context.orderFiles" Context="file" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=false Style="background-color:#424242;">
+                                        <HeaderContent>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_PayVouchers"]</b></MudTh>
+
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                            <MudTd  Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+
+                                                <MudLink Underline="Underline.None" Color="Color.Secondary" Class="cursor-pointer hoverLnk fontContent" OnClick="()=>ShowImage(context.id,file.id)">
+                                                @if (file.description == "application/pdf")
+                                                {
+                                                    @*Console.WriteLine($"fileDescription1: {@item.fileDescription}");*@
+                                                    <MudIcon Icon="@Icons.Material.Filled.PictureAsPdf" Color="Color.Secondary" Class="hoverLnk " Size="Size.Medium" aria-label="pdf" />
+                                                }
+                                                else
+                                                {
+                                                    <MudIcon Icon="@Icons.Material.Outlined.Image" aria-label="image" Color="Color.Secondary" Class="hoverLnk" Size="Size.Medium" />
+                                                }
+
+                                                @file.fileName
+                                            </MudLink>
+                                        </MudTd>
+
+                                    </RowTemplate>
+
+                                </MudTable>
+
+
+
+                                }
+
+                                else if (context.isReturned)
+                                {
+
+                                    <MudCardContent>
+
+                                        <td colspan="5">
+
+
+                                            <MudTextField Variant="Variant.Outlined" @bind-Value="note" Margin="Margin.Dense" Placeholder=@_localizer["lbl_Reason"] Class="mt-n2 fontContent" Style="color:#c8cacd"></MudTextField>
+
+                                            <MudButton Variant="Variant.Filled" OnClick="()=>ordReturned(context)" Class="fontContent mt-3" Style="color:#c8cacd">@_localizer["lbl_Send"]</MudButton>
+
+                                        </td>
+
+                                    </MudCardContent>
+                                }
+
+
+                            </MudCard>
+                        </td>
+                    </MudTr>
+
+
+                </ChildRowContent>
+
+            </MudTable>
+
+        </MudItem>
+
+    }
+    else
+    {
+        @*<MudGrid>*@
+        <MudItem xs="11" sm="11" md="11">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="mt-5" />
+        </MudItem>
+        @*</MudGrid>*@
+    }
+</MudGrid>
+
+@code {
+    bool isShowDetails = false;
+    private bool isVisible;
+    public string note;
+    [Parameter]
+    public string dashboardStatus{ set; get; }
+    [Parameter]
+    public string dashboardHeadline{ set; get; }
+    //ResponseModel<SubscriptionModel> subscriptions;
+    ResponseModel<OrderModel> Orders;
+
+    public List<PackageRelation> PackageRelations;
+
+    public string headline;
+    public bool isHidden;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        headline = _localizer["lbl_Orders"];
+        try{
+            Orders = await ordersService.GetAllOrderByStatus("requested");
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+
+    {
+        if (dashboardStatus != null && dashboardHeadline!=null)
+        {
+            await ordBystatus(dashboardStatus, dashboardHeadline);
+        }
+
+    }
+    async Task ordBystatus(string status, string HL)
+    {
+        Orders = null;
+        if (status != "requested")
+        {
+            isHidden = true;
+        }
+        else
+        {
+            isHidden = false;
+        }
+        Console.WriteLine($"order status is {status}");
+        headline = HL;
+        try{
+            Orders = await ordersService.GetAllOrderByStatus(status);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+        StateHasChanged();
+    }
+    public void ShowDetails(int ordId, string section)
+    {
+        Console.WriteLine($"order id {ordId}");
+        OrderModel ord = Orders.Content.First(s => s.id == ordId);
+        //isVisible = true;
+        //await Task.Delay(1000);
+        //Order = await ordersService.GetOrderDetails(ordId);//السطر هذا لازم يكون حسب الطب لانه انا مابحتاجه اله في حاله عرض الصور
+
+        if (section == "details")
+        {
+            Console.WriteLine($"ord id {ordId}");
+            ord.isShowDetails = !ord.isShowDetails;
+            ord.isReturned = false;
+            ord.isShowPayment = false;
+            //ord.packageRelations = Order.Content.orderModel.packageRelations;
+
+            //isVisible = false;
+            StateHasChanged();
+        }
+        else if (section == "payment")
+        {
+            ord.isShowPayment = !ord.isShowPayment;
+            ord.isReturned = false;
+            ord.isShowDetails = false;
+            //isVisible = false;
+            //Console.WriteLine($"ord userid{ord.userId}");
+            StateHasChanged();
+        }
+
+    }
+    async Task ShowImage(int ordId, int imgId)
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        try
+        {
+
+
+            // edite
+            ResponsGeneric<OrderDetails> Order = await ordersService.GetOrderDetails(ordId);
+
+            FileInformation fileInfo = Order.Content.filesInformation.Where(x => x.OrderFile.id == imgId).FirstOrDefault();
+            //Console.WriteLine($"index of image is {imgIndex} file name{Order.Content.orderModel.orderFiles[imgIndex].fileName}");
+            //FileInformation fileInfo = Order.Content.filesInformation[imgIndex];
+            //Console.WriteLine($"index of image is {imgIndex} file name{Order.Content.orderModel.orderFiles[imgIndex].fileName}");
+
+            var parameters = new DialogParameters();
+            var options = new DialogOptions { CloseButton = true };
+            parameters.Add("fileInfo", fileInfo);
+            DialogService.Show<ShowImages>(null, parameters, options);
+            isVisible = false;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["lbl_ImageNotLoad"], Severity.Normal);
+        }
+    }
+    public async Task ordAccepted(OrderModel ord)
+    {
+        ord.isReturned = false;
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        try
+        {
+            ResponsePost<SubscriptionModel> subscriptionIsCreared = new ResponsePost<SubscriptionModel>();
+
+            //create subscription
+            SubscriptionModel subscription = new SubscriptionModel();
+            subscription.userId = ord.userId;
+            Console.WriteLine($"user id is{subscription.userId}");
+            subscription.user = null;
+            subscription.status = "accepted";
+            List<SubscriptionServiceModel> listService = new List<SubscriptionServiceModel>();
+            foreach (var subc in ord.packageRelations)
+            {
+                subscription.price = subc.package.packageServices.Sum(p => p.price * p.qty) -
+                                                subc.package.packageServices.Sum(p => p.price * p.qty) *
+                                                subc.package.disCount / 100;
+                subscription.package = null;
+                subscription.packageId = subc.packageId;
+                foreach (var subcSrv in subc.package.packageServices)
+                {
+                    listService.Add(new SubscriptionServiceModel
+                        {
+                            serviceName = subcSrv.serviceName,
+                            price = subcSrv.price,
+                            qty = subcSrv.qty,
+                        });
+                }
+                subscription.subscriptionService = listService;
+                subscriptionIsCreared= await SubscriptionService.Create(subscription);
+                listService.Clear();
+
+            }
+
+            if (subscriptionIsCreared.Message== "Number of clients is larger than allowed in the new package"){
+                isVisible = false;
+                Snackbar.Add(_localizer["lbl_OrderNotAccepted"], Severity.Success);
+
+            }
+            else{
+                ord.status = "Accepted";
+                var acceptedOrd = await ordersService.UpdateOrderStatus(ord);
+                int lang = selectedCulture.Contains("en") ? 2 : 1;
+                Console.WriteLine($"user id{ord.userId}");
+                Console.WriteLine($"pck id{ord.packageRelations.Select(p => p.packageId).FirstOrDefault()}");
+                Console.WriteLine($"lang{lang}");
+                var bill = await ordersService.SendBillToEmail(ord.userId,ord.packageRelations.Select(p=>p.packageId).FirstOrDefault(),lang);
+            Console.WriteLine(acceptedOrd.Content);
+
+            isVisible = false;
+                Snackbar.Add(_localizer["lbl_OrderAccepted"], Severity.Success);
+            note = string.Empty;
+            Orders = await ordersService.GetAllOrderByStatus("requested");
+            StateHasChanged();
+            }
+           
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_Fail"], Severity.Error);
+        }
+    }
+    public async Task ordRejected(OrderModel ord)
+    {
+        ord.isReturned = false;
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        try
+        {
+            ord.status = "rejected";
+            var rejecredOrd = await ordersService.UpdateOrderStatus(ord);
+            Console.WriteLine(rejecredOrd.Content);
+            isVisible = false;
+            Snackbar.Add(_localizer["lbl_OrderRejected"], Severity.Success);
+            note = string.Empty;
+            Orders = await ordersService.GetAllOrderByStatus("requested");
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_Fail"], Severity.Error);
+        }
+    }
+    void Returned(int ordId)
+    {
+
+        OrderModel order = Orders.Content.First(s => s.id == ordId);
+        order.isShowDetails = false;
+        order.isShowPayment = false;
+        order.isReturned = !order.isReturned;
+
+    }
+    public async Task ordReturned(OrderModel ord)
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        try
+        {
+            ord.status = "returned";
+            ord.note = note;
+            Console.WriteLine($"staus {ord.status} note {ord.note}");
+            var returnedOrd = await ordersService.UpdateOrderStatus(ord);
+            Console.WriteLine(returnedOrd.Content);
+            isVisible = false;
+            Snackbar.Add(_localizer["lbl_OrderReturned"], Severity.Success);
+            note = string.Empty;
+            ord.isReturned = false;
+            Orders = await ordersService.GetAllOrderByStatus("requested");
+            StateHasChanged();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            isVisible = false;
+            Snackbar.Add(_localizer["msg_Fail"], Severity.Error);
+        }
+
+    }
+}

@@ -1,0 +1,198 @@
+﻿@page "/SubscriptionPeriods"
+@inject IAuthService _authService
+@*@attribute [Authorize(Roles = "admin")]*@
+@using Ultimate.Bot.Core.Model
+@inject IStringLocalizer<Resource> _localizer
+@inject IPeriodService PeriodService
+@inject NavigationManager navigationManager
+@inject IDialogService DialogService
+@inject ISnackbar Snackbar
+<PageTitle>SubscriptionPeriods</PageTitle>
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudGrid Spacing="0" Justify="Justify.Center" Class="mt-5">
+    <MudItem xs="11" sm="11" md="11">
+        <MudGrid>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+            </MudOverlay>
+
+            @if (result != null)
+            {
+                <MudItem xs="12" sm="12" md="12">
+                    <MudButton Class="fontContent" Variant="Variant.Filled" OnClick="addPeriods" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary">@_localizer["lbl_AddPeriod"] </MudButton>
+                </MudItem>
+                @foreach (PeriodModel c in result.Content)
+                {
+                    <MudItem xs="11" sm="4" md="3">
+                        <MudCard Elevation="1" Class="rounded-lg pb-0" Style="background-color:#424242;">
+                            <MudCardContent>
+                                <MudText Align="Align.Center">
+                                    <MudImage Height="80" Width="80" Src="images/subscriptionPeriods.png" Alt="subscription Periods" Class="" />
+                                </MudText>
+                                <div class="mt-5">
+                                    <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2">
+                                        <b>@_localizer["lbl_Nameperiods"]: </b>
+                                        @if (selectedCulture.Contains("en"))
+                                        {
+                                            <span>@c.foreignName</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@c.name</span>
+                                        }
+                                    </MudText>
+                                    <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2">
+                                        <b>@_localizer["lbl_Typeperiods"]: </b>
+                                        
+                                            @if (c.type == "Monthly")
+                                            {
+                                            <span class="fontContent">@_localizer["lbl_Monthly1"]</span>
+                                            }
+                                            else if (c.type == "Yearly") 
+                                            {
+                                            <span class="fontContent">@_localizer["lbl_Yearly1"]</span>
+                                            }
+                                        
+                                    </MudText>
+                                    @if (c.value == 1)
+                                    {
+                                        if (c.type == "Monthly")
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value @_localizer["lbl_Month"]</MudText>
+
+                                        }
+                                        else if (c.type == "Yearly")
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value @_localizer["lbl_Year"]</MudText>
+                                        }
+                                        else
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value</MudText>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (c.type == "Monthly")
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value @_localizer["lbl_Months"]</MudText>
+                                        }
+                                        else if (c.type == "Yearly")
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value @_localizer["lbl_Years"]</MudText>
+                                        }
+                                        else
+                                        {
+                                            <MudText Class="fontContent" Color="Color.Secondary" Align="Align.Center" Typo="Typo.body2"><b>@_localizer["lbl_Valueperiods"]:</b> @c.value</MudText>
+                                        }
+                                    }
+                                </div>
+
+                                <div Class="d-flex justify-space-between mt-5">
+                                    <MudButton OnClick="()=>navigateToPeriods(c)" Class="fontContent" Color="Color.Primary" Variant="Variant.Filled">@_localizer["lbl_Show"]</MudButton>
+                                    <div class="d-flex flex-row-reverse gap-0">
+                                        <MudIconButton Icon="@Icons.Material.Outlined.Edit" Size="Size.Medium" Color="Color.Primary" OnClick="()=>EditPeriods(c.id)" />
+                                        <MudIconButton Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium" Color="Color.Primary" OnClick="()=>DeletePeriods(c.id)" />
+                                    </div>
+                                </div>
+
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+                }
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+
+        </MudGrid>
+
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    ResponseModel<PeriodModel> result;
+    ResponseModel connectedResult;
+    PeriodModel periodModel = new PeriodModel();
+    List<PeriodModel> periodList = new List<PeriodModel>();
+    private bool isVisible;
+    Color activeColor = Color.Primary;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            if (selectedCulture.Contains("en"))
+            {
+                font_Content = "font-family:DROID;";
+                font_Title = "font-family:Forte;";
+            }
+            else if (selectedCulture.Contains("ar"))
+            {
+                font_Content = "font-family:Noto Kufi Arabic;";
+                font_Title = "font-family:Noto Kufi Arabic;";
+            }
+            result = await PeriodService.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    public async Task GetPeriods()
+    {
+        try
+        {
+            result = await PeriodService.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    public async Task navigateToPeriods(PeriodModel periods)
+    {
+    }
+    public void addPeriods()
+    {
+        navigationManager.NavigateTo("/SubscriptionPeriods/AddSubscriptionPeriods");
+    }
+    async Task DeletedPeriods()
+    {
+        try
+        {
+            result = await PeriodService.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    public void DeletePeriods(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeletePeriod"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeletePeriod"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedPeriods));
+        parameters.Add("Id", id);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+
+    private void EditPeriods(int id)
+    {
+        navigationManager.NavigateTo($"/SubscriptionPeriods/AddSubscriptionPeriods/{id}");
+    }
+}

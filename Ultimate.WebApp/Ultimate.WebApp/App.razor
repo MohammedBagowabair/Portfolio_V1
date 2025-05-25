@@ -1,0 +1,24 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager _navigationManager
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+				<NotAuthorized>
+					<div style="margin:10px;">
+						<h4>
+                            @_localizer["msg_unauthorizedWarning"]<NavLink href=@{"login?returnUrl="+_navigationManager.ToBaseRelativePath(_navigationManager.Uri)}>@_localizer["lbl_login"]</NavLink>
+                        </h4>
+                    </div>
+				</NotAuthorized>
+		    </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

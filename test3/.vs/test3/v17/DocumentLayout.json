@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\test3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C0577AAF-0C1A-4E0D-A113-2FB50ED6AC0D}|test3\\test3.csproj|c:\\users\\user\\source\\repos\\test3\\test3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0577AAF-0C1A-4E0D-A113-2FB50ED6AC0D}|test3\\test3.csproj|solutionrelative:test3\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0577AAF-0C1A-4E0D-A113-2FB50ED6AC0D}|test3\\test3.csproj|c:\\users\\user\\source\\repos\\test3\\test3\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C0577AAF-0C1A-4E0D-A113-2FB50ED6AC0D}|test3\\test3.csproj|solutionrelative:test3\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\test3\\test3\\Program.cs",
+              "RelativeDocumentMoniker": "test3\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\test3\\test3\\Program.cs",
+              "RelativeToolTip": "test3\\Program.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T09:02:02.877Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\test3\\test3\\Components\\App.razor",
+              "RelativeDocumentMoniker": "test3\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\test3\\test3\\Components\\App.razor",
+              "RelativeToolTip": "test3\\Components\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-26T09:01:44.733Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

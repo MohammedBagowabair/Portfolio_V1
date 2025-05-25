@@ -1,0 +1,148 @@
+﻿@page "/client/{botId:int}/{clientId:int}"
+@using Ultimate.Bot.Core.Model
+@inject IClientService clientService
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@using Ultimate.WebApp.Pages.Bot
+@inject IBotService BotService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Client</PageTitle>
+@*<MudContainer MaxWidth="MaxWidth.Medium">*@
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+</MudOverlay>
+<MudGrid Spacing="0" Class="mt-2" Justify="Justify.Center">
+    @*<MudItem  sm="3" xs="12" md="2">
+
+    </MudItem>*@
+    @*<MudItem sm="11" xs="12" md="9">
+
+    <Ultimate.WebApp.Pages.Client1.ClientInfo clnId="clientId" />
+    </MudItem>*@
+    <MudItem sm="11" xs="11" md="10">
+        <Ultimate.WebApp.Pages.Client1.ClientInfo clnId="clientId" />
+        <MudDynamicTabs Elevation="0" Rounded ApplyEffectsToContainer CloseIconStyle="visibility:hidden" AddTabIcon="@Icons.Material.Filled.Refresh" AddTab="Refersh" Color="Color.Surface" IconColor="Color.Secondary" Style="background-color:#393939;" Border ActivePanelIndex="0">
+
+            <MudTabPanel Class="fontContent" Text=@_localizer["lbl_AutoMessages"]>
+
+                <Ultimate.WebApp.Pages.Automessage.Automessage botId="@botId" />
+            </MudTabPanel>
+
+            <MudTabPanel Class="fontContent" Text=@_localizer["lbl_Menus"]>
+                <Ultimate.WebApp.Pages.Menus.IndexMenu botId="@botId" />
+            </MudTabPanel>
+            <MudTabPanel Class="fontContent" Text="@_localizer["lbl_Application"]">
+                <ApplicationPage clientId="@clientId" />
+            </MudTabPanel>
+            <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+                <MudTabPanel Class="fontContent" Text="@_localizer["lbl_Reports"]">
+                    <Ultimate.WebApp.Pages.Reports.Reports botId="@botId" />
+                </MudTabPanel>
+            </MudHidden>
+            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                <MudTabPanel Class="fontContent" Text=@_localizer["lbl_ReportCollections"]>
+                    <Ultimate.WebApp.Pages.Reports.ReportCollections.ViewReportCollection botId="@botId" />
+                </MudTabPanel>
+            </MudHidden>
+            <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+                <MudTabPanel Class="fontContent" Text=@_localizer["lbl_EncodingReports"]>
+                    <Ultimate.WebApp.Pages.Reports.EncodingReports.ViewEncodingReport botId="@botId" />
+                </MudTabPanel>
+            </MudHidden>
+            <MudTabPanel Class="fontContent" Text="@_localizer["lbl_texts"]">
+                <Ultimate.WebApp.Pages.Text.Text botId="botId"/>
+            </MudTabPanel>
+            @*<MudTabPanel Text=@_localizer["lbl_ERPSystems"]>
+            <Erpsystem></Erpsystem>
+            </MudTabPanel>*@
+        </MudDynamicTabs>
+
+    </MudItem>
+
+</MudGrid>
+@*</MudContainer>*@
+
+@code {
+    [Parameter]
+    public int botId { set; get; }
+    [Parameter]
+    public int clientId { set; get; }
+    ResponseModel<ClientModel> result;
+    private string qrCoderesult = "";
+    ClientModel clientModel = new ClientModel();
+    string status;
+    bool isVisible;
+    Color color;
+    List<ClientModel> clientlList = new List<ClientModel>();
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        await GetClient(clientId);
+        await getQr();
+    }
+    //public async Task GetClient(){
+    //    result = await clientService.GetClients();
+    //}
+    string msgalert;
+    public async void Refersh()
+    {
+        isVisible = true;
+        await Task.Delay(1000);
+        try
+        {
+
+            await BotService.Refresh();
+            isVisible = false;
+            msgalert = _localizer["lbl_uploadedtobot"];
+            Snackbar.Add(msgalert, Severity.Success);
+            StateHasChanged();
+        }
+        catch
+        {
+            isVisible = false;
+            //msgalert = _localizer["msg_AlertFSaved"];
+            msgalert = _localizer["lbl_Faileduploadedtobot"];
+            Snackbar.Add(msgalert, Severity.Error);
+            StateHasChanged();
+        }
+    }
+    public async Task getQr()
+    {
+
+        //ResponseAdd<string> responseAdd = await clientService.getQr<string>(1);
+        //qrCoderesult = responseAdd.Content;
+    }
+    public async Task GetClient(int clientId)
+    {
+        try{
+result = await clientService.GetClientById(clientId);
+        status = result.Content[0].Inactive == true ? @_localizer["lbl_Active"] : @_localizer["lbl_NotActive"];
+        color = result.Content[0].Inactive == true ? Color.Primary : Color.Default;
+        Console.WriteLine(result.Message);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+
+}

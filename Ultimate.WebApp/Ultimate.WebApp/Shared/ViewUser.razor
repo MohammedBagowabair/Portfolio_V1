@@ -1,0 +1,98 @@
+﻿@page "/user"
+@inject IAuthService _authService
+@inject IStringLocalizer<Resource> _localizer
+@*@attribute [Authorize(Roles = "User")]*@
+@inject ILocalStorageService _localStorageService
+@using System.Security.Claims;
+@inject NavigationManager _navigationManager
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudMenu Color="Color.Primary" AnchorOrigin="Origin.BottomCenter" FullWidth TransformOrigin="Origin.TopCenter">
+    <ActivatorContent>
+        @*@if (response.Content != null)
+        {*@
+        <div class="d-flex align-center">
+            <MudText Style="font-size:95%;font-family:DROID;font-weight:200;" Class="px-2 fontContent" Color="Color.Primary">@email</MudText>
+            <MudAvatar Size="Size.Small" Color="Color.Primary" Class="pa-4 fontContent">@response?.Content?.email?.ToString()?.Substring(0,2)</MudAvatar>
+        </div>
+        @*}
+        else
+        {
+
+            <MudProgressCircular Color="Color.Primary" Class="d-flex mx-auto" Indeterminate="true" />
+
+        }*@
+    </ActivatorContent>
+    <ChildContent>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudMenuItem Class="fontContent" OnTouch="moveToAccount" OnClick="moveToAccount"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_AccountManagement"]</span></MudMenuItem>
+            </Authorized>
+        </AuthorizeView>
+        <MudMenuItem Class="fontContent" OnTouch="Logout" OnClick="Logout"><span class="fontContent" style="color:#c8cacd">@_localizer["lbl_logout"]</span></MudMenuItem>
+        @*<MudMenuItem OnTouch="SelectEnglish" OnClick="SelectEnglish">English</MudMenuItem>*@
+    </ChildContent>    
+    </MudMenu>
+        @*<MudText>@email.ToLower()</MudText>*@
+@code {
+    UsersModel userModel;
+    ResponsGeneric<UsersModel> response;
+    int UserId;
+    public string email{ set; get; } =string.Empty;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId =int.Parse(identity.FindFirst("UserId").Value);
+        //if (UserId > 0)
+        //{
+        //    Console.WriteLine("UserId: " + UserId);
+            response = await _authService.GetUser(UserId);
+
+            //if (response.Content != null)
+            //{
+                email = response.Content?.email;
+        //        Console.WriteLine("emailUser: " + email);
+
+        //    }
+        //    //Console.WriteLine("email: " + response.Content.email);
+
+        ////}
+        //else {
+        //    await Task.Delay(250);
+        //}
+
+    }
+    private async Task Logout()
+    {
+        await _authService.Logout();
+        _navigationManager.NavigateTo("");
+    }
+    private void moveToAccount(){
+        _navigationManager.NavigateTo("/accountmanagement");
+    }
+}

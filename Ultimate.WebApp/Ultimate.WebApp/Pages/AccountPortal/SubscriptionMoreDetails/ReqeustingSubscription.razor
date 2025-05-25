@@ -1,0 +1,172 @@
+﻿@inject IOrdersService OrdersService
+@inject IPeriodService PeriodService
+@inject IDialogService DialogService
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>@_localizer["lbl_ReqeustSubscription"]</PageTitle>
+@if (OrderResponse != null)
+{
+    <MudOverlay Visible="isVisible" LightBackground=true ZIndex="9999">
+            <MudText Align="Align.Center">
+                <MudProgressCircular Style="height:100px;width:100px;color:#00AF37 " Indeterminate="true" />
+            </MudText>
+            <MudText Align="Align.Center" Typo="Typo.h4" Style="color:#00AF37 ">@_localizer["lbl_requestsending"]</MudText>
+        </MudOverlay>
+        <MudOverlay Visible="isVisibles" LightBackground=true ZIndex="9999">
+            <MudText Align="Align.Center">
+                <MudIcon Icon="@icon" Color="color_icontxt" Style="height:100px;width:100px; " />
+            </MudText>
+            <MudText Align="Align.Center" Color="color_icontxt" Typo="Typo.h4">@msgSubscription</MudText>
+        </MudOverlay>
+    <MudText Typo="Typo.h6" Color="Color.Primary" Class="fontContent">@_localizer["lbl_ReqeustSubscription"]</MudText>
+    <MudTable Items="OrderResponse.Content" Hover="true" Breakpoint="Breakpoint.Xs" Style="background-color:#393939;">
+        <HeaderContent>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style=" color:#c8cacd">@_localizer["lbl_RequestDate"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style=" color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style=" color:#c8cacd">@_localizer["lbl_packagesCount"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style=" color:#c8cacd">@_localizer["lbl_Note"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848; color:#c8cacd" DataLabel="@_localizer["lbl_RequestDate"]">@context.orderTime</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848; color:#c8cacd" DataLabel="@_localizer["lbl_Price"]">
+                @context.packageRelations.Sum(
+            x=>x.package.packageServices.Sum(x=>x.qty*x.price)-
+            x.package.packageServices.Sum(x=>x.qty*x.price)*
+            x.package.disCount/100
+            )
+                </MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848; color:#c8cacd" DataLabel="@_localizer["lbl_packagesCount"]">@context.packageRelations.Count</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848; color:#c8cacd" DataLabel="@_localizer["lbl_Note"]"></MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;"><MudButton Class="fontContent" Variant="Variant.Filled" Color="Color.Dark" Style="color:#c8cacd" Size="Size.Small" OnClick="()=>ShowDetails(context.id)"><b>@(context.isShowDetails == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton></MudTd>
+            <MudTd Style="border-bottom:1px solid #4b4848; color:#c8cacd">
+                <MudButton Class="fontContent my-1" Style="color:#c8cacd" Variant="Variant.Filled" Size="Size.Medium" OnClick="()=>Cancle(context.id)" Color="Color.Primary">@_localizer["lbl_DeleteSubscription"]</MudButton>
+                <MudButton Class="fontContent my-1" Style="color:#c8cacd" Variant="Variant.Filled" Size="Size.Medium" OnClick="()=>AddVoucher(context)" Color="Color.Primary">@_localizer["lbl_Add"] @_localizer["lbl_PaymentVoucher"]</MudButton>
+            </MudTd>                                                                                                           
+        </RowTemplate>
+        <ChildRowContent>
+            @if (context.isShowDetails)
+            {
+                <MudTr Style="background-color:#424242;">
+                    <td colspan="4">
+                        <MudCard Elevation="0">
+                            <MudCardHeader Style="background-color:#424242;">
+                                <CardHeaderContent>
+                                    <MudTable Items="context.packageRelations" Context="packageRelations" Elevation="0" Style="background-color:#424242;">
+                                        <HeaderContent>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd"><b>@_localizer["lbl_PackageName"]</b></MudTh>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd"><b>@_localizer["lbl_CountServices"]</b></MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_PackageName"]">
+                                                @(selectedCulture.Contains("en") ? packageRelations.package.foreignName ?? " " : packageRelations.package.name ?? " ")
+                                            </MudTd>
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_CountServices"]">@packageRelations.package.packageServices.Count</MudTd>
+                                        </RowTemplate>
+                                    </MudTable>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+           
+        </ChildRowContent>
+    </MudTable>
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+
+    bool isShowDetails = false;
+    private bool isVisible;
+    private bool isVisibles;
+    public string msgSubscription { get; set; }
+    public string icon { get; set; }
+    public Color color_icontxt { get; set; }
+    ResponseModel<OrderModel> OrderResponse;
+    OrderModel orderModel = new OrderModel();
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+    ResponseModel<packageServicesModel> packageServicesModel;
+    ResponseModel<PeriodModel> period;
+    PeriodModel periodModel = new PeriodModel();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        try{
+        OrderResponse = await OrdersService.GetOrderGetByStatus("requested");
+    }
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+    }
+}
+    void ShowDetails(int id)
+    {
+        OrderModel order = OrderResponse.Content.First(s => s.id == id);
+        order.isReturned = false;
+        order.isShowDetails = !order.isShowDetails;
+    }
+    List<PackageRelation> listService = new List<PackageRelation>();
+
+    public async void Cancle(int id){
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteSubscription"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeleteSubscription"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_DeleteSubscription"].ToString());
+        parameters.Add("Id", id);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, DeletedAuto));
+
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+    async Task DeletedAuto()
+    {
+        try{
+        OrderResponse = await OrdersService.GetOrderGetByStatus("requested");
+            StateHasChanged();
+    }
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+            StateHasChanged();
+    }
+       
+    }
+    
+    void Reply(int id){
+        OrderModel order = OrderResponse.Content.First(s => s.id == id);
+        order.isShowDetails = false;
+        order.isReturned = !order.isReturned;  
+    }
+    public async void AddVoucher(OrderModel order)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("curr2", "current-item");
+        parameters.Add("orderId", order.id);
+        var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+        var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+        var reslut = await dialog.Result;
+    }
+}

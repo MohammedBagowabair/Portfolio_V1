@@ -1,0 +1,47 @@
+﻿@* @inherits LayoutComponentBase
+
+<PageTitle>my portfolio</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+ *@
+ @inherits LayoutComponentBase
+
+<HeadContent>
+    <RadzenTheme Theme="material" />
+</HeadContent>
+<RadzenComponents />
+
+
+    <Header />
+ @Body
+    <Footer />
+
+<style>
+    .page {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    .main {
+        flex: 1; 
+    }
+
+    .content {
+        padding: 2rem;
+    }
+</style>

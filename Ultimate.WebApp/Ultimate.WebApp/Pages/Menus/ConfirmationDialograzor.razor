@@ -1,0 +1,338 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject IMenuService menuService
+@inject IAutomessageService AutomessageService
+@inject IPeriodService PeriodService
+@inject ITextService textService
+@inject IClientService clientService
+@inject IPackagesService packagesService
+@inject IOrdersService ordersService
+@inject IApplicationService ApplicationService
+@inject IEncodingReportService encodingReportService
+@inject IReportCollectionServices reportCollectionServices
+@inject NavigationManager _navigationManager
+@inject ISnackbar Snackbar
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            @*<div class="d-flex flex-row gap-2" dir="@direction">
+            <MudIcon Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium"></MudIcon>
+            <MudText Typo="Typo.h5">@title</MudText>
+            </div>*@
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5">@title</MudText>
+            </div>
+        </TitleContent>
+        @*  @Icons.Material.Filled.Dangerous
+        @Icons.Material.Filled.HighlightOff*@
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+            </MudOverlay>
+            @*<MudText>@menuId</MudText>*@
+            <div class="d-flex flex-row gap-2">
+                <MudText Class="fontContent" Color="Color.Secondary">@deleteConfirmation</MudText>
+            </div>
+            @*<MudText>@menuName</MudText>*@
+        </DialogContent>
+        <DialogActions>
+            <MudButton Class="fontContent" Color="Color.Secondary" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+            <MudButton Class="fontContent" Color="Color.Primary" Variant="Variant.Filled" OnClick="Delete">@buttonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    string font_Title;
+    string font_Content;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string deleteConfirmation { set; get; }
+    [Parameter] public string buttonText { set; get; }
+    [Parameter] public string title { set; get; }
+    [Parameter] public int menuId { set; get; }
+    [Parameter] public int userId { set; get; }
+    [Parameter] public int Id { set; get; }
+    [Parameter] public ClientModel cln { set; get; }
+    //[Parameter]public string menuName{ set; get; }
+    //[Parameter]public int botId{ set; get; }
+    //int menuId = 7;
+    ResponseModel result;
+    string direction;
+    bool IsRTL;
+    private bool isVisible;
+    [Parameter]
+    public EventCallback OnDeleted { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (selectedCulture.Contains("ar"))
+        {
+            direction = "rtl";
+            IsRTL = true;
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+
+    }
+    public async void Delete()
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = true;
+        await Task.Delay(2000);
+        if (title == _localizer["lbl_DeleteMenu"])
+        {
+            try
+            {
+                result = await menuService.DeleteMenu(menuId);
+                //await menuService.GetMenuBybotId(botId);
+                //StateHasChanged();
+                Console.WriteLine(result.Message);
+                Console.WriteLine(result.Content);
+                Console.WriteLine(result.Content.GetType());
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                MudDialog.Close(DialogResult.Ok(true));
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("not delete");
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+
+        if (title == _localizer["lbl_DeleteClient"])
+        {
+            try
+            {
+                result = await clientService.DeleteClient(Id, userId);
+                Console.WriteLine(result.Message);
+                Console.WriteLine(result.Content);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+                StateHasChanged();
+                MudDialog.Close(DialogResult.Ok(true));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Normal);
+                StateHasChanged();
+            }
+
+        }
+
+        if (title == _localizer["lbl_DeleteAutoMessage"])
+        {
+            try
+            {
+                await AutomessageService.Delete(Id);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_DeleteApplication"])
+        {
+            try
+            {
+                await ApplicationService.Delete(Id);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_DeleteText"])
+        {
+            try
+            {
+                await textService.Delete(Id);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_DeletePeriod"])
+        {
+            try
+            {
+                await PeriodService.Delete(Id);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_DeletePackage"])
+        {
+            try
+            {
+                result = await packagesService.DeletePackage(Id);
+                Console.WriteLine(result.Message);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+
+        }
+        if (title == _localizer["lbl_DeleteEncodingReport"])
+        {
+            try
+            {
+                result = await encodingReportService.DeleteEncodingReport(Id);
+                Console.WriteLine(result.Message);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+
+        }
+        if (title == _localizer["lbl_DeleteReportCollection"])
+        {
+            try
+            {
+                result = await reportCollectionServices.DeleteReportCollection(Id);
+                Console.WriteLine(result.Message);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertdDeleted"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertdFDeleted"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_EditActivity"])
+        {
+
+            try
+            {
+                cln.Inactive = !cln.Inactive;
+                var re = await clientService.Update(cln);
+                //Console.WriteLine($"activity after updated {cln.Inactive}");
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_AlertModified"], Severity.Success);
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                cln.Inactive = !cln.Inactive;
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                StateHasChanged();
+            }
+        }
+        if (title == _localizer["lbl_DeleteSubscription"])
+        {
+            try
+            {
+                await ordersService.Delete(Id);
+                isVisible = false;
+                await OnDeleted.InvokeAsync();
+                Snackbar.Add(_localizer["msg_cancelledSubscription"], Severity.Success);
+
+                MudDialog.Close(DialogResult.Ok(true));
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_cancelledFSubscription"], Severity.Error);
+                StateHasChanged();
+            }
+        }
+
+    }
+    public void Cancel() => MudDialog.Cancel();
+}

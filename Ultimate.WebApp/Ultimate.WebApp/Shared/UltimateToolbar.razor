@@ -1,0 +1,141 @@
+﻿
+<MudToolBar style="padding:0px;">
+    <MudIconButton Icon="@Icons.Material.Filled.AddCircle" Color="Color.Primary" OnClick="clickAdd" Disabled="@EnableBtnAdd" hidden="@HidenAddBtn" />
+    <MudIconButton Icon="@Icons.Material.Outlined.Edit" Color="Color.Tertiary" OnClick="clickUpdate" Disabled="@EnableBtnEdite" hidden="@HidenUpdateBtn" />
+    <MudIconButton Icon="@Icons.Material.Outlined.Save" Color="Color.Primary" OnClick="clickSave" Disabled="@(!EnableBtnSave)" />
+    <MudIconButton Icon="@Icons.Material.Filled.Undo" OnClick="ClickUndo" Disabled="@(!EnableBtnUndo)" />
+
+    <MudIconButton Icon="@Icons.Material.Outlined.Search" Color="Color.Inherit" OnClick="ClickSearch" hidden="@HidenSaerchBtn" />
+
+    
+</MudToolBar>
+
+
+@code {
+
+    [Parameter] public EventCallback Add { get; set; }
+    [Parameter] public EventCallback Save { get; set; }
+    [Parameter] public EventCallback Update { get; set; }
+    [Parameter] public EventCallback Clear { get; set; }
+    [Parameter] public EventCallback Search { get; set; }
+    [Parameter] public EventCallback Undo { get; set; }
+    [Parameter] public EventCallback<IBrowserFile> ExcelClick { get; set; }
+
+    [Parameter] public bool HidenAddBtn { get; set; } = false;
+    [Parameter] public bool HidenSaveBtn { get; set; } = false;
+    [Parameter] public bool HidenUpdateBtn { get; set; } = false;
+    [Parameter] public bool HidenUndoBtn { get; set; } = false;
+    [Parameter] public bool HidenSaerchBtn { get; set; } = true;
+    [Parameter] public bool HidenExcleBtn { get; set; } = true;
+
+
+    private IList<IBrowserFile> _files { get; set; }
+    [Parameter]
+    public IList<IBrowserFile> Files
+    {
+        get => _files;
+        set
+        {
+            _files = value;
+        }
+    }
+
+    // string ExclIcon = """"
+    //    <svg   viewBox="0 0 48 48" width="29px" height="29px"><defs><linearGradient id="G7C1BuhajJQaEWHVlNUzHa" x1="6" x2="27" y1="24" y2="24" data-name="Безымянный градиент 10" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#21ad64"/><stop offset="1" stop-color="#088242"/></linearGradient></defs><path fill="#31c447" d="m41,10h-16v28h16c.55,0,1-.45,1-1V11c0-.55-.45-1-1-1Z"/><path fill="#fff" d="m32,15h7v3h-7v-3Zm0,10h7v3h-7v-3Zm0,5h7v3h-7v-3Zm0-10h7v3h-7v-3Zm-7-5h5v3h-5v-3Zm0,10h5v3h-5v-3Zm0,5h5v3h-5v-3Zm0-10h5v3h-5v-3Z"/><path fill="url(#G7C1BuhajJQaEWHVlNUzHa)" d="m27,42l-21-4V10l21-4v36Z"/><path fill="#fff" d="m19.13,31l-2.41-4.56c-.09-.17-.19-.48-.28-.94h-.04c-.05.22-.15.54-.32.98l-2.42,4.52h-3.76l4.46-7-4.08-7h3.84l2,4.2c.16.33.3.73.42,1.18h.04c.08-.27.22-.68.44-1.22l2.23-4.16h3.51l-4.2,6.94,4.32,7.06h-3.74Z"/></svg>
+    // """";
+
+    public bool EnableBtnSave
+    {
+        get => (Model.ModelState == WebApp.Enum.ModelStates.Insert) || (Model.ModelState == WebApp.Enum.ModelStates.Update);
+    }
+
+    public bool EnableBtnAdd
+    {
+        get
+        {
+
+            return Model.ModelState != WebApp.Enum.ModelStates.Loaded;
+        }
+        set
+        {
+            EnableBtnAdd = value;
+        }
+    }
+
+    public bool EnableBtnEdite
+    {
+        get
+        {
+            return Model.ModelState != WebApp.Enum.ModelStates.Query;
+        }
+    }
+    [Parameter] public bool EnableBtnDelete { get; set; } = true;
+    [Parameter] public bool EnableBtnClear { get; set; } = true;
+
+
+    public bool EnableBtnUndo
+    {
+        get
+        {
+            return Model.ModelState != WebApp.Enum.ModelStates.Loaded;
+        }
+    }
+    private BaseModel _model = new BaseModel()
+        {
+            ModelState = WebApp.Enum.ModelStates.Loaded
+        };
+
+    [Parameter]
+    public BaseModel Model
+    {
+        get => _model;
+        set
+        {
+            if (_model == value)
+            {
+                return;
+            }
+            _model = value;
+        }
+    }
+
+
+    [Parameter] public bool EnableExcleBtn { get; set; } = true;
+
+    protected override void OnInitialized()
+    {
+
+
+    }
+    public async Task clickAdd()
+    {
+        await Add.InvokeAsync();
+    }
+    public async Task clickSave()
+    {
+        await Save.InvokeAsync();
+    }
+    public async Task clickUpdate()
+    {
+        await Update.InvokeAsync();
+    }
+    public void ClickClear()
+    {
+        Clear.InvokeAsync();
+    }
+
+    public void ClickSearch()
+    {
+        Search.InvokeAsync();
+    }
+
+    public async void ClickUndo()
+    {
+        await Undo.InvokeAsync();
+    }
+
+    private async void clickExcle(IBrowserFile browserFile)
+    {
+        await ExcelClick.InvokeAsync(browserFile);
+    }
+}

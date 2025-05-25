@@ -1,0 +1,106 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject IApplicationService ApplicationService
+@inject ISnackbar Snackbar
+
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            @*<div class="d-flex flex-row gap-2" dir="@direction">
+            <MudIcon Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium"></MudIcon>
+            <MudText Typo="Typo.h5">@title</MudText>
+            </div>*@
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5">@title</MudText>
+            </div>
+        </TitleContent>
+        @*  @Icons.Material.Filled.Dangerous
+        @Icons.Material.Filled.HighlightOff*@
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+            </MudOverlay>
+            @*<MudText>@menuId</MudText>*@
+            <div class="d-flex flex-row gap-2">
+                <MudText Class="fontContent" Color="Color.Secondary">@deleteConfirmation</MudText>
+            </div>
+            @*<MudText>@menuName</MudText>*@
+        </DialogContent>
+        <DialogActions>
+            <MudButton Class="fontContent" Color="Color.Secondary" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+            <MudButton Class="fontContent" Color="Color.Primary" Variant="Variant.Filled" OnClick="Update">@buttonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    string font_Title;
+    string font_Content;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string deleteConfirmation { set; get; }
+    [Parameter] public string buttonText { set; get; }
+    [Parameter] public string title { set; get; }
+    [Parameter] public int Id { set; get; }
+    ResponseModel result;
+    string direction;
+    bool IsRTL;
+    private bool isVisible;
+    public string msgalert { get; set; }
+    [Parameter]
+    public EventCallback OnDeleted { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (selectedCulture.Contains("ar"))
+        {
+            direction = "rtl";
+            IsRTL = true;
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+
+    }
+    public async void Update()
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+
+        try
+        {
+            await ApplicationService.RefreshSecret(Id);
+            isVisible = false;
+            await OnDeleted.InvokeAsync();
+            //response = await ApplicationService.GetById(clientId);
+            msgalert = _localizer["msg_AlertModified"];
+            MudDialog.Close(DialogResult.Ok(true));
+            Snackbar.Add(msgalert, Severity.Success);
+            StateHasChanged();
+        }
+        catch (Exception x)
+        {
+            isVisible = false;
+            msgalert = _localizer["msg_AlertFModified"];
+            Snackbar.Add(msgalert, Severity.Error);
+            StateHasChanged();
+            Console.WriteLine($"{x.Message}, {x.StackTrace}");
+        }
+    }
+    public void Cancel() => MudDialog.Cancel();
+}

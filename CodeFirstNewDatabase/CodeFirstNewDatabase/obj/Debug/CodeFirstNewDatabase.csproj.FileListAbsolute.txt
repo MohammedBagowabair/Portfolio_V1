@@ -1,0 +1,14 @@
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\CodeFirstNewDatabase.exe.config
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\CodeFirstNewDatabase.exe
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\CodeFirstNewDatabase.pdb
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\EntityFramework.dll
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\EntityFramework.xml
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.csproj.CopyComplete
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.exe
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.pdb
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.Migrations.intialtables.resources
+C:\Users\user\source\repos\CodeFirstNewDatabase\CodeFirstNewDatabase\obj\Debug\CodeFirstNewDatabase.csproj.GenerateResource.cache

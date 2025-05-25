@@ -1,0 +1,508 @@
+﻿@page "/UploadImages"
+@inject HttpClient Http
+@inject IPeriodService PeriodService
+@inject ISnackbar Snackbar
+@using System.Security.Claims;
+@inject IPackagesService packagesService
+@inject ISubscriptionService SubscriptionService
+@inject IStringLocalizer<Resource> _localizer
+@inject IOrdersService OrdersService
+@inject ISyncLocalStorageService _localStorageService
+@inject ILocalStorageService _localStorageService
+@using Ultimate.WebApp.Listpackages
+@using Ultimate.WebApp.ListPackagesByUserId
+@inject IListPackagesByUserId _ListPackagesByUserId
+@inject IListPackagesService ListPackagesService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h6">@message</MudText>
+            </div>
+        </TitleContent>
+
+        <DialogContent>
+
+            <MudOverlay Visible="isVisible" LightBackground=true ZIndex="9999">
+                <MudText Align="Align.Center">
+                    <MudProgressCircular Style="height:100px;width:100px;color:#4aa47e " Indeterminate="true" />
+                </MudText>
+                <MudText Align="Align.Center" Class="fontContent" Typo="Typo.h4" Style="color:#4aa47e">@_localizer["lbl_requestsending"]</MudText>
+            </MudOverlay>
+            <MudOverlay Visible="isVisibles" LightBackground=true ZIndex="9999">
+                <MudText Align="Align.Center">
+                    <MudIcon Icon="@icon" Color="color_icontxt" Style="height:100px;width:100px;" />
+                </MudText>
+                <MudText Align="Align.Center" Class="fontContent" Color="color_icontxt" Typo="Typo.h4">@msgSubscription</MudText>
+            </MudOverlay>
+            <MudGrid>
+                <MudItem xs="12" sm="12" md="12">
+                    <Component1 current1="@curr1" current2="@curr2" transform="@tran" />
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12">
+                    @if (curr1 == "current-item")
+                    {
+                        @if (ListPackagesByUserId != null && ListPackagesByUserId.Count != 0)
+                        {
+                            <MudTable Items="ListPackagesByUserId" Hover="true" Height="200px" Breakpoint="Breakpoint.Xs" Style="background-color:#393939;">
+                                
+                                <HeaderContent>
+                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"></MudTh>
+                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_PackageName"]</b></MudTh>
+                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Period"]</b></MudTh>
+                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"></MudTh>
+
+                                </HeaderContent>
+                                <RowTemplate>
+                                   
+                                        <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd ">
+                                        <MudLink OnClick="@(()=>clickDelete(context))" Underline="Underline.None" Color="Color.Transparent">
+                                            <MudIcon Color="Color.Error" Icon="@Icons.Material.Filled.Close" Size="Size.Medium" />
+                                        </MudLink>
+                                    </MudTd>
+                                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_PackageName"]">@context.package.name</MudTd>
+                                    @{
+                                        double totalPrice;
+                                        totalPrice = context.package.packageServices.Sum(x => x.price * x.qty);
+                                        double PriceAfterDiscount;
+                                        PriceAfterDiscount = totalPrice - totalPrice * (context.package.disCount / 100);
+                                        total_Price.Add(PriceAfterDiscount);
+                                    }
+                                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_Price"]">@PriceAfterDiscount</MudTd>
+                                    @if (periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().value == 1)
+                                    {
+                                        int? x = periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().value;
+                                        @if (periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().type == "Monthly")
+                                        {
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_Period"]">/@x @_localizer["lbl_Month"]</MudTd>
+                                        }
+                                        else if (periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().type == "Yearly")
+                                        {
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_Period"]">/@x @_localizer["lbl_Year"]</MudTd>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        int? x = periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().value;
+                                        @if (periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().type == "Monthly")
+                                        {
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_Period"]">/@x @_localizer["lbl_Months"]</MudTd>
+                                        }
+                                        else if (periodlist.Where(x => x.id == context.package.periodId).FirstOrDefault().type == "Yearly")
+                                        {
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd " DataLabel="@_localizer["lbl_Period"]">/@x @_localizer["lbl_Years"]</MudTd>
+                                        }
+                                    }
+                                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848">
+                                        <MudButton Variant="Variant.Filled" Style="color:#c8cacd" Size="Size.Small" OnClick="@(()=>ShowDetails(context))"><b>@(context.isShowDetails == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton>
+                                    </MudTd>
+
+                                    
+                                    
+
+                                </RowTemplate>
+
+                                <ChildRowContent>
+                                    @if (context.isShowDetails)
+                                    {
+                                        <MudTr Class="fontContent" Style="background-color:#424242;">
+                                            <td colspan="4">
+                                                <MudCard Elevation="0" Style="background-color:#424242;">
+                                                    <MudCardHeader>
+                                                        <CardHeaderContent>
+                                                            <MudTable Items="context.package.packageServices" Style="background-color:#424242;" Context="packageServices" Elevation="0">
+                                                                <HeaderContent>
+                                                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_Service"]</b></MudTh>
+                                                                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_Qty"]</b></MudTh>
+                                                                </HeaderContent>
+                                                                <RowTemplate>
+                                                                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_Service"]">@packageServices.serviceName</MudTd>
+                                                                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_Qty"]">@packageServices.qty</MudTd>
+                                                                </RowTemplate>
+                                                            </MudTable>
+                                                        </CardHeaderContent>
+                                                    </MudCardHeader>
+                                                </MudCard>
+                                            </td>
+                                        </MudTr>
+                                    }
+                                </ChildRowContent>
+
+                            </MudTable>
+
+                            <MudText Typo="Typo.h6" Class="fontContent" Color="Color.Secondary">
+                                @_localizer["lbl_TotalPrice"] (@ListPackagesByUserId.Count): $@ListPackagesByUserId.Sum(
+                        x=>x.package.packageServices.Sum(x=>x.qty*x.price)-
+                        x.package.packageServices.Sum(x=>x.qty*x.price)*
+                        x.package.disCount/100
+                        )
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudText Align="Align.Center">
+                                <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+                            </MudText>
+                            <MudText Align="Align.Center" Class="fontContent" Color="Color.Secondary" Typo="Typo.h6">@_localizer["lbl_NoItems"]</MudText>
+                        }
+                        @*<MudText>total (@ListPackages.Count): $@total_Price</MudText>*@
+                    }
+                    @if (curr2 == "current-item")
+                    {
+
+                        <MudPaper Style="background-color:#424242;width:100%;height:230px" Class="" Elevation="0">
+                            @if (files == null)
+                            {
+                                <div Style="width:100%;height:200px;color:#4aa47e" class="border-2 border-dashed pa-1">
+                                    <MudText Align="Align.Center" Class="pa-3">
+                                        <MudIcon Color="Color.Primary" Icon="@Icons.Material.Filled.CloudUpload" Style="height:130px;width:130px" />
+                                        @*<MudImage Src="images/uplo.png" Width="130" Height="130" />*@
+                                        <MudText Class="fontContent" Color="Color.Secondary">@_localizer["lbl_attachThePaymentVoucher"]</MudText>
+                                    </MudText>
+                                    <MudText Color="Color.Secondary" Align="Align.Center" Typo="Typo.h3" Class="my-4 fontContent">@msg</MudText>
+                                </div>
+                            }
+                            else
+                            {
+
+                                <MudPaper Style="width:100%;height:200px;color:#4aa47e;background-color:#424242" Class="d-flex flex-column overflow-scroll border-2 border-dashed pa-1" Elevation="0">
+                                    <table style="background-color:#343535">
+                                        @foreach (var item in filesBase64)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @*
+                                        @{
+                                        string x=item.fileDescription.ToString().Substring(item.fileDescription.IndexOf("/")+1);
+                                        Console.WriteLine($"item.fileDescription by spilt: {x}");
+                                        }*@
+                                                    @if (item.fileDescription == "application/pdf")
+                                                    {
+                                                        @*Console.WriteLine($"fileDescription1: {@item.fileDescription}");*@
+                                                        <MudIcon Icon="@Icons.Material.Filled.PictureAsPdf" Color="Color.Dark" Style="height:40px; width:40px" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="data:@item.fileDescription;base64,@item.fileContent" style="width:40px;height:40px" />
+                                                    }
+
+                                                    <span class="px-3 fontContent" style="color:#c8cacd;">
+                                                        @item.fileName
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <a download="@item.fileName" href="data:@item.fileDescription;base64,@item.fileContent" target="_blank">
+                                                        <MudIcon Icon="@Icons.Material.Filled.DownloadForOffline" Color="Color.Primary" Style="height:25px; width:25px" />
+                                                    </a>
+                                                    <MudLink Underline="Underline.None" Color="Color.Transparent" OnClick="@(e=>deleteFile(item))">
+                                                        <MudIcon Icon="@Icons.Material.Filled.Delete" Color="Color.Secondary" Style="height:23px; width:22px" />
+                                                    </MudLink>
+                                                </td>
+                                            </tr>
+                                            @*<img src="data:@item.fileDescription;base64,@item.fileContent" style="width:100%;height:100%" />*@
+                                        }
+                                    </table>
+                                </MudPaper>
+
+                            }
+
+                            <div class="custom-file pt-4" style="width:100%;">
+                                <label class="btn custom-file-input custom-file-label fontContent" style="color:#c8cacd;background-color:#4aa47e;margin-left:33%;margin-right:33%" for="inputFile">
+                                    @_localizer["lbl_attachTheVoucher"]
+                                </label>
+                                <InputFile class="custom-file-input" style="background-color:#eeeeee;visibility:hidden" multiple OnChange="OnChange" accept="application/pdf, image/png, image/jpeg, image/gif" id="inputFile" />
+                           </div>
+
+                        </MudPaper>
+                    }
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            @if (curr1 == "current-item")
+            {
+                <MudButton Class="d-block fontContent" Style=" color:#c8cacd" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+                @*<MudButton Class="d-block" Color="Color.Primary" Variant="Variant.Filled" Disabled="@isDisabled" OnClick="SaveAction">@_localizer["lbl_Add"]</MudButton>*@
+                <MudButton Class="d-block fontContent" Style=" color:#c8cacd" Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveAction">@_localizer["lbl_Add"]</MudButton>
+            }
+            @if (curr2 == "current-item")
+            {
+                <MudButton Class="d-block fontContent" Style=" color:#c8cacd" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+                @*<MudButton Class="d-block" Color="Color.Primary" Variant="Variant.Filled" Disabled="@isDisabled" OnClick="SaveAction">@_localizer["lbl_Send"]</MudButton>*@
+                <MudButton Class="d-block fontContent" Style=" color:#c8cacd" Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveAction">@_localizer["lbl_Send"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    [Parameter]
+    public int orderId { set; get; }
+    [Parameter]
+    public string curr1 { set; get; }
+    [Parameter]
+    public string curr2 { set; get; }
+    string tran;
+    List<double> total_Price = new List<double>();
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter]
+    public List<PackageRelation> packages { set; get; }
+    OrderModel orderModel = new OrderModel();
+    ResponsePost<OrderModel> OrderResponse = new ResponsePost<OrderModel>();
+    ResponseModel<OrderModel> order;
+    PackageRelation packageRelation = new PackageRelation();
+    List<ImageFile> filesBase64 = new List<ImageFile>();
+    ImageFile image = new ImageFile();
+    public string message { set; get; }
+    public string msg { set; get; } = string.Empty;
+    //bool isDisabled = false;
+    IReadOnlyList<IBrowserFile> files;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    string direction;
+    bool IsRTL;
+    void ShowDetails(PackageRelation packageRelation)
+    {
+
+        //Console.WriteLine($"id: {id}");
+        var index = ListPackagesByUserId.IndexOf(packageRelation);
+        var packR = ListPackagesByUserId[index];
+        packR.isShowDetails = !packR.isShowDetails;
+    }
+    List<PackageRelation> ListPackages = new List<PackageRelation>();
+    List<PackageRelation> ListPackagesByUserId = new List<PackageRelation>();
+    ResponseModel<PeriodModel> periods;
+    PeriodModel period = new PeriodModel();
+    List<PeriodModel> periodlist = new List<PeriodModel>();
+    private string UserId;
+    protected override async Task OnInitializedAsync()
+    {
+        message = _localizer["lbl_PaymentVoucher"];
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            direction = "rtl";
+            IsRTL = true;
+            tran = "translateX(50%)";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+            tran = "translateX(-50%)";
+        }
+        //curr1 = "current-item";
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = identity.FindFirst("UserId").Value;
+        try{
+        ListPackages = await ListPackagesService.GetPackageItemsByUserId(int.Parse(UserId));
+        ListPackagesByUserId = await _ListPackagesByUserId.GetPackageByUserIdItemsByUserId(int.Parse(UserId));
+        periods = await PeriodService.GetAll();
+        periodlist = periods.Content;
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    long maxSize = 1024 * 1024 * 3;
+    async Task OnChange(InputFileChangeEventArgs e)
+    {
+        files = e.GetMultipleFiles(); // get the files selected by the users
+        foreach (var file in files)
+        {
+            var format = file.ContentType;
+            var imageInfo = new ImageFile();
+            Stream stream1 = file.OpenReadStream(maxSize);
+            MemoryStream ms = new MemoryStream();
+            await stream1.CopyToAsync(ms);
+            stream1.Close();
+            var base64 = Convert.ToBase64String(ms.ToArray());
+            filesBase64.Add(new ImageFile
+                {
+                    fileContent = base64,
+                    fileDescription = format,
+                    fileName = file.Name
+                }); // convert to a base64 string!!
+
+        }
+        if (filesBase64.Count != 0)
+        {
+            msg = string.Empty;
+        }
+    }
+    void deleteFile(ImageFile base64)
+    {
+        int x = filesBase64.IndexOf(base64);
+        filesBase64.RemoveAt(x);
+        StateHasChanged();
+    }
+    private async Task clickDelete(PackageRelation packageRelation)
+    {
+        try{
+        await ListPackagesService.RemoveToListPackages(packageRelation.id);
+        await _ListPackagesByUserId.RemoveToListPackagesByUserId(packageRelation.id);
+        ListPackages = await ListPackagesService.GetPackageItems();
+        ListPackagesByUserId = await _ListPackagesByUserId.GetPackageItemsByUserId();
+    }
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+    }
+}
+
+    public void Cancel()
+    {
+        if (curr1 == "current-item") { MudDialog.Close(); }
+        else
+        {
+            filesBase64.Clear();
+            MudDialog.CancelAll();
+        }
+    }
+    bool isVisible;
+    bool isVisibles;
+    string msgSubscription;
+    string icon;
+    Color color_icontxt;
+    public string msgalert { get; set; }
+    List<PackageRelation> pck = new List<PackageRelation>();
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+    ResponseModel<SubscriptionModel> responseModelsub;
+    List<SubscriptionModel> pckFree = new List<SubscriptionModel>();
+    List<SubscriptionServiceModel> pckFreeService = new List<SubscriptionServiceModel>();
+    string isfree;
+    public async Task SaveAction()
+    {
+        if (curr1 == "current-item")
+        {
+            if (ListPackagesByUserId != null && ListPackagesByUserId.Count != 0)
+            {
+
+                foreach (var items in ListPackagesByUserId)
+                {
+                        pck.Add(new PackageRelation
+                            {
+                                packageId = items.packageId
+                            });
+                    
+                }
+                orderModel.userId = int.Parse(UserId);
+                orderModel.user = null;
+                orderModel.note = null;
+                orderModel.orderFiles = null;
+                orderModel.packageRelations = pck;
+                isVisible = true;
+                await Task.Delay(1000);
+                
+                try
+                    {
+                        await OrdersService.addOrder(orderModel);
+                        order = await OrdersService.GetOrderGetByStatus("requested");
+                        orderId = order.Content.LastOrDefault().id;
+                        await _ListPackagesByUserId.RemoveALLPackagesByUserIdStorage();
+                        foreach(var i in pck){
+                            await ListPackagesService.RemoveToListPackages(i.id);
+                        }
+                        pck.Clear();
+                        isVisible = false;
+                        
+
+                        curr1 = string.Empty;
+                        curr2 = "current-item";
+                        orderModel = new OrderModel();
+                        StateHasChanged();
+                    }
+                    catch (Exception e)
+                    {
+                        isVisible = false;
+                        pck.Clear();
+                        Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                        StateHasChanged();
+                    }
+                
+            }
+            else { }
+        }
+        else
+        {
+
+            if (filesBase64.Count != 0)
+            {
+
+                //image.orderId = order.Content.LastOrDefault().id;
+                Console.WriteLine($"orderId: {image.orderId}");
+
+
+                try
+                {
+                    isVisible = true;
+                    await Task.Delay(1000);
+                    msgSubscription = _localizer["lbl_requestsent"];
+                    icon = @Icons.Material.Filled.CheckCircle;
+                    color_icontxt = @Color.Primary;
+                    foreach (var items in filesBase64)
+                    {
+                        image.fileContent = items.fileContent;
+                        image.fileDescription = items.fileDescription;
+                        image.fileName = items.fileName;
+                        image.orderId = orderId;
+                        Console.WriteLine("image.orderId: " + image.orderId);
+                        Console.WriteLine("image.base64data: " + image.fileContent);
+                        Console.WriteLine("image.contentType: " + image.fileDescription);
+                        Console.WriteLine("image.fileName: " + image.fileName);
+                        await OrdersService.uploadFile(image);
+                        image = new ImageFile();
+                    }
+                    isVisible = false;
+                    isVisibles = true;
+                    StateHasChanged();
+                    await Task.Delay(1000);
+
+                    //isDisabled = true;
+                    filesBase64.Clear();
+                    isVisibles = false;
+                    StateHasChanged();
+                    MudDialog.CancelAll();
+                    
+                }
+                catch
+                {
+                    //msgSubscription = _localizer["lbl_requestFsent"];
+                    icon = @Icons.Material.Filled.Error;
+                    color_icontxt = @Color.Error;
+                    isVisible = false;
+                    isVisibles = false;
+                    //StateHasChanged();
+                    await Task.Delay(1500);
+                    //isVisible = false;
+                    Console.WriteLine("image.base64data: " + image.fileContent);
+                    Console.WriteLine("image.contentType: " + image.fileDescription);
+                    Console.WriteLine("image.fileName: " + image.fileName);
+                    //isDisabled = true;
+                    image = new ImageFile();
+                    filesBase64.Clear();
+                    MudDialog.Close();
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                msg = _localizer["lbl_PleaseChooseImage"];
+            }
+        }
+
+    }
+}

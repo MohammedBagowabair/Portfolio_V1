@@ -1,0 +1,7 @@
+C:\Users\user\source\repos\textrevere\textrevere\bin\Debug\textrevere.exe.config
+C:\Users\user\source\repos\textrevere\textrevere\bin\Debug\textrevere.exe
+C:\Users\user\source\repos\textrevere\textrevere\bin\Debug\textrevere.pdb
+C:\Users\user\source\repos\textrevere\textrevere\obj\Debug\textrevere.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\textrevere\textrevere\obj\Debug\textrevere.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\textrevere\textrevere\obj\Debug\textrevere.exe
+C:\Users\user\source\repos\textrevere\textrevere\obj\Debug\textrevere.pdb

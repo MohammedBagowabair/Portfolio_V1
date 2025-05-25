@@ -1,0 +1,152 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\my portfolio\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\pages\\_host.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\shared\\header.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\shared\\header.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\shared\\footer.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\shared\\footer.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\wwwroot\\js\\site.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|c:\\users\\user\\source\\repos\\my portfolio\\my portfolio\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2A5EFFE1-F645-4D75-9F3E-2AAA4A0CCD6B}|my portfolio\\my portfolio.csproj|solutionrelative:my portfolio\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Header.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\Header.razor",
+              "RelativeDocumentMoniker": "my portfolio\\Shared\\Header.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\Header.razor",
+              "RelativeToolTip": "my portfolio\\Shared\\Header.razor",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAAAE8AAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T13:20:27.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Footer.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\Footer.razor",
+              "RelativeDocumentMoniker": "my portfolio\\Shared\\Footer.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\Footer.razor",
+              "RelativeToolTip": "my portfolio\\Shared\\Footer.razor",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAcwGQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-21T06:52:09.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\_Imports.razor",
+              "RelativeDocumentMoniker": "my portfolio\\_Imports.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\_Imports.razor",
+              "RelativeToolTip": "my portfolio\\_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T13:42:15.125Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "my portfolio\\Pages\\Index.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Pages\\Index.razor",
+              "RelativeToolTip": "my portfolio\\Pages\\Index.razor",
+              "ViewState": "AgIAAAoEAAAAAAAAAAAhwBcEAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T13:37:14.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Program.cs",
+              "RelativeDocumentMoniker": "my portfolio\\Program.cs",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Program.cs",
+              "RelativeToolTip": "my portfolio\\Program.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAUwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-20T13:36:20.569Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "site.js",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\js\\site.js",
+              "RelativeDocumentMoniker": "my portfolio\\wwwroot\\js\\site.js",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\wwwroot\\js\\site.js",
+              "RelativeToolTip": "my portfolio\\wwwroot\\js\\site.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAmwAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-05-20T13:30:45.637Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Host.cshtml",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Pages\\_Host.cshtml",
+              "RelativeDocumentMoniker": "my portfolio\\Pages\\_Host.cshtml",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Pages\\_Host.cshtml",
+              "RelativeToolTip": "my portfolio\\Pages\\_Host.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T12:59:25.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\MainLayout.razor",
+              "RelativeDocumentMoniker": "my portfolio\\Shared\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\my portfolio\\my portfolio\\Shared\\MainLayout.razor",
+              "RelativeToolTip": "my portfolio\\Shared\\MainLayout.razor",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-20T12:56:56.202Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

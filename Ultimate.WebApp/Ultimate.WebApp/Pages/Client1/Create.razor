@@ -1,0 +1,89 @@
+﻿@*@page "/client/create"
+@inject IClientService ClientService
+@inject NavigationManager navManager
+@using Newtonsoft.Json;
+@using System.Text;
+@using Ultimate.Bot.Core.Model
+<h3>@result</h3>
+
+
+<MudGrid Spacing="1" Class="mt-8 mx-3 ml-3">
+
+<EditForm Model="clientModel" OnValidSubmit="add">
+
+    <MudCardActions>
+        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="demo-form-button">Register</MudButton>
+            
+
+        </MudCardActions>
+</EditForm>
+    <MudText>resuljjt</MudText>
+    
+</MudGrid>
+
+
+@code {
+    private string result= "";
+    //private object content;
+    ClientModel  clientModel= new ClientModel()
+    {
+
+        Name="Maryam101",
+        Inactive=false,
+        PhoneAdmin=777888999,
+       WhatsappNumber=777888999,
+       Description="desc client",
+       NameAdmin="mm",
+       ActiveName="jhx",
+       Icon="",
+       ActiveType="",
+       Qr="",
+       UserId=1
+    };
+
+    //UserModel user = new UserModel()
+    //    {
+    //        //FirstName = "Aziz",
+    //        //LastName = "Alhimairy",
+    //        //PasswordHash = "Aziz@123",
+    //        //Role = "Admin",
+    //        //UserName = "Aziz Alhimiary",
+    //        //Email = "azizhamood822@gmail.com"
+
+
+    //    };
+
+    async void add()
+    {
+
+        Console.WriteLine("Test");
+
+        try
+        {
+
+
+            ResponsePost<ClientModel> res = await ClientService.Create(clientModel);
+
+            result = res.Message;
+            Console.WriteLine(res.Message);
+            //content = response.Content;
+           // navigationManager.NavigateTo("/clients");
+            
+            
+            //ResponseModel response = await ClientService.Create<ResponseModel>("/register", user);
+//            ResponseModel response = await ClientService.Create<ResponseModel>("/api/Client", clientModel);
+            //result = response.Message;
+            //content = response.Content;
+
+        }
+        catch (Exception e)
+        {
+            //result = "[oopj""
+        }
+    }
+
+    
+
+
+}
+*@

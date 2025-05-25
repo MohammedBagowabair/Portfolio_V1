@@ -1,0 +1,67 @@
+﻿@page "/ChatApiBot"
+@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager _navigationManager
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content 
+    /*text-align: justify;*/
+    }
+</style>
+<div style="background-color:#343535">
+    <MudContainer Class="my-10">
+        <MudGrid Class="px-12" Justify="Justify.FlexStart" Spacing="2">
+            <MudItem xs="12" sm="12" md="12" >
+                <MudText Align="Align.Center" Color="Color.Primary" Class="fontContent pb-5" Style="font-size:23px;font-weight:bold;">
+                    @_localizer["lbl_serviceApi1"]
+                </MudText>
+                <MudText Align="Align.Center" Class="fontContent pb-7" Style="font-size:20px;font-weight:500;">
+                    @_localizer["lbl_serviceApi2"]
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="11" md="6" Class="mt-10">
+                
+                <MudText Align="Align.Justify" Class="fontContent pb-5" Style="font-size:18px;font-weight:300;">
+                    @_localizer["lbl_serviceApi3"]
+                </MudText>
+                <MudText Align="Align.Justify" Class="fontContent pb-5" Style="font-size:18px;font-weight:300;">
+                    @_localizer["lbl_serviceApi4"]
+                </MudText>
+                <MudText Align="Align.Justify" Class="fontContent pb-5" Style="font-size:18px;font-weight:300;">
+                    @_localizer["lbl_serviceApi5"]
+                </MudText>
+                <MudText Align="Align.Justify" Class="fontContent pb-5" Style="font-size:18px;font-weight:300;">
+                    @_localizer["lbl_serviceApi6"]
+                </MudText>
+                <AuthorizeView>
+                    <Authorized>
+                        <MudButton OnClick="subscription" Class="px-7 py-3 fontContent rounded-pill" Style="background-color:#fff;color:#4aa47e;font-size:15px;font-weight:700;" Variant="Variant.Filled">@_localizer["lbl_joinBtn"]</MudButton>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudButton OnClick="login" Class="px-7 py-3 fontContent rounded-pill" Style="background-color:#fff;color:#4aa47e;font-size:15px;font-weight:700;" Variant="Variant.Filled">@_localizer["lbl_joinBtn"]</MudButton>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudItem>
+            <MudItem xs="12" sm="11" md="6">
+                    <MudImage Fluid="true" Src="images/ChatApi11.png" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</div>
+@code {
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+    void login()
+    {
+        _navigationManager.NavigateTo("/login");
+    }
+    void subscription()
+    {
+        _navigationManager.NavigateTo("/SeeMoreSubscription");
+    }
+}

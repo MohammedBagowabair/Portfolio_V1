@@ -1,0 +1,189 @@
+﻿@inject IOrdersService OrdersService
+@inject ISnackbar Snackbar
+@inject IDialogService DialogService
+@inject IPeriodService PeriodService
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>@_localizer["lbl_RejectSubscription"]</PageTitle>
+@if (OrderResponse != null)
+{
+    <MudText Typo="Typo.h6" Color="Color.Primary" Class="fontContent">@_localizer["lbl_RejectSubscription"]</MudText>
+    <MudTable Items="OrderResponse.Content" Hover="true" Breakpoint="Breakpoint.Xs" Style="background-color:#393939;">
+        <HeaderContent>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_RequestDate"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_packagesCount"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd">@_localizer["lbl_Note"]</b></MudTh>
+            <MudTh Style="border-bottom:1px solid #4b4848"></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_RequestDate"]">@context.orderTime</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_Price"]">
+                @context.packageRelations.Sum(
+            x=>x.package.packageServices.Sum(x=>x.qty*x.price)-
+            x.package.packageServices.Sum(x=>x.qty*x.price)*
+            x.package.disCount/100
+            )
+                </MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_packagesCount"]">@context.packageRelations.Count</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_Note"]">@context.note</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;">
+                <MudButton Class="fontContent" Style="color:#c8cacd" Color="Color.Dark" Variant="Variant.Filled" Size="Size.Small" OnClick="()=>ShowDetails(context.id)"><b>@(context.isReturned == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton>
+                <MudButton Class="fontContent my-1" Style="color:#c8cacd" Variant="Variant.Filled" Size="Size.Medium" OnClick="()=>sendAgain(context)" Color="Color.Primary">@_localizer["lbl_SendAgain"]</MudButton>
+            </MudTd>
+        </RowTemplate>
+        <ChildRowContent>
+            @if (context.isReturned)
+            {
+                <MudTr Style="background-color:#424242;">
+                    <td colspan="4">
+                        <MudCard Elevation="0" Style="background-color:#424242;">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudTable Items="context.packageRelations" Context="packageRelations" Elevation="0" Style="background-color:#424242;">
+                                        <HeaderContent>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style="color:#c8cacd">@_localizer["lbl_PackageName"]</b></MudTh>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848;"><b style="color:#c8cacd">@_localizer["lbl_CountServices"]</b></MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_PackageName"]">
+                                                @(selectedCulture.Contains("en") ? packageRelations.package.foreignName ?? " " : packageRelations.package.name ?? " ")
+                                                </MudTd>
+                                            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848;color:#c8cacd" DataLabel="@_localizer["lbl_CountServices"]">@packageRelations.package.packageServices.Count</MudTd>
+                                        </RowTemplate>
+                                    </MudTable>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+        </ChildRowContent>
+    </MudTable>
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    string font_Content;
+    bool isShowDetails = false;
+    ResponseModel<OrderModel> OrderResponse;
+    ResponseModel<packageServicesModel> packageServicesModel;
+    ResponseModel<PeriodModel> period;
+    PeriodModel periodModel = new PeriodModel();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        try
+        {
+            OrderResponse = await OrdersService.GetOrderGetByStatus("Rejected");
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    void ShowDetails(int id)
+    {
+        OrderModel order = OrderResponse.Content.First(s => s.id == id);
+        order.isReturned= !order.isReturned;
+    }
+    int orderId;
+    private bool isVisible;
+    public async void sendAgain(OrderModel model)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_Resend_subscription"].ToString());
+        parameters.Add("SubscriptionConfirmation", _localizer["lbl_CofirmResendSub"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Ok"].ToString());
+        parameters.Add("orderss", model);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Index.SubFreeDialog>(null, parameters, options);
+
+
+
+        //isVisible = true;
+        //await Task.Delay(1000);
+        //try
+        //{
+        //    var result = await OrdersService.addOrder(model);
+        //    Console.WriteLine("eeeeeeeeee: " + result.Code);
+        //    if (result.Code == 0)
+        //    {
+        //        orderId = result.Content.id;
+        //        //isVisible = false;
+        //        var parameters = new DialogParameters();
+        //        parameters.Add("curr2", "current-item");
+        //        parameters.Add("orderId", orderId);
+        //        var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+        //        var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+        //        var reslut = await dialog.Result;
+        //    }
+        //    else if (result.Code == 4001)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_alreadyWaiting"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else if (result.Code == 4002)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_numberLarger"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else if (result.Code == 4003)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_alreadySubscribed"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(result.Message, Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //}
+        //catch (Exception e)
+        //{
+        //    isVisible = false;
+
+        //    //Snackbar.Add(e.Message, Severity.Error);
+        //    //MudDialog.CancelAll();
+        //    Console.WriteLine("error99: " + e.Message);
+        //    StateHasChanged();
+        //}
+    }
+    //public async void getPeriod(int id)
+    //{
+    //    period = await PeriodService.GetById(id);
+    //}
+}

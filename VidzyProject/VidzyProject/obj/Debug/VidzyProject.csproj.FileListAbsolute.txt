@@ -1,0 +1,14 @@
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\VidzyProject.exe.config
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\VidzyProject.exe
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\VidzyProject.pdb
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\EntityFramework.dll
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\EntityFramework.xml
+C:\Users\user\source\repos\VidzyProject\VidzyProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.csproj.CopyComplete
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.exe
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.pdb
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.Migrations.initialMigration.resources
+C:\Users\user\source\repos\VidzyProject\VidzyProject\obj\Debug\VidzyProject.csproj.GenerateResource.cache

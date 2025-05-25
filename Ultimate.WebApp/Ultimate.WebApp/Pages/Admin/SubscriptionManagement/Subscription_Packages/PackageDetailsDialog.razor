@@ -1,0 +1,349 @@
+﻿@page "/packagesdetails/{pckId:int}"
+@inject IPackagesService packagesService
+@inject IPeriodService PeriodService
+@inject CustomHttp Http
+@inject NavigationManager navigationManager
+@*<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <DialogContent>
+            <MudPaper Style="background-color:#424242;height:700px;overflow-y: scroll">
+            <PackageDetails package=@package period=@period pckStatus=@pckStatus></PackageDetails>
+            </MudPaper>
+        </DialogContent>
+        </MudDialog>
+        </MudRTLProvider>*@
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .mud-data-grid .mud-table-cell .column-header {
+        display: flex;
+        justify-content: space-between;
+        color: #d0d0d0;
+    }
+
+    .mud-table-root .mud-table-body .mud-table-cell {
+        color: #d0d0d0 !important;
+    }
+
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+@if (package != null)
+{
+    @*<MudPaper Elevation="0" Class="ma-5" >*@
+    <MudGrid Justify="Justify.FlexStart" Spacing="0" Class="ma-5">
+        <MudItem sm="11" xs="11" md="11">
+            @*<MudText Color="Color.Info">
+        ملاحظة: لم تكتمل بعد
+        </MudText>*@
+            <MudText Typo="Typo.h6" Class="fontContent" Color="Color.Secondary">
+                @_localizer["lbl_PackageDetails"]
+            </MudText>
+            <MudDivider Light Class="my-3" />
+        </MudItem>
+
+
+
+        <MudItem sm="4" xs="6" md="4">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary"> <b>@_localizer["lbl_Name"]:</b></MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="8">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary">
+                @if (selectedCulture.Contains("ar"))
+                {
+                    <span>@package.name</span>
+                }
+                else
+                {
+                    <span>@package.foreignName</span>
+                }
+            </MudText>
+        </MudItem>
+
+        <MudItem sm="4" xs="6" md="4">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_Description"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="8">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary">
+                @if (selectedCulture.Contains("ar"))
+                {
+                    <span>@package.description</span>
+                }
+                else
+                {
+                    <span>@package.foreignDescription</span>
+                }
+            </MudText>
+        </MudItem>
+        <MudItem sm="4" xs="6" md="4">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_Status2"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="8">
+            <MudText Class="mt-2 fontContent" Color="Color.Secondary">
+                @if (selectedCulture.Contains("en"))
+                {
+
+                    <MudText Class="fontContent" Color="Color.Secondary">
+                        @pckStatus.Where(x=>x.status==package.status).FirstOrDefault()?.status
+                    </MudText>
+
+                }
+                else if (selectedCulture.Contains("ar"))
+                {
+
+                    <MudText Class="fontContent" Color="Color.Secondary">
+                        @pckStatus.Where(x=>x.status==package.status).FirstOrDefault()?.value
+                    </MudText>
+
+                }
+            </MudText>
+        </MudItem>
+        <MudItem sm="4" xs="6" md="4">
+            <MudText class="mt-2 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_TheDiscount"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="8">
+            <MudText class="mt-2 fontContent" Color="Color.Secondary">
+                @package.disCount%
+            </MudText>
+
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+            <MudDivider Light Class="my-3" />
+        </MudItem>
+
+        @if (period != null)
+        {
+            <MudItem sm="4" xs="6" md="4">
+                <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                    <b>@_localizer["lbl_Period"]:</b>
+                </MudText>
+            </MudItem>
+            <MudItem sm="8" xs="6" md="8">
+                <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                    @if (selectedCulture.Contains("ar"))
+                    {
+                        <span>@period.name</span>
+                    }
+                    else
+                    {
+                        <span>@period.foreignName</span>
+                    }
+                </MudText>
+            </MudItem>
+            <MudItem sm="4" xs="6" md="4">
+                <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                    <b>@_localizer["lbl_Subscription"]:</b>
+                </MudText>
+            </MudItem>
+            <MudItem sm="8" xs="6" md="8">
+                @if (@period.type == "Monthly")
+                {
+                    <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                        @_localizer["lbl_Monthly"]
+                    </MudText>
+                }
+                else if (@period.type == "Yearly")
+                {
+                    <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                        @_localizer["lbl_Yearly"]
+                    </MudText>
+                }
+            </MudItem>
+            <MudItem sm="4" xs="6" md="4">
+                <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                    <b>@_localizer["lbl_PeriodDuration"]:</b>
+                </MudText>
+            </MudItem>
+            <MudItem sm="8" xs="6" md="8">
+                @if (period.value == 1)
+                {
+                    if (@period.type == "Monthly")
+                    {
+                        <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                            @period.value @_localizer["lbl_Month"]
+                        </MudText>
+                    }
+                    else if (@period.type == "Yearly")
+                    {
+                        <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                            @period.value @_localizer["lbl_Year"]
+                        </MudText>
+
+                    }
+                }
+                else
+                {
+                    if (@period.type == "Monthly")
+                    {
+                        <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                            @period.value @_localizer["lbl_Months"]
+                        </MudText>
+                    }
+                    else if (@period.type == "Yearly")
+                    {
+                        <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                            @period.value @_localizer["lbl_Years"]
+                        </MudText>
+
+                    }
+                    else
+                    {
+                        <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                            @period.value
+                        </MudText>
+                    }
+                }
+
+
+            </MudItem>
+        }
+
+        <MudItem sm="11" xs="11" md="11">
+            <MudDivider Light Class="my-3" />
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+            <MudText Class="fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_services"]</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="11" md="11">
+            <MudDataGrid T="packageServicesModel" Items="package.packageServices" ReadOnly="true" Dense="true" SortMode="@SortMode.None" Class="mt-3 fontContent" Style="background-color:#393939;">
+
+                <Columns>
+                    <PropertyColumn Property="p=>p.displayedserviceName" Title=@_localizer["lbl_Service"] Style="border-bottom:1px solid #4b4848 !important;color:#c8cacd ;" Class="fontContent"></PropertyColumn>
+                    <PropertyColumn Property="p=>p.price"  Title=@_localizer["lbl_Price"] Style="border-bottom:1px solid #4b4848 !important;color:#c8cacd ;" Class="fontContent"></PropertyColumn>
+                    <PropertyColumn Property="p=>p.qty"  Title=@_localizer["lbl_Qty"] Style="border-bottom:1px solid #4b4848 !important;color:#c8cacd;" Class="fontContent"></PropertyColumn>
+
+                </Columns>
+            </MudDataGrid>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="11">
+            <MudDivider Light Class="my-4" />
+        </MudItem>
+        @*  <MudItem sm="4" xs="6" md="5">
+    <MudText Class="fontContent" Color="Color.Secondary">
+    <b>@_localizer["lbl_TotalQuantity"]:</b>
+    </MudText>
+    </MudItem>
+    <MudItem sm="8" xs="6" md="7">
+    <MudText Class="fontContent" Color="Color.Secondary">
+    @package.packageServices.Sum(x=>x.qty)
+    </MudText>
+    </MudItem>*@
+
+        @{
+            double totalPrice, PriceAfterDiscount, amount;
+            totalPrice = package.packageServices.Sum(x => x.price * x.qty);
+            PriceAfterDiscount = totalPrice - totalPrice * (package.disCount / 100);
+            amount = totalPrice * (package.disCount / 100);
+        }
+        <MudItem sm="4" xs="6" md="5">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_TotalPrice"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="7">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                $@totalPrice
+            </MudText>
+        </MudItem>
+        <MudItem sm="4" xs="6" md="5">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_DiscountAmount"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="7">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                $@amount
+            </MudText>
+        </MudItem>
+        <MudItem sm="4" xs="6" md="5">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                <b>@_localizer["lbl_PriceADiscount"]:</b>
+            </MudText>
+        </MudItem>
+        <MudItem sm="8" xs="6" md="7">
+            <MudText Class="mt-3 fontContent" Color="Color.Secondary">
+                $@PriceAfterDiscount
+            </MudText>
+        </MudItem>
+
+        @*<MudItem xs="11" sm="11" md="11" >
+
+    </MudItem>*@
+    </MudGrid>
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="backToPackages" Class="fontContent ma-5">@_localizer["lbl_Cancelbtn"]</MudButton>
+    @*</MudPaper>*@
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+
+@code {
+    [Parameter]
+    public int pckId { set; get; }
+    ResponsGeneric<PackagesModel> packageById;
+    ResponseModel<PeriodModel> periods;
+    List<PeriodModel> periodlist = new List<PeriodModel>();
+    public PackagesModel package;
+    public PeriodModel period;
+    public PackageStatus[]? pckStatus { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            packageById = await packagesService.GetPackageById(pckId);
+            package = packageById.Content;
+            if (selectedCulture.Contains("en"))
+            {
+                font_Content = "font-family:DROID;";
+                font_Title = "font-family:Forte;";
+                foreach (var srv in package.packageServices)
+                {
+                    srv.displayedserviceName = srv.serviceName;
+                }
+            }
+            else if (selectedCulture.Contains("ar"))
+            {
+                font_Content = "font-family:Noto Kufi Arabic;";
+                font_Title = "font-family:Noto Kufi Arabic;";
+                foreach (var srv in package.packageServices)
+                {
+                    srv.displayedserviceName = srv.serviceName == "Client" ? "عميل" : srv.serviceName == "Menu" ? "قائمة" : " ";
+                }
+            }
+
+
+
+            periods = await PeriodService.GetAll();
+            periodlist = periods.Content;
+            period = periodlist.Where(x => x.id == package.periodId).FirstOrDefault();
+            pckStatus = await Http.HttpClient.GetFromJsonAsync<PackageStatus[]>("PackageStatus/PackagesStatus.json");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+
+    }
+    void backToPackages()
+    {
+
+        navigationManager.NavigateTo("/ViewSubscriptionPackages");
+    }
+}
+

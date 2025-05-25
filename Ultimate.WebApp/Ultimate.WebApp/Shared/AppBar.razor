@@ -1,0 +1,92 @@
+﻿
+@inject IAuthService _authService
+@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Resource> _localizer
+@inject ISyncLocalStorageService _localStorageServices
+@inject ILocalStorageService _localStorageService
+@inject IListPackagesService ListPackagesService
+@inject IDialogService DialogService
+@*@implements IDisposable*@
+@using System.Security.Claims
+@using Ultimate.WebApp.Listpackages
+
+<style>
+    .fontTitle {
+    @font_Title
+    }
+    .fontContent{
+    @font_Content
+    }
+    .left {
+        color: white;
+        border-radius: 20px;
+        background-color: #8da9ee;
+    }
+
+    .left2 {
+        color: white;
+        border-radius: 20px;
+        background-color: #434548;
+    }
+</style>
+<MudAppBar Fixed="true" Elevation="0" Dense="true" Color="Color.Tertiary" Class="px-2 py-3">
+    <MudImage src="images/LogoMaly.png" Fluid="true" Alt="MalyBot Logo" Width="120" Height="120" Class="pa-1" />
+    @*<MudImage src="Images/UbotLogo.png" Fluid="true" Alt="UBot Logo" Width="100" Height="100" Class="pa-2" />*@
+    @*<MudText Style="font-size:20px;font-family:Forte;" Color="Color.Secondary" ><span style="color:#4aa47e">U</span>Bots</MudText>*@
+    <div class="ms-5">
+        <MudLink Typo="Typo.body1" Href="/" Style="font-weight:200;font-size: 18px;" Underline="Underline.None" Class=" fontContent ms-2 link-hover">@_localizer["lbl_home"]</MudLink>
+        @*<MudLink Href="#" Underline="Underline.None" Class="ms-2 link-hover" Color="Color.Default">@_localizer["lbl_services"]</MudLink>*@
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudLink Href="/AdminManagement" Style="font-weight:200;font-size: 18px;" Underline="Underline.None" Class="fontContent ms-2 link-hover">@_localizer["lbl_AdminManagement"]</MudLink>
+            </Authorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="User">
+            <Authorized>
+                <MudLink Href="/accountPortal" Style="font-weight:200;font-size: 18px;" Underline="Underline.None" Class="fontContent ms-2 link-hover">@_localizer["lbl_AccountDetails"]</MudLink>
+
+            </Authorized>
+    </AuthorizeView>
+        @*<MudLink Href="#" Underline="Underline.None" Style="font-weight:200;font-size: 18px;" Class="fontContent ms-2 link-hover">@_localizer["lbl_contactUs"]</MudLink>*@
+    </div>
+    <MudSpacer />
+    <AuthorizeView>
+        <NotAuthorized>
+            <div><MudLink Href="/login" Underline="Underline.None" Style="font-weight:200;font-size: 18px;padding-top:6px;padding-bottom:6px" Class="fontContent mud-theme-primary px-6 rounded-lg login-hover">@_localizer["lbl_login"]</MudLink></div>
+            <div><MudLink Href="/register" Underline="Underline.None" Style="font-weight:200;font-size: 18px;padding-top:6px;padding-bottom:6px" Class="fontContent mud-theme-primary px-6 rounded-lg ms-3 register-hover">@_localizer["lbl_register"]</MudLink></div>
+        </NotAuthorized>
+        <Authorized>
+            <ViewUser />
+        </Authorized>
+    </AuthorizeView>
+    <CultureSelector />
+    @*<AuthorizeView Roles="User">
+        <Authorized>
+            <Cart />
+        </Authorized>
+    </AuthorizeView>*@
+    
+    
+</MudAppBar>
+
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    string UserId;
+    protected override async void OnInitialized()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+
+    }
+
+}

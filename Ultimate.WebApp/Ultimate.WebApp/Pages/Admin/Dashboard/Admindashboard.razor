@@ -1,0 +1,454 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager navigationManager
+@inject IClientService ClientService
+@inject IPackagesService packagesService
+@inject IAdminDashboardService adminDashboardService
+@inject IDialogService DialogService
+@page "/AdminDassboard"
+@using System.Runtime.InteropServices
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .mud-icon-root.mud-svg-icon {
+        color: #4aa47e;
+    }
+
+    .mud-table-pagination-select .mud-input .mud-input-root {
+        color: white;
+    }
+
+    .mud-list-item.mud-list-item-dense {
+        color: white;
+    }
+
+    .mud-typography-body2 {
+    @font_Content;
+    }
+
+   .IsActive{
+       color:#6bcd86 !important;
+       @font_Content;
+   }
+   .IsunActive{
+       color:#f15454 !important;
+       @font_Content;
+   }
+   .mud-table-root .mud-table-body .mud-table-cell{
+
+   }
+</style>
+<PageTitle> Admin Dashboard</PageTitle>
+<MudGrid Spacing="4" Class="mt-5">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    <MudItem xs="11" sm="11" md="9" lg="9">
+        <MudGrid Spacing="1">
+            <MudItem xs="3" sm="2" md="2" lg="2">
+
+                <MudText Typo="Typo.subtitle1" Class="fontContent pt-2">
+                    @_localizer["lbl_FromDate"]
+                </MudText>
+            </MudItem>
+            <MudItem xs="7" sm="3" md="3" lg="3">
+                <MudTextField Style="color:#c8cacd;background-color:#424242;border-color:#424242;" @bind-Value="fromDate" Class="fontContent" Variant="Variant.Outlined" InputType="InputType.Text" Margin="Margin.Dense" Mask="@dMask" Placeholder="@dMask.Mask" />
+
+            </MudItem>
+
+            <MudItem xs="3" sm="2" md="2" lg="2">
+
+                <MudText Typo="Typo.subtitle1" Class="fontContent pt-2">
+                    @_localizer["lbl_ToDate"]
+                </MudText>
+            </MudItem>
+            <MudItem xs="7" sm="3" md="3" lg="3">
+                <MudTextField Style="color:#c8cacd;background-color:#424242;border-color:#424242;" @bind-Value="toDate" Class="fontContent" Variant="Variant.Outlined" InputType="InputType.Text" Margin="Margin.Dense" Mask="@dMask2" Placeholder="@dMask2.Mask" />
+            </MudItem>
+            <MudItem xs="1" sm="2" md="2" lg="2" Class="pt-2">
+
+                <MudButton Variant="Variant.Filled" Size="Size.Medium" Class="fontContent" Style="color:#c8cacd;" Color="Color.Primary" OnClick="@(()=>GetAllStatistics(@fromDate,@toDate))"><b>@_localizer["lbl_Ok"]</b></MudButton>
+
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    @* <MudItem xs="6" sm="6" md="6" lg="6">
+    </MudItem>*@
+    @if (AllStatistics != null && SubscribtedUsers != null)
+    {
+
+
+
+        @*---------------statistics and users--------------------------------*@
+
+        <MudItem xs="11" sm="11" md="8" lg="8">
+            <MudPaper Style="background-color:#424242 ;color:#c8cacd;" Class="pa-2 fontContent">
+                @*ChartOptions="@(new() { ChartPalette = new[] { "#ad2643", "#9926ad", "#2c28ad", "#544c87", "#c8cacd" } })"*@
+                <MudChart ChartType="ChartType.Donut" Width="250px" Height="300px" InputData="@chartData" InputLabels="@chartLabels" LegendPosition="Position.Start" Class="fontContent">
+                    <CustomGraphics>
+                        <text class="donut-inner-text fontContent" x="50%" y="43%" dominant-baseline="middle" text-anchor="middle" fill="#c8cacd" font-size="3">@_localizer["lbl_Total"]</text>
+                        <text class="donut-inner-text fontContent" x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" fill="#c8cacd" font-size="3">@AllStatistics.Content.allOrdersNum</text>
+                    </CustomGraphics>
+                </MudChart>
+            </MudPaper>
+            @*<MudGrid>*
+        @*-----------------statistics----------------------------------------*@
+            @*<MudItem xs="12" sm="12" md="12" lg="12">
+        <MudText Typo="Typo.h6" Class="fontContent">الإحصائيات</MudText>
+
+        </MudItem>*@
+            @*all------------------------------------------*@
+            @*<MudItem xs="12" sm="12" md="6">
+        <MudPaper @onclick="@(()=>navigateToDetails("requested",@_localizer["lbl_Orders"]))" Style="background-color:#dd8287;" Class="pa-2">
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold; color:black">@_localizer["lbl_Orders"]</MudText>
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold; color:black">@AllStatistics.Content.allOrdersNum</MudText>
+        </MudPaper>
+        </MudItem>*@
+            @*returned------------------------------------------*@
+            @*<MudItem xs="12" sm="12" md="6">
+        <MudPaper @onclick="@(()=>navigateToDetails("returned",@_localizer["lbl_ReturnedOrders"]))" Style="background-color:#8b87ac" Class="pa-2">
+
+
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:black">@_localizer["lbl_ReturnedOrders"]</MudText>
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:black">@AllStatistics.Content.allReturnedOrdersNum</MudText>
+        </MudPaper>
+        </MudItem>*@
+            @*accepted------------------------------------------*@
+            @*  <MudItem xs="12" sm="12" md="6">
+        <MudPaper @onclick="@(()=>navigateToDetails("accepted",@_localizer["lbl_AcceptedOrders"]))" Style="background-color:#544c87;" Class="pa-2">
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:white">@_localizer["lbl_AcceptedOrders"]</MudText>
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:white">@AllStatistics.Content.allAcceptedOrdersNum</MudText>
+        </MudPaper>
+        </MudItem>*@
+            @*rejected------------------------------------------*@
+            @*<MudItem xs="12" sm="12" md="6">
+        <MudPaper @onclick="@(()=>navigateToDetails("rejected",@_localizer["lbl_RejectedOrders"]))" Style="background-color:#5a9083 ;" Class="pa-2">
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:black">@_localizer["lbl_RejectedOrders"]</MudText>
+        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="font-weight:bold;color:black">@AllStatistics.Content.allRejectedOrdersNum</MudText>
+        </MudPaper>
+        </MudItem>*@
+            @*-----------------users----------------------------------------*@
+
+
+
+
+            @*</MudGrid>*@
+        </MudItem>
+        @*-----------------------others-----------------------------------------*@
+        <MudItem xs="11" sm="11" md="4" lg="4">
+            <MudGrid>
+
+                <MudItem xs="11" sm="11" md="11" lg="11">
+                    <MudText Typo="Typo.h6" Class="fontContent">@_localizer["lbl_Others"]</MudText>
+                </MudItem>
+
+
+
+
+                <MudItem xs="4" sm="4" md="11" lg="12">
+                    <MudPaper Style="background-color:#424242;border:.5px solid #65e1bd" Class="pa-2">
+                        <MudText Class="fontContent" Style="font-weight:bold; color:grey;font-size:18px;">@_localizer["lbl_AllSubscribers"]</MudText>
+                        <MudText Class="fontContent" Style="color:#65e1bd;font-size:14px;font-weight:bold">@AllStatistics.Content.allSubscribedUsersNum @_localizer["lbl_Subscriber"]</MudText>
+                    </MudPaper>
+
+                </MudItem>
+
+                <MudItem xs="4" sm="4" md="11" lg="12">
+                    <MudPaper Style="background-color:#424242;border:.5px solid #99b6ee" Class="pa-2">
+                        <MudText Class="fontContent" Style="font-weight:bold; color:grey; font-size:18px">@_localizer["lbl_AllSubscriptions"]</MudText>
+                        <MudText Class="fontContent" Style="color:#99b6ee;font-size:14px;font-weight:bold">@AllStatistics.Content.totalOfCreatedSubscription @_localizer["lbl_OneSubscription"]</MudText>
+                    </MudPaper>
+
+                </MudItem>
+
+                <MudItem xs="4" sm="4" md="11" lg="12">
+                    <MudPaper Style="background-color:#424242;border:.5px solid #b66f73" Class="pa-2">
+                        <MudText Class="fontContent" Style="font-weight:bold; color:grey;font-size:18px">@_localizer["lbl_AllUsers"]</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="fontContent" Style="color:#b66f73;font-size:14px;font-weight:bold">@AllStatistics.Content.usersRegisteredNum @_localizer["lbl_OnelUser"]</MudText>
+                    </MudPaper>
+
+                </MudItem>
+
+                @* <MudItem xs="12" sm="12" md="12" lg="12">
+            <MudPaper Style="background-color:#424242; border:.5px solid #eaf1a4;" Class="pa-2">
+            <MudText Class="fontContent" Style=" font-weight:bold;color:grey;font-size:18px;">@_localizer["lbl_Orders"]</MudText>
+            <MudText Class="fontContent" Style="color:#eaf1a4;font-size:14px;font-weight:bold">@AllStatistics.Content.allOrdersNum @_localizer["lbl_OneOrder"]</MudText>
+            </MudPaper>
+
+            </MudItem>*@
+
+
+            </MudGrid>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="11" lg="12">
+            <MudText Typo="Typo.h6" Class="fontContent">@_localizer["lbl_Subscribers"]</MudText>
+        </MudItem>
+
+
+
+        <MudItem xs="11" sm="11" md="12" lg="12">
+            <MudTable Items="SubscribtedUsers.Content" Breakpoint="Breakpoint.Xs" Class="mt-3" Style="background-color:#393939;">
+
+                <HeaderContent>
+                    @*<MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Name"]</b></MudTh>*@
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Email"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_SubscriptionDate"]</b></MudTh>
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_EndDate"]</b></MudTh>
+                    @*<MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Number"]</b></MudTh>*@
+                    <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    @*<MudTd DataLabel="@_localizer["lbl_Name"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.userName</MudTd>*@
+                    <MudTd DataLabel="@_localizer["lbl_Email"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.email</MudTd>
+                    <MudTd DataLabel="@_localizer["lbl_SubscriptionDate"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.startDate</MudTd>
+                    <MudTd DataLabel="@_localizer["lbl_EndDate"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.endDate</MudTd>
+                    @*<MudTd DataLabel="@_localizer["lbl_Number"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@context.phoneNumber</MudTd>*@
+                    <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848">
+                        <MudButton Variant="Variant.Filled" Size="Size.Small" OnClick="@(()=>ShowUserDetails(context.Id))" Class="fontContent" Style="color:white;background-color:#5a9083;"><b>@(context.isShowDetails == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton>
+
+                    </MudTd>
+                </RowTemplate>
+
+                <PagerContent>
+
+                    <MudTablePager RowsPerPageString="@_localizer["lbl_SubscribersNumber"]" PageSizeOptions="new int[]{5, 10,15}" Style="border-top:1px solid #4b4848 ;color:white" />
+
+                </PagerContent>
+
+                <ChildRowContent>
+                    @if (context.isShowDetails)
+                    {
+                        <MudTr Style="background-color:#424242;">
+                            <td colspan="4">
+
+                                <MudCard Elevation="0" Style="background-color:#424242;">
+                                    @if (context.UserStatistics.Count != 0)
+                                    {
+
+
+                                        <MudTable Items="context.UserStatistics" Context="Statistics" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=true Style="background-color:#424242;">
+                                            @*<ColGroup>
+                                <col width="23%" />
+                                <col width="23%" />
+                                </ColGroup>*@
+                                            <HeaderContent>
+
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;" >@_localizer["lbl_Numbers"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_NumbersUsed"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Menus"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_MenusUsed"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Messages"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_AllUserSubscriptions"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_RemainingSubscriptions"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_FinishedSubscriptions"]</b></MudTh>
+
+                                            </HeaderContent>
+                                            <RowTemplate>
+
+
+                                                <MudTd DataLabel="@_localizer["lbl_Numbers"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.allClientUserHave</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_NumbersUsed"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.allClientUserUsed</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_Menus"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.allMenusUserHave</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_MenusUsed"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.allMenusUserUsed</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_Messages"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.allMessageUsersHave</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_AllUserSubscriptions"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.theNumberOfSubscriptionUserHave</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_RemainingSubscriptions"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.theNumberOfSubscriptionsRemaining</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_FinishedSubscriptions"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@Statistics.theNumberOfFinishedSubscription</MudTd>
+
+                                            </RowTemplate>
+                                            <ChildRowContent>
+                                        @if (context.isShowDetails)
+                                        {
+                                            <MudTr Style="background-color:#424242;">
+                                                <td colspan="8">
+                                                    <MudCard Elevation="0" Style="background-color:#424242;">
+                                                        <MudText Typo="Typo.h6" Color="Color.Primary" Class="fontContent pa-5"><b>@_localizer["lbl_SubscriptionsDetails"]</b></MudText>
+                                                        <MudTable Items="context.subscription" Context="userUbscription" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=true Style="background-color:#424242;">
+                                                            <ColGroup>
+                                                                <col width="23%" />
+                                                                <col width="23%" />
+                                                            </ColGroup>
+                                                            <HeaderContent>
+
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_SubscriptionDate"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_EndDate"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Price"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Package"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Period"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_services"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Numbers"]</b></MudTh>
+                                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Menus"]</b></MudTh>
+
+                                                            </HeaderContent>
+                                                            <RowTemplate>
+
+                                                                @*<MudTd DataLabel="@_localizer["lbl_SubscriptionDate"]" Class="fontContent" Style="border-bottom:1px solid #4b4848">@userUbscription.startDate</MudTd>*@
+                                                                <MudTd DataLabel="@_localizer["lbl_SubscriptionDate"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.isActive</MudTd>
+                                                                <MudTd DataLabel="@_localizer["lbl_EndDate"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.endDate</MudTd>
+                                                                <MudTd DataLabel="@_localizer["lbl_Price"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.price</MudTd>
+                                                                <MudTd DataLabel="@_localizer["lbl_Package"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.package.name</MudTd>
+                                                            @if (userUbscription.package.period.value == 1)
+                                                            {
+                                                                @if (userUbscription.package.period.type == "Monthly")
+                                                                {
+                                                                    <MudTd DataLabel="@_localizer["lbl_Period"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.package.period.value @_localizer["lbl_Month"]</MudTd>
+                                                                }
+                                                                else if (userUbscription.package.period.type == "Yearly")
+                                                                {
+                                                                    <MudTd DataLabel="@_localizer["lbl_Period"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.package.period.value @_localizer["lbl_Year"]</MudTd>
+                                                                }
+
+                                                            }
+                                                            else
+                                                            {
+                                                                @if (userUbscription.package.period.type == "Monthly")
+                                                                {
+                                                                    <MudTd DataLabel="@_localizer["lbl_Period"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.package.period.value @_localizer["lbl_Months"]</MudTd>
+                                                                }
+                                                                else if (userUbscription.package.period.type == "Yearly")
+                                                                {
+                                                                    <MudTd DataLabel="@_localizer["lbl_Period"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.package.period.value @_localizer["lbl_Years"]</MudTd>
+                                                                }
+                                                            }
+
+                                                            <MudTd DataLabel="@_localizer["lbl_Service"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@userUbscription.subscriptionService.Count</MudTd>
+                                                            <MudTd DataLabel="@_localizer["lbl_Numbers"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@(userUbscription.subscriptionService.Where(srv => srv.serviceName == "client").FirstOrDefault() == null ? 0 : userUbscription.subscriptionService.Where(srv => srv.serviceName == "client").FirstOrDefault().qty)</MudTd>
+                                                                <MudTd DataLabel="@_localizer["lbl_Menus"]" Class="@getRowClass(userUbscription)" Style="border-bottom:1px solid #4b4848">@(userUbscription.subscriptionService.Where(srv => srv.serviceName == "menu").FirstOrDefault() == null ? 0 : userUbscription.subscriptionService.Where(srv => srv.serviceName == "menu").FirstOrDefault().qty)</MudTd>
+
+                                                            </RowTemplate>
+                                                        </MudTable>
+                                                    </MudCard>
+                                                </td>
+                                            </MudTr>
+                                        }
+                                    </ChildRowContent>
+                                </MudTable>
+                                    }
+                                    else
+                                    {
+                                        <MudItem xs="11" sm="11" md="11" lg="11">
+                                            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="ma-3" />
+                                        </MudItem>
+                                    }
+                                </MudCard>
+                            </td>
+                        </MudTr>
+                    }
+                </ChildRowContent>
+            </MudTable>
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="11" sm="11" md="11" lg="11">
+            <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="mx-5" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+    ResponseModel<ClientModel> client;
+    ResponseModel<PackagesModel> package;
+    ResponseModel<UsersModel> SubscribtedUsers;
+    ResponsGeneric<AllStatisticsModel> AllStatistics;
+    double[] chartData = new double[4];
+    public string[] chartLabels = new string[4];
+    private bool isVisible;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    string isActiveColor;
+    string fromDate;
+    string toDate;
+    IMask dMask = new DateMask("yyyy/MM/dd");
+    IMask dMask2 = new DateMask("yyyy/MM/dd");
+    string isActive;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        //var currentdate = DateTime.Now.ToString("yyyy-MM-dd");
+        //Console.WriteLine($"date noe {currentdate}");
+        await GetAllStatistics();
+        await GetAllSubscribedUsers();
+
+    }
+    void navigateToDetails(string ordStatus, string Hl)
+    {
+        //navigationManager.NavigateTo("/SubscriptionOrders/"+ordStatus+"/"+Hl);
+        navigationManager.NavigateTo("/AdminManagement/4");
+        StateHasChanged();
+        Console.WriteLine(" statistics details");
+    }
+    public async Task GetAllStatistics([Optional] string fdate, [Optional] string ldate)
+    {
+        AllStatistics = null;
+        Console.WriteLine($" with date {fdate} to {ldate}");
+        try{
+            AllStatistics = await adminDashboardService.GetAllStatisticsNumber(fdate, ldate);
+            chartData[0] = AllStatistics.Content.allRequestedOrdersNum;
+            chartData[1] = AllStatistics.Content.allAcceptedOrdersNum;
+            chartData[2] = AllStatistics.Content.allRejectedOrdersNum;
+            chartData[3] = AllStatistics.Content.allReturnedOrdersNum;
+            chartLabels[0] = _localizer["lbl_RequestedOrders"] + " " + AllStatistics.Content.allRequestedOrdersNum;
+            chartLabels[1] = _localizer["lbl_AcceptedOrders"] + " " + AllStatistics.Content.allAcceptedOrdersNum;
+            chartLabels[2] = _localizer["lbl_RejectedOrders"] + " " + AllStatistics.Content.allRejectedOrdersNum;
+            chartLabels[3] = _localizer["lbl_ReturnedOrders"] + " " + AllStatistics.Content.allReturnedOrdersNum;
+        }
+       catch(Exception e){
+           Console.WriteLine($"{e.Message}, {e.StackTrace}");
+       }
+
+        StateHasChanged();
+
+    }
+    public async Task GetAllSubscribedUsers([Optional] string fdate, [Optional] string ldate)
+    {
+        try{
+             SubscribtedUsers = await adminDashboardService.GetAllSubscribedUsers(fdate, ldate);
+        }
+       catch(Exception e){
+           Console.WriteLine($"{e.Message}, {e.StackTrace}");
+       }
+        //Console.WriteLine($" SubscribtedUsers {SubscribtedUsers.Code}");
+        StateHasChanged();
+    }
+    public async Task ShowUserDetails(int userId)
+    {
+        try{
+             UsersModel user = SubscribtedUsers.Content.First(s => s.Id == userId);
+        Console.WriteLine($" UserID {userId}");
+        user.isShowDetails = !user.isShowDetails;
+        ResponseModel<UserStatisticsModel> UserStatistics = await adminDashboardService.GetUserStatisticsSummary(userId);
+        ResponseModel<SubscriptionModel> userStatisticsDetails = await adminDashboardService.GetUserStatisticsDetails(userId);
+        user.UserStatistics = UserStatistics.Content;
+        user.subscription = userStatisticsDetails.Content;
+        StateHasChanged();
+        }
+       catch(Exception e){
+           Console.WriteLine($"{e.Message}, {e.StackTrace}");
+       }
+
+
+
+    }
+
+    public string getRowClass(SubscriptionModel sub){
+        return sub.isActive ? "IsActive" : "IsunActive";
+    }
+}
+

@@ -1,0 +1,70 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|c:\\users\\user\\source\\repos\\rowadai_website\\rowadai_website\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|solutionrelative:rowadai_website\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|c:\\users\\user\\source\\repos\\rowadai_website\\rowadai_website\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|solutionrelative:rowadai_website\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|c:\\users\\user\\source\\repos\\rowadai_website\\rowadai_website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CD281798-0791-49BB-91CB-98820E5AA459}|RowadAI_Website\\RowadAI_Website.csproj|solutionrelative:rowadai_website\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "RowadAI_Website\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "RowadAI_Website\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-09T00:33:37.997Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "RowadAI_Website\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "RowadAI_Website\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAADUAAAAAAAAAAAAvwHkEAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-09T00:12:32.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "RowadAI_Website\\wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "RowadAI_Website\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAwIgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-08T23:29:18.326Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

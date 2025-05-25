@@ -1,0 +1,73 @@
+﻿@inherits LayoutComponentBase
+
+@inject ISyncLocalStorageService _localStorageService
+@inject IDialogService DialogService
+@using Ultimate.WebApp.Listpackages
+@inject IListPackagesService ListPackagesService
+<MudThemeProvider Theme="CustomTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudRTLProvider RightToLeft="@isRtl">
+
+    <MudLayout>
+        @*<header>
+        < meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        </header>*@
+        <div>
+            <div class="screen-full">
+                <AppBar />
+            </div>
+        </div>
+        @*/////////////////////////////appbar when screen small/////////////////////////*@
+        <div>
+            <div class="screen-small">
+                <MudAppBar Fixed="true" Elevation="0" Dense="true" Color="Color.Tertiary">
+                    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Secondary" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+                    <CultureSelector />
+                    @*<AuthorizeView Roles="User">
+                        <Authorized>
+                            <Cart/>
+                        </Authorized>
+                    </AuthorizeView>*@
+                    @* <MudText Style="font-size:40px;font-family:Forte;" Color="Color.Secondary" Class="mx-auto"><span style="color:#4aa47e">U</span>Bots</MudText> *@
+                    <MudImage src="images/LogoMaly.png" Fluid="true" Alt="MalyBot Logo" Width="120" Height="120" Class="pa-3 mx-auto" />
+                </MudAppBar>
+                <MudDrawer @bind-Open="@_drawerOpen" Style="background-color:#343535; color:white;">
+                     <NavMenu />               
+                     </MudDrawer>
+            </div>
+        </div>
+        @*/////////////////////////////appbar when screen small/////////////////////////*@
+        <MudMainContent>
+            @Body
+        </MudMainContent>
+    </MudLayout>
+</MudRTLProvider>
+
+@code {
+    bool isRtl = false;
+    MudTheme CustomTheme = new MudTheme()
+        {
+            Palette = new Palette()
+            {
+                Primary = "#4aa47e",        //green
+                Secondary = "#c8cacd",      //gray
+                Tertiary = "#343535",      //black
+                Surface = "#393939",        //gray
+                //AppbarBackground = Colors.Red.Default,
+                AppbarText = "#dc0dc5",
+            },
+        };
+    bool _drawerOpen = false;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        isRtl = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
+        return base.OnInitializedAsync();
+    }
+}

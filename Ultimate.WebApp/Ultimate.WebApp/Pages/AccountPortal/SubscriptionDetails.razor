@@ -1,0 +1,91 @@
+﻿@page "/subscriptionDetails"
+@inject ISubscriptionService SubscriptionService
+@using System.Security.Claims
+@inject ILocalStorageService _localStorageService
+@inject IPackagesService PackagesService
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>@_localizer["lbl_SubscriptionDetails"]</PageTitle>
+
+
+    <MudGrid Justify="Justify.FlexStart" Class="mt-5">
+        <MudItem sm="12" xs="12" md="12">
+        <MudButtonGroup Size="Size.Large" Color="Color.Primary" Variant="Variant.Filled">
+            <MudButton Class="fontContent" OnClick="currentSubscription">@_localizer["lbl_CurrentSubscription"]</MudButton>
+            <MudButton Class="fontContent" OnClick="reqeustedSubscription">@_localizer["lbl_ReqeustSubscription"]</MudButton>
+            <MudButton Class="fontContent" OnClick="rejectedSubscription">@_localizer["lbl_RejectSubscription"]</MudButton>
+            </MudButtonGroup>
+        </MudItem>
+        <MudItem sm="11" xs="11" md="12">
+            @if (NamePage == "currentSubscription")
+            {
+            <Ultimate.WebApp.Pages.AccountPortal.SubscriptionMoreDetails.CurrentSubscription />
+            }
+            else if (NamePage == "reqeustedSubscription")
+            {
+                <Ultimate.WebApp.Pages.AccountPortal.SubscriptionMoreDetails.ReqeustingSubscription />
+            }
+            else if (NamePage == "rejectedSubscription")
+            {
+                <Ultimate.WebApp.Pages.AccountPortal.SubscriptionMoreDetails.RejectedSubscription />
+            }
+        </MudItem>
+
+    </MudGrid>
+
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+
+
+    private string UserId;
+    private string NamePage = "currentSubscription";
+
+
+    ResponseModel<SubscriptionModel> subscription;
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+    SubscriptionServiceModel subscriptionServiceModel = new SubscriptionServiceModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = identity.FindFirst("UserId").Value;
+
+        //subscription = await SubscriptionService.GetAll();
+
+    }
+
+
+    public void currentSubscription()
+    {
+        NamePage = "currentSubscription";
+    }
+    public void reqeustedSubscription()
+    {
+        NamePage = "reqeustedSubscription";
+    }
+    public void rejectedSubscription()
+    {
+        NamePage = "rejectedSubscription";
+    }
+}

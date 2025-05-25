@@ -1,0 +1,102 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+        @font_Title
+    }
+    .fontContent{
+        @font_Content
+    }
+    .rebot {
+        width: 400px;
+        height: 400px;
+    }
+    #hero {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        padding: 140px 0 100px 0;
+    }
+        #hero::before {
+            content: "";
+            position: absolute;
+            right: -100%;
+            top: 20%;
+            width: 250%;
+            height: 200%;
+            z-index: -1;
+            background-color: #4d9779;
+            transform: skewY(135deg);
+        }
+
+    
+</style>
+<section id="hero">
+    
+       
+    <MudContainer>
+            
+        <MudGrid Justify="Justify.FlexStart" Class="my-5">
+                @if (position == "en")
+                {
+                    <MudItem xs="11" sm="6" md="5">
+                        @*<MudText Align="Align.Center">*@
+                        <MudImage Class="rebot" Src="images/Chat11.gif" Fluid />
+                        @*</MudText>*@
+
+                    </MudItem>
+                    @*<MudItem xs="11" sm="1" md="1"></MudItem>*@
+                    
+                    @*<MudItem xs="11" sm="1" md="1"></MudItem>*@
+                    <MudItem xs="11" sm="6" md="7">
+                    <MudText Color="Color.Secondary" Class="px-1" Style="font-family:Forte;font-size:70px;margin-bottom:1px;margin-top:110px;">MalyBots</MudText>
+                    <MudText Class="fontContent" Color="Color.Secondary" Style="font-size:27px;font-weight:300; ">
+                        @_localizer["lbl_UBot1"]
+                </MudText>
+                    
+            </MudItem>
+            }
+            else{
+                    
+                    <MudItem xs="11" sm="6" md="7">
+                    <MudText Color="Color.Secondary" Class="px-1" Style="font-family:Forte;font-size:70px;margin-bottom:1px;margin-top:110px;">MalyBots</MudText>
+                    <MudText Class="fontContent" Color="Color.Secondary" Style="font-size:27px;font-weight:300;">
+                            @_localizer["lbl_UBot1"]
+                        </MudText>
+
+                    </MudItem>
+                    @*<MudItem xs="11" sm="1" md="1"></MudItem>*@
+                    <MudItem xs="11" sm="6" md="5">
+                        @*<MudText Align="Align.Center">*@
+                        <MudImage Class="rebot" Src="images/Chat11.gif" Fluid />
+                        @*</MudText>*@
+
+                    </MudItem>
+                    @*<MudItem xs="11" sm="1" md="1"></MudItem>*@
+            }
+        </MudGrid>
+            </MudContainer>
+    
+   
+</section>
+@code{
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string position;
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            position = "en";
+        }
+        else
+        {
+            if (selectedCulture.Contains("ar"))
+            {
+                position = "ar";
+            }
+        }
+    }
+}

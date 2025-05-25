@@ -1,0 +1,56 @@
+[
+  {
+    "events_id": "101",
+    "events": "إرسال",
+    "events_name": [
+      {
+        "events_name_id": "1",
+        "eventsName": "إرسال وسائط",
+        "keys": "S^M^",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "2",
+        "eventsName": "إرسال نص الرصيد",
+        "keys": "S^T^Q^1000",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "3",
+        "eventsName": "إرسال نص",
+        "keys": "S^T^S^",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "4",
+        "eventsName": "إرسال نص مرمز",
+        "keys": "S^T^Q^",
+        "eventsid": "101"
+      }
+    ]
+  },
+  {
+    "events_id": "202",
+    "events": "انتقال",
+    "events_name": [
+      {
+        "events_name_id": "2",
+        "eventsName": "انتقال لقائمة مرمزة ",
+        "keys": "N^M^Q^",
+        "eventsid": "202"
+      },
+      {
+        "events_name_id": "3",
+        "eventsName": "انتقال لقائمة",
+        "keys": "N^M^S^",
+        "eventsid": "202"
+      },
+      {
+        "events_name_id": "4",
+        "eventsName": "انتقال لمجموعة تقارير",
+        "keys": "N^M^R^",
+        "eventsid": "202"
+      }
+    ]
+  }
+]

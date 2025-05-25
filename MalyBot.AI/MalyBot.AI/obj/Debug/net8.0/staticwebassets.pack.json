@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\bin\\Debug\\net8.0\\wwwroot\\_framework\\blazor.webassembly.js",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\obj\\Debug\\net8.0\\compressed\\g51aybmtsh.gz",
+      "PackagePath": "staticwebassets\\_framework\\blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\obj\\Debug\\net8.0\\scopedcss\\bundle\\MalyBot.AI.styles.css",
+      "PackagePath": "staticwebassets\\MalyBot.AI.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.MalyBot.AI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.MalyBot.AI.props",
+      "PackagePath": "build\\MalyBot.AI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.MalyBot.AI.props",
+      "PackagePath": "buildMultiTargeting\\MalyBot.AI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.MalyBot.AI.props",
+      "PackagePath": "buildTransitive\\MalyBot.AI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

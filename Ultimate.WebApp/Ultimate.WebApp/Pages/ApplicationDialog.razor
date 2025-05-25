@@ -1,0 +1,123 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@inject IApplicationService ApplicationService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            <div dir="@direction" class="d-flex d-flex-row">
+                <MudIcon Icon="@Icons.Material.Filled.Info" Color="Color.Primary" />
+                <MudText Color="Color.Secondary" Class="fontContent" Align="Align.Center" Typo="Typo.h6">@title</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            </MudOverlay>
+            <MudGrid Justify="Justify.FlexStart">
+                 <MudItem sm="4" xs="11" md="3"><b style="color:#c8cacd" class="fontContent">@_localizer["lbl_appId"]:</b></MudItem>
+                <MudItem sm="8" xs="11" md="9">
+                    @*<MudPaper Class="d-flex flex-row overflow-scroll" Elevation="0">*@
+                    @*<MudText>*@
+                        <MudTextField @ref="multilineReference2" ReadOnly Style="color:#c8cacd" Class="fontContent" T="string" Lines="1" AdornmentColor="Color.Secondary" Variant="Variant.Filled" Text="@AppCode" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.SelectAll" OnAdornmentClick="@(() => multilineReference2.SelectAsync())" />
+                    @*</MudText>*@
+                    @*</MudPaper>*@
+                </MudItem>
+                <MudItem sm="4" xs="11" md="3"><b style="color:#c8cacd" class="fontContent">@_localizer["lbl_secretKey"]:</b></MudItem>
+                <MudItem sm="8" xs="11" md="9">
+                    <MudTextField @ref="multilineReference1" ReadOnly T="string" Lines="3" Variant="Variant.Filled" Text="@Secret_Key" AdornmentColor="Color.Secondary" Class="fontContent" Style="color:#c8cacd" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.SelectAll" OnAdornmentClick="@(() => multilineReference1.SelectAsync())" />
+                    
+                </MudItem>
+
+                <MudItem sm="4" xs="11" md="3"><b style="color:#c8cacd" class="fontContent">@_localizer["lbl_Active"]:</b></MudItem>
+                <MudItem sm="8" xs="11" md="9">
+                    <MudText Color="Color.Secondary" Class="fontContent">
+                    @Active
+                    </MudText>
+                    </MudItem>
+
+                <MudItem sm="4" xs="11" md="3"><b style="color:#c8cacd" class="fontContent">@_localizer["lbl_Date"]:</b></MudItem>
+                <MudItem sm="8" xs="11" md="9">
+                    <MudText Color="Color.Secondary" Class="fontContent">
+                    @Date
+                    </MudText>
+                    </MudItem>
+
+                <MudItem sm="11" xs="11" md="11">
+                    <MudText Align="Align.Center" Class="pt-5">
+                        <div class="d-flex justify-space-between">
+                            <div>
+                                <MudButton Color="Color.Primary" Class="fontContent" Variant="Variant.Filled" OnClick="Edit">@_localizer["lbl_Edit"]</MudButton>
+                                <MudButton Color="Color.Secondary" Class="fontContent" Variant="Variant.Filled" OnClick="Delete">@_localizer["lbl_Deletebtn"]</MudButton>
+                                <MudButton Color="Color.Secondary" Class="fontContent" Variant="Variant.Filled" OnClick="Close">@_localizer["lbl_Cancelbtn"]</MudButton>
+                            </div>
+                            
+                        </div>
+                    </MudText>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    bool IsRTL;
+    string direction;
+    private MudTextField<string> multilineReference1;
+    private MudTextField<string> multilineReference2;
+    private bool isVisible;
+    public string msgalert { get; set; }
+    ResponseModel<ApplicationModel> response;
+    ApplicationModel applicationModel = new ApplicationModel();
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string title { set; get; }
+    [Parameter] public int id { set; get; }
+    [Parameter] public int clientId { set; get; }
+    [Parameter] public string Secret_Key { set; get; }
+    [Parameter] public string AppCode { set; get; }
+    [Parameter] public bool Active { set; get; }
+    [Parameter] public string name_btn { set; get; }
+    [Parameter] public DateTime Date { set; get; }
+    [Parameter] public EventCallback OnDeleted { set; get; }
+    string x;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            direction = "rtl";
+            IsRTL = true;
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+    }
+    void Close() => MudDialog.Close(DialogResult.Ok(true));
+    void Edit()
+    {
+        x = "edit";
+        MudDialog.Close(DialogResult.Ok(x));
+    }
+    void Delete()
+    {
+        x = "delete";
+        MudDialog.Close(DialogResult.Ok(x));
+    }
+    
+}

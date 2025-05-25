@@ -1,0 +1,319 @@
+﻿@page "/indexsmenu"
+@inject ISMenuService menuService
+@inject IDialogService DialogService
+@inject IStringLocalizer<Resource> _localizer
+@inject ISnackbar Snackbar
+@inject IUserService userService
+@inject ILocalStorageService _localStorageService
+@inject NavigationManager navigationManager
+@using System.Security.Claims
+@using Ultimate.WebApp.Pages.Menus
+<style>
+    .mud-typography-body1 {
+        font-size: var(--mud-typography-body1-size);
+    @font_Content;
+        font-weight: var(--mud-typography-body1-weight);
+        line-height: var(--mud-typography-body1-lineheight);
+        letter-spacing: var(--mud-typography-body1-letterspacing);
+        text-transform: var(--mud-typography-body1-text-transform);
+    }
+
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    /*.only .mud-menu *{
+            color:#4aa47e;
+
+        }*/
+</style>
+<MudGrid Spacing="0">
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+    </MudOverlay>
+    <MudItem xs="11" sm="11" md="3">
+
+       
+
+        <MudList Clickable="true" @bind-SelectedItem="selectedItem" @bind-SelectedValue="selectedValue" Color="Color.Primary">
+           
+
+
+
+            @if (result != null)
+            {
+
+
+                @foreach (MenuModel menu in result.Content)
+                {
+
+
+                    <MudContainer>
+                        <MudGrid Spacing="0" Justify="Justify.FlexStart">
+                            <MudItem xs="2" sm="1" md="2">
+                                <MudAvatar Color="Color.Primary" Size="Size.Medium">
+                                    
+                                        <MudIcon Icon="@Icons.Material.Filled.FormatListBulleted" Size="Size.Small" Style="color:white" />
+                                    
+                                    
+                                </MudAvatar>
+                            </MudItem>
+                            <MudItem xs="8" sm="9" md="8">
+                                <MudListItem Class="fontContent mud-typography-body1" Value="@(result.Content.IndexOf(menu))" OnClick="()=>editMenu(menu)" Text="@menu.MenuName">
+                                    @*<span class="fontContent">@menu.MenuName</span>*@
+                                </MudListItem>
+                            </MudItem>
+                            <MudItem xs="2" sm="2" md="2">
+                                <MudIconButton Icon="@Icons.Material.Outlined.Delete" Color="Color.Secondary" />
+
+                            </MudItem>
+                        </MudGrid>
+
+
+
+                    </MudContainer>
+
+
+
+
+                }
+            }
+            else
+            {
+
+            }
+        </MudList>
+
+
+        @*</MudItem>*@
+
+        @*</MudPaper>*@
+
+
+    </MudItem>
+    <MudItem xs="11" sm="11" md="8">
+
+        <MudPaper Elevation="0" Class="py-6 mx-5" Style="background-color:#393939;">
+
+            <CreateSMenu menudetails="@menuInfo"></CreateSMenu>
+
+        </MudPaper>
+
+    </MudItem>
+
+
+</MudGrid>
+
+@code {
+    string font_Title;
+    string font_Content;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    [Parameter]
+    public int botId { set; get; }
+    MudListItem selectedItem;
+    object selectedValue;
+    bool clickedAdd_btn = false;
+    string headline;
+    string typeHeadline;
+    string name_btn;
+    string icon;
+    string typeAdd;
+    int UserId;
+    //private string _buttonText;
+    ResponsGeneric<bool> isSubscribed;
+
+    //List<string> menus = new List<string> { "قائمة1", "قائمة2", "قائمة3", "قائمة4", "قائمة5", "قائمة6" };
+    ResponseModel<MenuModel> result;
+
+    MenuModel menuInfo= new MenuModel();
+    bool isVisible;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        typeHeadline = _localizer["lbl_Menus"];
+        //_buttonText = _localizer["lbl_Menus"];
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = int.Parse(identity.FindFirst("UserId").Value);
+        isSubscribed = await userService.IsUserSubScribed(UserId, "Menu");
+        try
+        {
+            result = await menuService.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    private async Task getMenuByType(string type)
+    {
+
+    }
+    public async Task btnClicked(string addtype)
+    {
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        if (isSubscribed.Content == true)
+        {
+            clickedAdd_btn = true;
+
+            if (addtype == "menu")
+            {
+                typeAdd = "menu";
+                menuInfo = new MenuModel();
+                //if (typeHeadline == "القوائم")
+                //{
+                //    menuInfo.structureType = "s";
+                //}
+                //else if (typeHeadline == "ترميز القوائم")
+                //{
+                //    menuInfo.structureType = "Q";
+                //}
+
+                selectedValue = null;
+                selectedItem = null;
+
+                headline = _localizer["lbl_CreateMenu"];
+                name_btn = _localizer["lbl_BtnSave"];
+            }
+            else if (addtype == "template")
+            {
+                typeAdd = "template";
+            }
+
+        }
+        else
+        {
+            Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+            await Task.Delay(1000);
+
+            navigationManager.NavigateTo("/SeeMoreSubscription");
+        }
+        StateHasChanged();
+
+
+    }
+    async Task ShowAddedOREditedMenu(string type)
+    {
+        // try
+        // {
+        //     if (type == _localizer["lbl_Menus"]){
+        //         //Console.WriteLine($"hhhh{typeHeadline}*{type}");
+        //         result = await menuService.GetMenuBybotId(botId, "s");
+        //     }
+        //     else if(type==_localizer["lbl_EncodingMenus"]){
+        //        //Console.WriteLine($"hhhh{typeHeadline}*{type}");
+        //         result = await menuService.GetMenuBybotId(botId, "Q");
+        //     }
+        //     else{
+        //         //Console.WriteLine($"hhhh{typeHeadline}*{type}");
+        //         result = await menuService.GetMenuBybotId(botId, type);
+        //     }
+        //     isSubscribed = await userService.IsUserSubScribed(UserId, "Menu");
+        //     headline = _localizer["lbl_CreateMenu"];
+        //     name_btn = _localizer["lbl_BtnSave"];
+
+        //     menuInfo = new MenuModel();
+        // }
+        // catch (Exception e)
+        // {
+        //     Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        // }
+
+
+    }
+    async Task DeletedMenu(string type)
+    {
+        try
+        {
+
+            // result = await menuService.GetMenuBybotId(botId, type);
+            isSubscribed = await userService.IsUserSubScribed(UserId, "Menu");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+
+    public async Task editMenu(MenuModel menuModel)
+    {
+
+        menuInfo = menuModel;
+        menuInfo.ModelState = WebApp.Enum.ModelStates.Query;
+        StateHasChanged();
+
+    }
+    async void deleteMenu(int menuId, string type)
+    {
+
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteMenu"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDelete"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("menuId", menuId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, (() => DeletedMenu(type))));
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+       // DialogService.Show<ConfirmationDialograzor>(null, parameters, options);
+
+
+
+    }
+    //private async Task SetButtonText(int id,string type)
+    //{
+    //    switch (id)
+    //    {
+    //        case 0:
+    //            _buttonText = _localizer["lbl_Menus"];
+    //            clickedAdd_btn = false;
+    //            break;
+    //        case 1:
+    //            _buttonText = _localizer["lbl_EncodingMenus"];
+    //            clickedAdd_btn = false;
+    //            break;
+    //        case 2:
+    //            _buttonText = "قوائم جاهزة";
+    //            clickedAdd_btn = false;
+    //            break;
+
+    //    }
+    //    result = await menuService.GetMenuBybotId(botId, type);
+    //    StateHasChanged();
+    //}
+
+    //public async Task getTemplate(){
+    //    if (isSubscribed.Content == true){
+    //        typeHeadline = _localizer["lbl_MenuTemplates"];
+    //        clickedAdd_btn = true;
+    //        selectedValue = null;
+    //        selectedItem = null;
+    //        Console.WriteLine(" get template");
+    //    }
+    //    else
+    //    {
+    //        Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+    //        await Task.Delay(1000);
+    //        StateHasChanged();
+    //        navigationManager.NavigateTo("/SeeMoreSubscription");
+    //    }
+    //    StateHasChanged();
+
+    //}
+
+}
+

@@ -1,0 +1,8 @@
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\RowadAI_Website.exe
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\appsettings.json
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\RowadAI_Website.dll
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\RowadAI_Website.deps.json
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\RowadAI_Website.runtimeconfig.json
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\RowadAI_Website.pdb
+C:\Users\user\source\repos\RowadAI_Website\RowadAI_Website\obj\Release\net8.0\PubTmp\Out\Radzen.Blazor.dll

@@ -1,0 +1,251 @@
+﻿@inject ISubscriptionService SubscriptionService
+@inject IOrdersService OrdersService
+@inject IPeriodService PeriodService
+@inject ISnackbar Snackbar
+@inject CustomHttp Http
+@inject IDialogService DialogService
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>@_localizer["lbl_CurrentSubscription"]</PageTitle>
+@if (subscriptions != null)
+{
+    <MudOverlay Visible="isVisible" LightBackground=true ZIndex="9999">
+        <MudText Align="Align.Center">
+            <MudProgressCircular Style="height:100px;width:100px;color:#00AF37 " Indeterminate="true" />
+        </MudText>
+        <MudText Align="Align.Center" Typo="Typo.h4" Style="color:#00AF37 ">@_localizer["lbl_requestsending"]</MudText>
+    </MudOverlay>
+    <MudOverlay Visible="isVisibles" LightBackground=true ZIndex="9999">
+        <MudText Align="Align.Center">
+            <MudIcon Icon="@icon" Color="color_icontxt" Style="height:100px;width:100px; " />
+        </MudText>
+        <MudText Align="Align.Center" Color="color_icontxt" Typo="Typo.h4">@msgSubscription</MudText>
+    </MudOverlay>
+    <MudText Typo="Typo.h6" Color="Color.Primary" Class="fontContent">@_localizer["lbl_CurrentSubscription"]</MudText>
+    <MudTable Items="subscriptions.Content" Hover="true" Breakpoint="Breakpoint.Xs" Style="background-color:#393939;">
+        <HeaderContent>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_PackageName"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Price"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Period"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_SubscriptionDate"]</b></MudTh>
+            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_EndDate"]</b></MudTh>
+            <MudTh Style="border-bottom:1px solid #4b4848"></MudTh>
+            <MudTh Style="border-bottom:1px solid #4b4848"></MudTh>
+        </HeaderContent>
+        
+        <RowTemplate>
+            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_PackageName"]">
+                @(selectedCulture.Contains("en") ? context.package.foreignName ?? " " : context.package.name ?? " ")
+            </MudTd>
+            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Price"]">@context.price</MudTd>
+            @if (context.package.period.value == 1)
+            {
+                @if (context.package.period.type == "Monthly")
+                {
+                    <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Period"]">@context.package.period.value @_localizer["lbl_Month"]</MudTd>
+                }
+                else if (context.package.period.type == "Yearly")
+                {
+                    <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Period"]">@context.package.period.value @_localizer["lbl_Year"]</MudTd>
+                }
+            }
+            else
+            {
+                @if (context.package.period.type == "Monthly")
+                {
+                    <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Period"]">@context.package.period.value @_localizer["lbl_Months"]</MudTd>
+                }
+                else if (context.package.period.type == "Yearly")
+                {
+                    <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Period"]">@context.package.period.value @_localizer["lbl_Years"]</MudTd>
+                }
+            }
+            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_SubscriptionDate"]">@context.startDate</MudTd>
+            <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_EndDate"]">@context.endDate</MudTd>
+            <MudTd Class="fontContent" Style="border-bottom:1px solid #4b4848"><MudButton Class="fontContent" Style="color:#c8cacd" Variant="Variant.Filled" Size="Size.Small" OnClick="()=>ShowDetails(context.id)"><b>@(context.isShowDetails == true ? _localizer["lbl_HideDetail"] : _localizer["lbl_ShowDetail"])</b></MudButton></MudTd>
+            <MudTd Style="border-bottom:1px solid #4b4848">
+                @if (context.package.status == "free")
+                {
+
+                }
+                else
+                {
+                    <MudButton Style="color:#c8cacd" Class="fontContent my-1" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" OnClick="()=>renewalSubscription(context.id)">@_localizer["lbl_RenewalSubscription"]</MudButton>
+                }@*<MudButton Style="color:#c8cacd" Class="fontContent my-1" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary">@_localizer["lbl_ChangePackage"]</MudButton>*@
+            </MudTd>
+        </RowTemplate>
+        <ChildRowContent>
+            @if (context.isShowDetails)
+            {
+                <MudTr Style="background-color:#424242;">
+                    <td colspan="4">
+                        <MudCard Elevation="0" Style="background-color:#424242;">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudTable Items="context.package.packageServices" Context="packageServices" Elevation="0" Style="background-color:#424242;">
+                                        <HeaderContent>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Service"]</b></MudTh>
+                                            <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Qty"]</b></MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                        <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Service"]">
+                                                @packageServices.serviceName
+                                        </MudTd>
+                                        <MudTd Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Qty"]">@packageServices.qty</MudTd>
+                                    </RowTemplate>
+                                </MudTable>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                    </MudCard>
+                </td>
+            </MudTr>
+            }
+        </ChildRowContent>
+    </MudTable>
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+
+    bool isShowDetails = false;
+    private bool isVisible;
+    private bool isVisibles;
+    public string msgSubscription { get; set; }
+    public string icon { get; set; }
+    public Color color_icontxt { get; set; }
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    ResponseModel<SubscriptionModel> subscriptions;
+    ResponseModel<packageServicesModel> packageServicesModel;
+    ResponseModel<PeriodModel> period;
+    private ServicesModel[]? servicesModel;
+    List<string> services = new List<string>();
+    OrderModel orderModel = new OrderModel();
+    PeriodModel periodModel = new PeriodModel();
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            servicesModel = await Http.HttpClient.GetFromJsonAsync<ServicesModel[]>("Service/ServicesEN.json");
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            servicesModel = await Http.HttpClient.GetFromJsonAsync<ServicesModel[]>("Service/Services.json");
+        }
+        foreach (var x in servicesModel)
+        {
+            services.Add(x.serviceApi);
+            Console.WriteLine(x.serviceApi);
+        }
+        try
+        {
+            subscriptions = await SubscriptionService.GetAll();
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+    void ShowDetails(int subcriptionId)
+    {
+        SubscriptionModel subcr = subscriptions.Content.First(s => s.id == subcriptionId);
+        subcr.isShowDetails = !subcr.isShowDetails;
+    }
+    List<PackageRelation> listService = new List<PackageRelation>();
+    public async void renewalSubscription(int subId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_RenewalSubscription"].ToString());
+        parameters.Add("SubscriptionConfirmation", _localizer["lbl_CofirmRenewSub"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Ok"].ToString());
+        parameters.Add("orderssId", subId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Index.SubFreeDialog>(null, parameters, options);
+
+
+
+
+        //isVisible = true;
+
+        //await Task.Delay(2000);
+        //try
+        //{
+        //    var result = await OrdersService.AddRenewalOrder(subId);
+        //    if (result.Code == 0)
+        //    {
+        //        var parameters = new DialogParameters();
+        //        parameters.Add("curr2", "current-item");
+        //        parameters.Add("orderId", subId);
+        //        var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+        //        var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+        //        var reslut = await dialog.Result;
+        //    }
+        //    else if (result.Code == 4001)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_alreadyWaiting"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else if (result.Code == 4002)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_numberLarger"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else if (result.Code == 4003)
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(_localizer["msg_alreadySubscribed"].ToString(), Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //    else
+        //    {
+        //        isVisible = false;
+        //        Snackbar.Add(result.Message, Severity.Error);
+        //        MudDialog.Close();
+        //        Console.WriteLine("error: " + result.Message);
+        //        StateHasChanged();
+        //    }
+        //}
+        //catch
+        //{
+        //    listService.Clear();
+        //    icon = @Icons.Material.Filled.Error;
+        //    color_icontxt = @Color.Error;
+        //    msgSubscription = _localizer["lbl_requestFsent"];
+        //    isVisibles = true;
+        //    isVisible = false;
+        //    subscriptionModel = new SubscriptionModel();
+        //    StateHasChanged();
+        //    await Task.Delay(1500);
+        //    isVisibles = false;
+        //    subscriptionModel = new SubscriptionModel();
+        //    StateHasChanged();
+        //}
+
+    }
+}

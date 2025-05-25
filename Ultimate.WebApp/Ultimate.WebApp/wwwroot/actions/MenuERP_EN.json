@@ -1,0 +1,18 @@
+[
+  {
+    "ERP_Id": "1",
+    "NameERP": "receipt vouchers"
+  },
+  {
+    "ERP_Id": "2",
+    "NameERP": "payment vouchers"
+  },
+  {
+    "ERP_Id": "4",
+    "NameERP": "sales invoices"
+  },
+  {
+    "ERP_Id": "5",
+    "NameERP": "sales returns"
+  }
+]

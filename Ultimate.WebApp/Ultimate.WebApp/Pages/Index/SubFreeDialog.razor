@@ -1,0 +1,363 @@
+﻿@using System.Security.Claims
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+@inject ILocalStorageService _localStorageService
+@inject IClientService clientService
+@inject ISubscriptionService SubscriptionService
+@inject IOrdersService OrdersService
+@inject IDialogService DialogService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            @*<div class="d-flex flex-row gap-2" dir="@direction">
+            <MudIcon Icon="@Icons.Material.Outlined.Delete" Size="Size.Medium"></MudIcon>
+            <MudText Typo="Typo.h5">@title</MudText>
+            </div>*@
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h5">@title</MudText>
+            </div>
+        </TitleContent>
+        @*  @Icons.Material.Filled.Dangerous
+        @Icons.Material.Filled.HighlightOff*@
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+            </MudOverlay>
+            @*<MudText>@menuId</MudText>*@
+            <div class="d-flex flex-row gap-2">
+                <MudText Class="fontContent" Color="Color.Secondary">@SubscriptionConfirmation</MudText>
+            </div>
+            @*<MudText>@menuName</MudText>*@
+        </DialogContent>
+        <DialogActions>
+            <MudButton Class="fontContent" Color="Color.Secondary" OnClick="Cancel">@_localizer["lbl_Cancelbtn"]</MudButton>
+            <MudButton Class="fontContent" Color="Color.Primary" Variant="Variant.Filled" OnClick="SubFree">@buttonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    string font_Title;
+    string font_Content;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public string SubscriptionConfirmation { set; get; }
+    [Parameter] public string buttonText { set; get; }
+    [Parameter] public string title { set; get; }
+    [Parameter] public PackagesModel package { set; get; }
+    [Parameter] public OrderModel orderss { set; get; }
+    [Parameter] public int orderssId { set; get; }
+    string direction;
+    string UserId;
+    int orderId;
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+    OrderModel orderModel = new OrderModel();
+    ResponsePost<OrderModel> OrderResponse = new ResponsePost<OrderModel>();
+    ResponseModel<OrderModel> order;
+    bool IsRTL;
+    private bool isVisible;
+    string msgSubscription;
+    List<SubscriptionServiceModel> pckFreeService = new List<SubscriptionServiceModel>();
+    List<PackageRelation> pck = new List<PackageRelation>();
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (selectedCulture.Contains("ar"))
+        {
+            direction = "rtl";
+            IsRTL = true;
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = identity.FindFirst("UserId").Value;
+
+    }
+    public void Cancel()
+    {
+        pck.Clear();
+        MudDialog.Cancel();
+    }
+    public async void SubFree()
+    {
+        if (SubscriptionConfirmation == _localizer["lbl_subPackageFree"].ToString())
+        {
+            isVisible = true;
+            await Task.Delay(1000);
+            var subFrree = await SubscriptionService.ThePostOfFreeSubscription(package.id);
+
+            if (subFrree.Code==0)
+            {
+                //pckFreeService.Clear();
+                //foreach (var itemsService in package.packageServices)
+                //{
+                //    pckFreeService.Add(new SubscriptionServiceModel
+                //        {
+                //            serviceName = itemsService.serviceName,
+                //            price = itemsService.price,
+                //            qty = itemsService.qty,
+                //        });
+                //}
+                Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomRight;
+                Snackbar.Configuration.ShowCloseIcon = false;
+
+                //subscriptionModel.packageId = package.id;
+                //subscriptionModel.userId = int.Parse(UserId);
+                //subscriptionModel.price = 0;
+                //subscriptionModel.subscriptionService = pckFreeService;
+                try
+                {
+                    //await SubscriptionService.Create(subFrree.Content);
+                    isVisible = false;
+                    Snackbar.Add(_localizer["lbl_subscribedSuccessfully"], Severity.Success);
+                    pckFreeService.Clear();
+                    MudDialog.Close();
+                    subscriptionModel = new SubscriptionModel();
+                    StateHasChanged();
+                }
+                catch (Exception e)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_CheckOnline"], Severity.Error);
+                    pckFreeService.Clear();
+                    Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                Snackbar.Add(_localizer["msg_usedPackageFree"], Severity.Warning);
+                isVisible = false;
+                pckFreeService.Clear();
+                MudDialog.Close();
+                subscriptionModel = new SubscriptionModel();
+                StateHasChanged();
+            }
+        }
+        else if (SubscriptionConfirmation==_localizer["lbl_SubscriptionConfirmation"].ToString())
+        {
+
+            pck.Add(new PackageRelation
+                {
+                    packageId = package.id
+                });
+
+
+            orderModel.userId = int.Parse(UserId);
+            orderModel.user = null;
+            orderModel.note = null;
+            orderModel.orderFiles = null;
+            orderModel.packageRelations = pck;
+            orderModel.type = null;
+            isVisible = true;
+            await Task.Delay(1000);
+            try{
+            var result = await OrdersService.addOrder(orderModel);
+            Console.WriteLine("eeeeeeeeee: " + result.Code);
+            if (result.Code == 0)
+            {
+                order = await OrdersService.GetOrderGetByStatus("requested");
+                orderId = order.Content.LastOrDefault().id;
+                pck.Clear();
+                //isVisible = false;
+                var parameters = new DialogParameters();
+                parameters.Add("curr2", "current-item");
+                parameters.Add("orderId", orderId);
+                var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+                var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+                var reslut = await dialog.Result;
+            }
+            else if (result.Code == 4001)
+            {
+                pck.Clear();
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_alreadyWaiting"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                Console.WriteLine("error: " + result.Message);
+                StateHasChanged();
+            }
+            else if (result.Code == 4002)
+            {
+                pck.Clear();
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_numberLarger"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                Console.WriteLine("error: " + result.Message);
+                StateHasChanged();
+            }
+            else if (result.Code == 4003)
+            {
+                pck.Clear();
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_alreadySubscribed"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                Console.WriteLine("error: " + result.Message);
+                StateHasChanged();
+            }
+            else
+            {
+                pck.Clear();
+                isVisible = false;
+                Snackbar.Add(result.Message, Severity.Error);
+                    MudDialog.Close();
+                Console.WriteLine("error: " + result.Message);
+                StateHasChanged();
+            }
+            }
+            catch (Exception e)
+            {
+                pck.Clear();
+
+                isVisible = false;
+            
+                //Snackbar.Add(e.Message, Severity.Error);
+                //MudDialog.CancelAll();
+                Console.WriteLine("error99: " + e.Message);
+                StateHasChanged();
+            }
+        }
+        else if (SubscriptionConfirmation == _localizer["lbl_CofirmRenewSub"].ToString()){
+            isVisible = true;
+
+            await Task.Delay(2000);
+            try
+            {
+                var result = await OrdersService.AddRenewalOrder(orderssId);
+                if (result.Code == 0)
+                {
+                    var parameters = new DialogParameters();
+                    parameters.Add("curr2", "current-item");
+                    parameters.Add("orderId", orderssId);
+                    var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+                    var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+                    var reslut = await dialog.Result;
+                }
+                else if (result.Code == 4001)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_alreadyWaiting"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else if (result.Code == 4002)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_numberLarger"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else if (result.Code == 4003)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_alreadySubscribed"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else
+                {
+                    isVisible = false;
+                    Snackbar.Add(result.Message, Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+            }
+            catch
+            {
+                //listService.Clear();
+                //icon = @Icons.Material.Filled.Error;
+                //color_icontxt = @Color.Error;
+                msgSubscription = _localizer["lbl_requestFsent"];
+                //isVisibles = true;
+                isVisible = false;
+                subscriptionModel = new SubscriptionModel();
+                //StateHasChanged();
+                //await Task.Delay(1500);
+                //isVisibles = false;
+                subscriptionModel = new SubscriptionModel();
+                StateHasChanged();
+            }
+        }
+        else if (SubscriptionConfirmation == _localizer["lbl_CofirmResendSub"].ToString())
+        {
+            isVisible = true;
+            await Task.Delay(1000);
+            try
+            {
+                var result = await OrdersService.addOrder(orderss);
+                Console.WriteLine("eeeeeeeeee: " + result.Code);
+                if (result.Code == 0)
+                {
+                    orderId = result.Content.id;
+                    //isVisible = false;
+                    var parameters = new DialogParameters();
+                    parameters.Add("curr2", "current-item");
+                    parameters.Add("orderId", orderId);
+                    var options = new DialogOptions { FullWidth = true, DisableBackdropClick = true };
+                    var dialog = await DialogService.ShowAsync<Ultimate.WebApp.Pages.Index.UploadImages>(null, parameters, options);
+                    var reslut = await dialog.Result;
+                }
+                else if (result.Code == 4001)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_alreadyWaiting"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else if (result.Code == 4002)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_numberLarger"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else if (result.Code == 4003)
+                {
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_alreadySubscribed"].ToString(), Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+                else
+                {
+                    isVisible = false;
+                    Snackbar.Add(result.Message, Severity.Error);
+                    MudDialog.Close();
+                    Console.WriteLine("error: " + result.Message);
+                    StateHasChanged();
+                }
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+
+                //Snackbar.Add(e.Message, Severity.Error);
+                //MudDialog.CancelAll();
+                Console.WriteLine("error99: " + e.Message);
+                StateHasChanged();
+            }
+        }
+    }
+}

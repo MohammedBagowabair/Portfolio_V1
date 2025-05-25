@@ -1,0 +1,72 @@
+﻿@inject IBotService BotService
+@inject IStringLocalizer<Resource> _localizer
+@using Ultimate.WebApp.Pages.Bot
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        
+    <DialogContent>
+            @if (responsGenericImage != null)
+            {
+        <MudText Align="Align.Center">
+                    <img src="data:@responsGenericImage.Content.fileDescription;base64,@responsGenericImage.Content.fileContent" style="width:250px;height:250px" />
+        </MudText>
+                }
+                else{
+                <MudProgressCircular Color="Color.Primary" Class="d-flex mx-auto" Indeterminate="true" />
+                }
+    </DialogContent>
+    <DialogActions>
+            <MudButton Variant="Variant.Filled" Class="fontContent" Color="Color.Primary" OnClick="Close">@_localizer["lbl_Ok"]</MudButton>
+    </DialogActions>
+</MudDialog>
+   
+</MudRTLProvider>
+@code {
+    string direction;
+    bool IsRTL;
+    string fileName;
+    string fileContent;
+    ResponsGeneric<BotFileModel> responsGenericImage;
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public int id { set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        
+        
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            direction = "rtl";
+            IsRTL = true;
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+        try{
+            responsGenericImage = await BotService.GetFileById(id);
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        
+    }
+    void Close(){MudDialog.Close();}
+}

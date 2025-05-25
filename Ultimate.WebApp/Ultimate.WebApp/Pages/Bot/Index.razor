@@ -1,0 +1,28 @@
+﻿@page "/bot/{clientId:int}"
+
+
+@inject IBotService _IBotService
+@inject NavigationManager _navigationManager
+
+
+@code {
+
+    [Parameter]
+    public int clientId {get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+       
+        
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+         ResponseModel<BotModel> reslut= await _IBotService.GetBot(clientId);
+        if (reslut.Content?.Count>0)
+        {
+            _navigationManager.NavigateTo("/client"+"/"+reslut.Content[0].Id);
+        }
+    }
+
+
+}

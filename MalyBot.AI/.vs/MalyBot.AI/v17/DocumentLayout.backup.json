@@ -1,0 +1,155 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\wwwroot\\icon-192.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\wwwroot\\icon-192.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|c:\\users\\user\\source\\repos\\malybot.ai\\malybot.ai\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D867F785-5852-4616-A62E-DB3E81BDB8C0}|MalyBot.AI\\MalyBot.AI.csproj|solutionrelative:malybot.ai\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "icon-192.png",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\icon-192.png",
+              "RelativeDocumentMoniker": "MalyBot.AI\\wwwroot\\icon-192.png",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\icon-192.png",
+              "RelativeToolTip": "MalyBot.AI\\wwwroot\\icon-192.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2025-05-03T08:50:17.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\App.razor",
+              "RelativeDocumentMoniker": "MalyBot.AI\\App.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\App.razor",
+              "RelativeToolTip": "MalyBot.AI\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-03T08:46:19.759Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "MalyBot.AI\\wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\index.html",
+              "RelativeToolTip": "MalyBot.AI\\wwwroot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-05-03T07:56:08.833Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "MalyBot.AI\\wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "MalyBot.AI\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAC0BAAAAAAAAAAAowF0BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-03T07:55:50.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "site.css",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\site.css",
+              "RelativeDocumentMoniker": "MalyBot.AI\\wwwroot\\css\\site.css",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\wwwroot\\css\\site.css",
+              "RelativeToolTip": "MalyBot.AI\\wwwroot\\css\\site.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-03T07:55:41.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "MalyBot.AI\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Pages\\Home.razor",
+              "RelativeToolTip": "MalyBot.AI\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGMAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-03T07:54:17.143Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "MalyBot.AI\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "MalyBot.AI\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-03T07:50:24.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "MalyBot.AI\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\MalyBot.AI\\MalyBot.AI\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "MalyBot.AI\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-03T07:47:29.95Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

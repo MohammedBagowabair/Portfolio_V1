@@ -1,0 +1,259 @@
+﻿@page "/createsmenu"
+@using System.ComponentModel.DataAnnotations
+@inject ITextService textService
+@using Microsoft.Extensions.Localization;
+@using Ultimate.Bot.Core.Model
+@using BlazorApp1.Model
+@using Ultimate.WebApp.Enum
+@using Ultimate.WebApp.Model.Validations
+@using Ultimate.WebApp.Pages.Menus
+@using Ultimate.WebApp.Shared.ResourceFiles;
+
+@inject NavigationManager navigationManager
+@inject ISMenuService menuService
+@inject IDialogService DialogService
+@inject CustomHttp Http
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+@inject IReportCollectionServices reportCollectionServices
+
+@*<h3> type is @menudetails.menuElementTitle</h3>*@
+<style>
+    .mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol {
+        /*  color: var(--mud-palette-text-primary);*/
+        color: aquamarine;
+    }
+
+    .mud-application-layout-rtl .mud-input-label-filled.mud-input-label-margin-dense {
+        transform: translate(-12px,17px) scale(1);
+        color: #898989;
+    }
+
+    .save_icon {
+        color: #3dc798;
+    }
+
+    .mud-icon-root {
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        transition: fill 200ms cubic-bezier(.4,0,.2,1) 0ms;
+        flex-shrink: 0;
+        user-select: none;
+        color: white;
+    }
+
+    .mud-input > input.mud-input-root, div.mud-input-slot.mud-input-root {
+        font: inherit;
+        color: #d4d4d4;
+        width: 100%;
+        border: 0;
+        height: 1.1876em;
+        margin: 0;
+        display: block;
+        padding: 6px 0 7px;
+        min-width: 0;
+        background: none;
+        position: relative;
+        box-sizing: content-box;
+        letter-spacing: inherit;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    
+</style>
+
+
+<MudForm @ref="form" Model="menudetails" OnValidSubmit="menuSubmit">
+    @*<DataAnnotationsValidator />*@
+   @*  <ObjectGraphDataAnnotationsValidator /> *@
+
+            <MudPaper Elevation="1" >
+                <UltimateToolbar Model="menudetails" Undo="Undo" Save="Save" Add="Add" Update="Update" />
+            </MudPaper>
+
+    <MudPaper Elevation="0" Class="pa-5">
+        <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+        @*<h1>@botId</h1>*@
+        <MudGrid Justify="Justify.FlexStart">
+            <MudItem xs="12" md="12" sm="12" lg="12">
+              
+                </MudItem>
+
+                
+                <MudItem xs="12" md="12" sm="12" lg="12">
+                    <div style="background-color:#424242;" class="pa-4">
+                        <MudText Color="Color.Secondary" Class="fontContent" Typo="Typo.h6"> @_localizer["lbl_MenuData"]</MudText>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" md="12" sm="12" lg="12">
+                    <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Name"]" Variant="Variant.Filled" @bind-Value="menudetails.MenuName" T="string" Class="fontContent my-5" Margin="Margin.Dense" For="@(()=>menudetails.MenuName)"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" md="6" sm="6" lg="6">
+                    <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Title"]" Variant="Variant.Filled" @bind-Value="menudetails.Title" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Title)"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" md="6" sm="6" lg="6">
+                    <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Body"]" Variant="Variant.Filled" @bind-Value="menudetails.Body" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Body)"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" md="6" sm="6" lg="6">
+                    <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_ButtonText"]" Variant="Variant.Filled" @bind-Value="menudetails.ButtonText" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.ButtonText)"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" md="6" sm="6" lg="6">
+                    <MudTextField Style="color:#c8cacd" Variant="Variant.Filled" Placeholder="@_localizer["lbl_ItemTitle"]" Class="fontContent mb-5" @bind-Value="menudetails.ItemTitle" T="string" For="@(()=>menudetails.ItemTitle)" Margin="Margin.Dense"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" md="12" sm="12" lg="12">
+                    <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Footer"]" Variant="Variant.Filled" @bind-Value="menudetails.Footer" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Footer)"></MudTextField>
+                </MudItem>
+
+                <MudItem xs="8" md="12" sm="8" lg="12">
+
+                   
+            </MudItem>
+            <MudItem xs="12" md="12" sm="12">
+                    <MudDataGrid T="MenuItemModel" Items="@menudetails.Items" ReadOnly="false" EditMode="@DataGridEditMode.Cell"
+                       
+                         Dense="true" >
+                        <Columns>
+                            <PropertyColumn Property="x => x.Title"   />
+                            <PropertyColumn Property="x => x.Description" />
+                            <PropertyColumn Property="x => x.Action" /> 
+                        </Columns>
+                    </MudDataGrid>
+            </MudItem>
+          
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudButton DisableElevation="true" Class="fontContent" OnClick="@addMeniItem" Variant="Variant.Filled" Color="Color.Primary" >إضافة+</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+    </MudForm>
+
+
+
+
+
+
+
+    @code {
+
+    [Parameter]
+    public string Type { set; get; }
+    private MenuTypeModel[]? types;
+    private MenuTypeModel[]? typesInEN;
+    private MenuModel m;
+
+    public bool isVisible = false;
+    [Parameter]
+    public MenuModel menudetails
+    {
+        set
+        {
+            _menudetails = value;
+
+        }
+        get => _menudetails;
+    }
+    private MenuModel _menudetails= new MenuModel(){ModelState=ModelStates.Loaded};
+
+
+    MudForm form;
+    protected override async Task OnInitializedAsync()
+    {
+
+        StateHasChanged();
+    }
+    private async void menuSubmit()
+    {
+
+
+    }
+    public void Add()
+    {
+        menudetails.ModelState = ModelStates.Insert; 
+
+    }
+
+    public void Undo()
+    {
+        menudetails = new MenuModel()
+        {
+                ModelState = ModelStates.Loaded
+        };
+        form.ResetValidation();
+        StateHasChanged();
+
+    }
+    private void Update()
+    {
+        menudetails.ModelState = ModelStates.Update;
+    }
+    async Task Save()
+    {
+        await form.Validate();
+        if (!form.IsValid)
+        {
+            await form.Validate();
+            return;
+        }
+        isVisible = true;
+        try
+        {
+            var result = new ResponsePost<MenuModel>();
+            if (menudetails.ModelState == ModelStates.Update)
+            {
+                // result =await menuService.UpdateMenu(menudetails);
+            }
+            else
+            {
+                result = await menuService.Create(menudetails);
+            }
+            if (result.Code == 0)
+            {
+
+                Snackbar.Add("Seccess", Severity.Success);
+                menudetails = new();
+
+                StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add(result.Message, Severity.Error);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        isVisible = false;
+    }
+
+
+
+    async Task addMeniItem()
+    {
+        menudetails.Items.Add(new MenuItemModel());
+    }
+    public async Task GetActionValue(MenuItemModel item)
+    {
+       
+
+    }
+
+    void DeleteItem(int itemIndx)
+    {
+        
+
+        StateHasChanged();
+    }
+
+    public async void EvevtDialog(MenuItemModel item)
+    {
+       
+    }
+
+
+}

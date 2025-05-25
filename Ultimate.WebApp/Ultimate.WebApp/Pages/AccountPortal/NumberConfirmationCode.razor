@@ -1,0 +1,187 @@
+﻿@inject IUserService userService
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager navigationManager
+@using System.Timers
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Confirmation Code</PageTitle>
+
+    <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+        <MudProgressCircular Color="Color.Secondary" Indeterminate="true"/>
+    </MudOverlay>
+    <MudGrid Justify="Justify.Center" Class="mt-1">
+        <MudItem xs="11" sm="10" md="8">
+            <MudPaper Class="py-15" Style="background-color:#424242;box-shadow:9px 8px 200px -13px #4aa47e">
+    <MudForm Class="px-5">
+        @*<MudItem xs="11" sm="11" md="11">*@
+            <MudGrid Justify="Justify.FlexStart">
+
+
+            <MudItem xs="11" sm="11" md="11">
+                        <MudText Align="Align.Start" Class="ma-2 fontContent" Style="color:#c8cacd" Typo="Typo.h6"><b>@_localizer["lbl_StayUpdated"]</b></MudText>
+                        <MudText Align="Align.Start" Class="ma-2 fontContent" Style="color:#c8cacd">@_localizer["lbl_EnterConfirmationCode"]</MudText>
+            </MudItem>
+            <MudItem xs="11" sm="10" md="10">
+                        <MudTextField Class="fontContent mx-2" Style="color:#c8cacd" @bind-Value="code" Margin="Margin.Dense" Variant="Variant.Outlined" MaxLength="6" Placeholder=@_localizer["lbl_TypeConfirmationCode"]></MudTextField>
+                        <MudText Align="Align.Start" Typo="Typo.body1" Class="fontContent mx-2" Color="Color.Error">@validationMsg</MudText>
+           </MudItem>
+           
+           <MudItem xs="11" sm="10" md="9">
+               <br/>
+               <MudText Align="Align.Start" Class="fontContent mx-2" Style=" color:#c8cacd">@_localizer["lbl_SendingCode"]</MudText>
+                    <MudText Align="Align.Start" Class="fontContent mt-2 mx-2" Color="Color.Primary">@timeValue @_localizer["lbl_Second"]</MudText>
+           </MudItem>
+                    <MudItem sm="11" xs="10" md="9">
+            <MudText Align="Align.Center" >
+                            <MudButton Color="Color.Primary" Class="px-10 mx-2 fontContent" Variant="Variant.Filled" Style="font-size:16px;color:white" OnClick="confirm">@_localizer["lbl_Confirm"]</MudButton>
+            </MudText>
+                    </MudItem>
+                    
+                      <MudItem xs="11" sm="10" md="9">
+                          <br/>
+                        @if (isDisabled == true)
+                        {
+                            <div style="text-align:Center">
+                                <MudText Align="Align.Center" Style="font-size:14px; color:#c8cacd" Class="fontContent " Inline>@_localizer["lbl_Verifyfialed"]</MudText>
+                            <MudElement HtmlTag="button"
+                                    @onclick="resendCode"
+                                        Style="color: grey; font-weight:200; font-size:14px;"
+                                    disabled=@isDisabled
+                                        Class="pointer-events-none fontTitle mt-n1">
+                                @_localizer["lbl_NewVerify"]
+                            </MudElement>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="text-align:Center">
+                                <MudText Align="Align.Center" Style="font-size:14px; color:#c8cacd" Class="fontContent" Inline>@_localizer["lbl_Verifyfialed"]</MudText>
+                            <MudElement HtmlTag="button"
+                                    @onclick="resendCode"
+                                    Style="color:#4aa47e;font-weight:200; font-size:14px;" Class="fontTitle mt-n1">
+                                @_localizer["lbl_NewVerify"]
+                            </MudElement>
+                            </div>
+                        }
+                        </MudItem>
+        </MudGrid>
+    </MudForm>
+    </MudPaper>
+    </MudItem>
+    </MudGrid>
+   
+
+@code {
+    [Parameter]
+    public string number{ set; get; }
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    private bool isVisible;
+    bool error;
+    bool success;
+    string code;
+    string validationMsg;
+    private Timer timer;
+    private int timeCounter = 120;
+    bool isDisabled = true;
+    private string timeValue { set; get; } = "00:00";
+    [Parameter]
+    public EventCallback OnBacktoClients { set; get; }
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"code 1: {number};");
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        StartTimer();
+    }
+    public void StartTimer()
+    {
+
+        timer = new Timer(1000);
+        timer.Elapsed += CountDownTimer;
+        timer.Enabled = true;
+    }
+    private void CountDownTimer(object sender, ElapsedEventArgs e)
+    {
+        if (timeCounter > 0)
+        {
+            timeCounter -= 1;
+            timeValue = TimeSpan.FromSeconds(timeCounter).ToString(@"mm\:ss");
+        }
+        else
+        {
+            timer.Enabled = false;
+            isDisabled = false;
+        }
+        InvokeAsync(StateHasChanged);
+
+    }
+    public async Task confirm()
+    {
+        if (code == null)
+        {
+            validationMsg = _localizer["lbl_CodeValidation"];
+        }
+        else{
+            isVisible = true;
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+            Snackbar.Configuration.ShowCloseIcon = false;
+            await Task.Delay(1000);
+            validationMsg = string.Empty;
+            try
+            {
+                ResponsGeneric<bool> result = await userService.VerifyWhatsappPhone(code);
+                code = string.Empty;
+                isVisible = false;
+                Snackbar.Add(_localizer["lbl_NumberConfirmed"], Severity.Success);
+                navigationManager.NavigateTo("/accountPortal/5");
+                await OnBacktoClients.InvokeAsync();
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                isVisible = false;
+                Snackbar.Add(_localizer["msg_Fail"], Severity.Normal);
+                //StateHasChanged();
+            }
+        }
+        Console.WriteLine("confirm");
+        StateHasChanged();
+    }
+    private async void resendCode()
+    {
+        try
+        {
+            timeCounter = 120;
+            StartTimer();
+            isDisabled = true;
+            ResponsGeneric<bool> result = await userService.SendWhatsappVerifyCode(number);
+
+            Console.WriteLine($"number {number}");
+            StateHasChanged();
+        }
+
+        catch (Exception e)
+        {
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+}

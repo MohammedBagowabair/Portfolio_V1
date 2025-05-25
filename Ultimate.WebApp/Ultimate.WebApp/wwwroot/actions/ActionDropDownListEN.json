@@ -1,0 +1,56 @@
+[
+  {
+    "events_id": "101",
+    "events": "Send",
+    "events_name": [
+      {
+        "events_name_id": "1",
+        "eventsName": "Send Media",
+        "keys": "S^M^",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "2",
+        "eventsName": "Send balance text",
+        "keys": "S^T^Q^1000",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "3",
+        "eventsName": "Send Text",
+        "keys": "S^T^S^",
+        "eventsid": "101"
+      },
+      {
+        "events_name_id": "4",
+        "eventsName": "Send coded text",
+        "keys": "S^T^Q^",
+        "eventsid": "101"
+      }
+    ]
+  },
+  {
+    "events_id": "202",
+    "events": "Move",
+    "events_name": [
+      {
+        "events_name_id": "2",
+        "eventsName": "Move to coded menu",
+        "keys": "N^M^Q^",
+        "eventsid": "202"
+      },
+      {
+        "events_name_id": "3",
+        "eventsName": "Move to Menu",
+        "keys": "N^M^S^",
+        "eventsid": "202"
+      },
+      {
+        "events_name_id": "4",
+        "eventsName": "Move to report collection",
+        "keys": "N^M^R^",
+        "eventsid": "202"
+      }
+    ]
+  }
+]

@@ -1,0 +1,237 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@inject IReportCollectionServices reportCollectionServices
+@inject IDialogService DialogService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>View Encoding Report</PageTitle>
+@*<div style="background-color:#393939">*@
+<MudGrid Class="pb-6 px-5">
+    @if (!addBtn)
+    {
+        <MudItem xs="11" sm="11" md="11">
+            <MudIconButton Icon="far fa-plus-square" Size="Size.Medium" style="color:#c8cacd" OnClick="NavigateToCreatReport" />
+        </MudItem>
+        <MudItem xs="11" sm="11" md="11">
+            @if (ReportCollections != null)
+            {
+
+                <MudTable Items="@ReportCollections.Content"
+                  Breakpoint="Breakpoint.Sm" Style="background-color:#393939;">
+                    <ColGroup>
+                       
+                    <col style="width: 40px;  border-bottom:1px solid #4b4848"   />
+                    <col style="  border-bottom:1px solid #4b4848"   />
+                        
+                    </ColGroup>
+                    <HeaderContent>
+                        <MudTh Style="border-bottom:1px solid #4b4848"></MudTh>
+                        <MudTh Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@_localizer["lbl_Collection"]</b></MudTh>
+                        @*<MudTh Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">النموذج</b></MudTh>*@
+                        
+                        
+                    </HeaderContent>
+                    @*<GroupHeaderTemplate>
+
+                        <MudTh colspan="6" Style="border-bottom:1px solid #4b4848"><b style=" color:#c8cacd">@($"{context.GroupName}: {context.Key}")</b></MudTh>
+                        </GroupHeaderTemplate>*@
+                      @*  <RowTemplate>
+
+                        @foreach (EncodingReportModel report in context.reports)
+                        {
+                            <MudTd Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="">@report.name</MudTd>
+                            <MudTd Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="">@report.reportTemplate.temp_name</MudTd>
+                            <MudTd Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+                                <MudLink Underline="Underline.None" Class="px-3" OnClick="()=>EditReport(report)">
+                                    <MudIcon Icon="far fa-edit" Size="Size.Small" style="color: #c8cacd;" />
+                                </MudLink>
+                                <MudLink Underline="Underline.None" Class="text-white" OnClick="()=>DeleteReport(report.id)">
+                                    <MudIcon Icon="fas fa-trash-alt" Size="Size.Small" style="color: #c8cacd;"></MudIcon>
+                                </MudLink>
+                            </MudTd>
+
+                        }
+
+                    </RowTemplate>*@
+                    <RowTemplate>
+                        <MudTd Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="">
+                            @*<MudButton Variant="Variant.Filled" Size="Size.Small" Class="fontContent" Style="color:#c8cacd" OnClick="()=>showReports(context.id)">عرض التقارير</MudButton>*@
+                            @if(context.isShowReports)
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowDown" Class="fontContent" Style="color:#c8cacd" OnClick="()=>showReports(context.id)"></MudIconButton>
+                            }
+                            else
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.KeyboardArrowRight" Class="fontContent" Style="color:#c8cacd" OnClick="()=>showReports(context.id)"></MudIconButton>
+                            }
+                            
+                            
+                        </MudTd>
+                        <MudTd Style="color:#c8cacd;border-bottom:1px solid #4b4848" DataLabel="@_localizer["lbl_Collection"]">@context.name</MudTd>
+                        
+                    </RowTemplate>
+                    <ChildRowContent>
+                        <MudTr Style="background-color:#424242;">
+                            <td colspan="6">
+                                <MudCard Elevation="0" Style="background-color:#424242;">
+                                    @if (context.isShowReports)
+                                    {
+                                        
+                                       
+                                        
+                                        <MudTable Items="context.reports" Context="report" Breakpoint="Breakpoint.Xs" Elevation="0" Outlined=false Dense=false Style="background-color:#424242;">
+                                            <HeaderContent>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Report"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_MsgNo"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;">@_localizer["lbl_Template"]</b></MudTh>
+                                                <MudTh Class="fontContent" Style="border-bottom:1px solid #4b4848"><b style="color:#c8cacd;"></b></MudTh>
+                                                
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                <MudTd DataLabel="@_localizer["lbl_Report"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@report.name</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_MsgNo"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@report.erpMsgNo</MudTd>
+                                                <MudTd DataLabel="@_localizer["lbl_Template"]" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">@report.reportTemplate.temp_name</MudTd>
+                                                <MudTd DataLabel="" Class="fontContent" Style="color:#c8cacd;border-bottom:1px solid #4b4848">
+
+                                                    <MudLink Underline="Underline.None" Class="px-3" OnClick="()=>EditReport(report)">
+                                                            <MudIcon Icon="far fa-edit" Size="Size.Small" style="color: #c8cacd;" />
+                                                        </MudLink>
+                                                    <MudLink Underline="Underline.None" Class="text-white" OnClick="()=>DeleteReport(report.id)">
+                                                            <MudIcon Icon="fas fa-trash-alt" Size="Size.Small" style="color: #c8cacd;"></MudIcon>
+                                                        </MudLink>
+                                                    </MudTd>
+                                               
+                                            </RowTemplate>
+                                            </MudTable>
+                                          
+                                    }
+                                    </MudCard>
+                                </td>
+                            </MudTr>
+                    </ChildRowContent>
+                </MudTable>
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true"  />
+            }
+        </MudItem>
+    }
+    else
+    {
+        <CreateEncodingReport botId="@botId" name_btn="@name_btn" headline="@headline" EncodingReportDto="@reportDto" OnAddOREditReport="ShowAddedOREditedReport" />
+    }
+</MudGrid>
+@*</div>*@
+@code {
+
+    ResponseModel<ReportCollectionModel> ReportCollections;
+
+    [Parameter]
+    public int botId { set; get; }
+    bool addBtn = false;
+    string headline;
+    string name_btn;
+    EncodingReportModel report;
+    EncodingReportDto reportDto;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+
+        }
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    private TableGroupDefinition<ReportCollectionModel> _groupDefinition = new()
+        {
+            GroupName = "المجموعة",
+            Indentation = false,
+            Expandable = true,
+            IsInitiallyExpanded = false,
+            Selector = (e) => e.name
+
+        };
+    void NavigateToCreatReport()
+    {
+        reportDto = new EncodingReportDto();
+        addBtn = true;
+        headline = _localizer["lbl_CreateNewReport"];
+        name_btn = _localizer["lbl_BtnSave"];
+
+    }
+    private void EditReport(EncodingReportModel Report)
+    {
+        reportDto.id = Report.id;
+        reportDto.name = Report.name;
+        reportDto.type = Report.type;
+        reportDto.reportCollectionId = Report.reportCollectionId;
+        reportDto.reportTemplateId = Report.reportTemplateId;
+        reportDto.erpMsgNo = Report.erpMsgNo;
+        headline = reportDto.name;
+        name_btn = _localizer["lbl_BtnEdit"];
+        addBtn = true;
+    }
+    public async Task ShowAddedOREditedReport()
+    {
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+            addBtn = false;
+            headline = _localizer["lbl_CreateNewReport"];
+            name_btn = _localizer["lbl_BtnSave"];
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+        //report = new EncodingReportModel();
+    }
+    async Task DeletedReport()
+    {
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    private void DeleteReport(int reportId)
+    {
+
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteEncodingReport"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_ConfirmDeleteReport"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", reportId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, (() => DeletedReport())));
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+    void showReports(int colId)
+    {
+        ReportCollectionModel collectionReports = ReportCollections.Content.First(s => s.id == colId);
+        collectionReports.isShowReports = !collectionReports.isShowReports;
+    }
+}

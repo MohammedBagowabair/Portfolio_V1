@@ -1,0 +1,138 @@
+﻿@page "/AdminManagement"
+@page "/AdminManagement/{selectedValue}"
+@inject IAuthService _authService
+@*@attribute [Authorize(Roles = "Admin")]*@
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .mud-typography-body1 {
+        font-size: var(--mud-typography-body1-size);
+        @font_Content;
+        font-weight: var(--mud-typography-body1-weight);
+        line-height: var(--mud-typography-body1-lineheight);
+        letter-spacing: var(--mud-typography-body1-letterspacing);
+        text-transform: var(--mud-typography-body1-text-transform);
+    }
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert="true">
+            <MudGrid>
+                <MudItem xs="3" sm="3" md="3">
+                    <MudList  Style="background-color:#424242;color:#c8cacd;height:100%" Class="px-3 fontContent" Clickable="true" @bind-SelectedValue="selectedValues" @bind-SelectedItem="SelectedValue" >
+                        <MudListItem Class="fontContent mud-typography-body1" Text="@_localizer["lbl_SubscriptionManagement"]">
+                            <NestedList>
+                                <MudListItem  Class="fontContent" Value="1" Text="@_localizer["lbl_SubscriptionPeriods"]">
+                                </MudListItem>
+                                <MudListItem Class="fontContent" Value="2" Text="@_localizer["lbl_SubscriptionPackages"]">
+                                </MudListItem>
+                            </NestedList>
+                        </MudListItem>
+                        <MudListItem Class="fontContent" Text="@_localizer["lbl_UsersManagement"]" >
+                            <NestedList>
+                                <MudListItem Class="fontContent" Value="7" Text="@_localizer["lbl_Notifications"]" />
+                            </NestedList>
+                        </MudListItem>
+                           <MudListItem Class="fontContent" Text="@_localizer["lbl_AccountsManagement"]" >
+                            <NestedList>
+                                <MudListItem Class="fontContent" Value="6" Text="@_localizer["lbl_SendNotifications"]" />
+                            </NestedList>
+                        </MudListItem>
+                        <MudListItem Class="fontContent" Text="@_localizer["lbl_SubscriptionOrders"]" Value="4" />
+                        <MudListItem Class="fontContent" Text="@_localizer["lbl_ExtendSubscriptions"]" Value="5" />
+                     
+                        <MudListItem Class="fontContent" Text="@_localizer["lbl_Dashboard"]" Value="3" />
+                        <MudNavLink Href="/smenu" Match="NavLinkMatch.Prefix">SMenu</MudNavLink>
+                    </MudList>
+
+                </MudItem>
+                <MudItem xs="8" sm="8" md="8">
+                    @if (@selectedValues?.ToString() == "1")
+                    {
+                        <Ultimate.WebApp.Pages.Admin.SubscriptionManagement.Subscription_Periods.ViewSubscriptionPeriods />
+                    }
+                    @if (@selectedValues?.ToString() == "2")
+                    {
+
+
+                        <Ultimate.WebApp.Pages.Admin.SubscriptionManagement.Subscription_Packages.ViewSubscriptionPackages />
+                    }
+                    @if (@selectedValues?.ToString() == "3")
+                    {
+                        <Ultimate.WebApp.Pages.Admin.Dashboard.Admindashboard />
+                    }
+                    @if (@selectedValues?.ToString() == "4")
+                    {
+                        <Ultimate.WebApp.Pages.Admin.Orders.SubscriptionOrders />
+                    }
+                    @if (@selectedValues?.ToString() == "5"){
+                        <Ultimate.WebApp.Pages.Admin.ExtendSubscription/>
+                    }
+                    @if (@selectedValues?.ToString() == "6")
+                    {
+                      <Ultimate.WebApp.Pages.Admin.Notifications.SendNotifications/>
+                     
+
+                    }
+                    @if (@selectedValues?.ToString() == "7")
+                    {
+                        <Ultimate.WebApp.Pages.Admin.Notifications.NotificationMethods/>
+
+
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert="true">
+            <Ultimate.WebApp.Pages.Admin.SubscriptionManagement.Subscription_Periods.ViewSubscriptionPeriods />
+        </MudHidden>
+    </Authorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public object selectedValue { set; get; }
+    MudListItem SelectedValue;
+    object selectedValues;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic ;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+
+    {
+        
+        if (selectedValue == null)
+        {
+            selectedValues = 1;
+        }
+        else
+        {
+            Console.WriteLine($"para {selectedValue}");
+            selectedValues = selectedValue;
+            
+            Console.WriteLine($"selectedValues {selectedValues}");
+            StateHasChanged();
+        }
+
+    }
+
+
+}

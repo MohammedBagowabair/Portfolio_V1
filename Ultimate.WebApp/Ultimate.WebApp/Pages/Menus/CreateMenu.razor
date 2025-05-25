@@ -1,0 +1,710 @@
+﻿@page "/createmenu"
+@using System.ComponentModel.DataAnnotations
+@inject ITextService textService
+@using Microsoft.Extensions.Localization;
+@using Ultimate.Bot.Core.Model
+@using BlazorApp1.Model
+@using Ultimate.WebApp.Model.Validations
+@using Ultimate.WebApp.Shared.ResourceFiles;
+@inject NavigationManager navigationManager
+@inject IMenuService menuService
+@inject IDialogService DialogService
+@inject CustomHttp Http
+@inject ISnackbar Snackbar
+@inject IStringLocalizer<Resource> _localizer
+@inject IReportCollectionServices reportCollectionServices
+
+@*<h3> type is @menudetails.menuElementTitle</h3>*@
+<style>
+    .mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol {
+        /*  color: var(--mud-palette-text-primary);*/
+        color: aquamarine;
+    }
+
+    .mud-application-layout-rtl .mud-input-label-filled.mud-input-label-margin-dense {
+        transform: translate(-12px,17px) scale(1);
+        color: #898989;
+    }
+
+    .save_icon {
+        color: #3dc798;
+    }
+
+    .mud-icon-root {
+        width: 1em;
+        height: 1em;
+        display: inline-block;
+        transition: fill 200ms cubic-bezier(.4,0,.2,1) 0ms;
+        flex-shrink: 0;
+        user-select: none;
+        color: white;
+    }
+
+    .mud-input > input.mud-input-root, div.mud-input-slot.mud-input-root {
+        font: inherit;
+        color: #d4d4d4;
+        width: 100%;
+        border: 0;
+        height: 1.1876em;
+        margin: 0;
+        display: block;
+        padding: 6px 0 7px;
+        min-width: 0;
+        background: none;
+        position: relative;
+        box-sizing: content-box;
+        letter-spacing: inherit;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+
+    .hoverLnk:hover {
+        color: #4CAF50;
+    }
+</style>
+
+
+<EditForm Model="menudetails" OnValidSubmit="menuSubmit">
+    @*<DataAnnotationsValidator />*@
+    <ObjectGraphDataAnnotationsValidator />
+    <MudPaper Elevation="0" Class="pa-5">
+        <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+            <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+        </MudOverlay>
+        @*<h1>@botId</h1>*@
+        <MudGrid Justify="Justify.FlexStart">
+            <MudItem xs="12" md="12" sm="12" lg="12">
+                <MudText Color="Color.Secondary" Typo="Typo.h4" class="pb-6 fontContent">@headline</MudText>
+            </MudItem>
+
+            @*<MudText Typo="Typo.h6" class="pb-6">@action</MudText>
+            <MudText Typo="Typo.h6" class="pb-6">@actionValue</MudText>
+            <MudText Typo="Typo.h6" class="pb-6">@eventMenuId</MudText>
+            <MudText Typo="Typo.h6" class="pb-6">@actionFsTt</MudText>*@
+
+            @*        <MudText>@action<MudText>
+            *@        @*@foreach (var itemtype in type)
+            {
+            <h1>@itemtype.symbol</h1><h1>@itemtype.type</h1>
+
+            }*@
+            <MudItem xs="12" md="12" sm="12" lg="12">
+                <div style="background-color:#424242;" class="pa-4">
+                    <MudText Color="Color.Secondary" Class="fontContent" Typo="Typo.h6"> @_localizer["lbl_MenuData"]</MudText>
+                </div>
+            </MudItem>
+            <MudItem xs="12" md="12" sm="12" lg="12">
+                <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Name"]" Variant="Variant.Filled" @bind-Value="menudetails.MenuName" T="string" Class="fontContent my-5" Margin="Margin.Dense" For="@(()=>menudetails.MenuName)"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" md="6" sm="6" lg="6">
+                <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Title"]" Variant="Variant.Filled" @bind-Value="menudetails.Title" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Title)"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" md="6" sm="6" lg="6">
+                <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Body"]" Variant="Variant.Filled" @bind-Value="menudetails.Body" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Body)"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" md="6" sm="6" lg="6">
+                <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_ButtonText"]" Variant="Variant.Filled" @bind-Value="menudetails.ButtonText" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.ButtonText)"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" md="6" sm="6" lg="6">
+                <MudTextField Style="color:#c8cacd" Variant="Variant.Filled" Placeholder="@_localizer["lbl_ItemTitle"]" Class="fontContent mb-5" @bind-Value="menudetails.ItemTitle" T="string" For="@(()=>menudetails.ItemTitle)" Margin="Margin.Dense"></MudTextField>
+            </MudItem>
+            <MudItem xs="12" md="12" sm="12" lg="12">
+                <MudTextField Style="color:#c8cacd" Placeholder="@_localizer["lbl_Footer"]" Variant="Variant.Filled" @bind-Value="menudetails.Footer" T="string" Class="mb-5 fontContent" Margin="Margin.Dense" For="@(()=>menudetails.Footer)"></MudTextField>
+            </MudItem>
+
+            <MudItem xs="8" md="12" sm="8" lg="12">
+
+                <MudRadioGroup @bind-SelectedOption="menudetails.Type">
+                    <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.body1">@_localizer["lbl_MenuType"]</MudText>
+                    @if (selectedCulture.Contains("ar"))
+                    {
+                        @foreach (var type in types ?? Array.Empty<MenuTypeModel>())
+                        {
+                            @*<div class="d-block">*@
+                            <MudRadio Option=@type.symbol Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@type?.type</span></MudRadio>
+                            @*</div>*@
+                        }
+                    }
+
+                    @if (selectedCulture.Contains("en"))
+                    {
+                        @foreach (var type in typesInEN ?? Array.Empty<MenuTypeModel>())
+                        {
+                            @*<div class="d-block">*@
+                            <MudRadio Option=@type.symbol Color="Color.Primary" UnCheckedColor="Color.Secondary"><span class="fontContent" style="color:#c8cacd">@type?.type</span></MudRadio>
+                            @*</div>*@
+                        }
+                    }
+
+                </MudRadioGroup>
+            </MudItem>
+            <MudItem xs="12" md="12" sm="12">
+                @if (Type == "s")
+                {
+                    <div>
+                        @*<div class="rounded border border-solid mud-border-Default mt-4">*@
+                        <MudItem xs="12" md="12" sm="12" lg="12">
+                            <div style="background-color:#424242;" class="pa-4">
+                                <MudText Color="Color.Secondary" Class="fontContent" Typo="Typo.h6">@_localizer["lbl_ItemData"]</MudText>
+                            </div>
+                        </MudItem>
+
+                        <MudGrid Justify="Justify.FlexStart" Class="">
+                            @*
+                        <MudItem md="11">
+                        <MudText Typo="Typo.subtitle1" Color="Color.Info">  هذه الجزئية لم تكتمل بعد( ومعالجة عدم ظهور قائمة الحدث بسرعة)</MudText>
+                        </MudItem>*@
+                            @*<MudItem md="11">
+
+                        </MudItem>*@
+                            <MudItem md="12" sm="12" xs="12" lg="12">
+                                <MudDataGrid Style="color:#c8cacd" T="MenuItemModel" Items="menudetails.Items.Where(i=>i.isDeleted==false)" ReadOnly="false" GroupStyle="color:#c8cacd" RowStyle="color:#c8cacd" EditMode="DataGridEditMode.Cell"
+                                         StartedEditingItem="@StartedEditingItem" CanceledEditingItem="@CanceledEditingItem" CommittedItemChanges="@CommittedItemChanges"
+                                         Bordered="false" EditTrigger="@(_editTriggerRowClick ? DataGridEditTrigger.OnRowClick : DataGridEditTrigger.Manual)" Class=" fontContent my-5" SortMode="SortMode.None">
+                                    <Columns>
+                                        
+                                        <PropertyColumn  Property="i=>i.Title" Style="color:#c8cacd" Class="fontContent"  CellStyle="color:#c8cacd" HeaderStyle="color:#c8cacd" Title=@_localizer["lbl_Title"] />
+                                        <PropertyColumn Property="i=>i.Description" Style="color:#c8cacd" Class="fontContent" HeaderStyle="color:#c8cacd"  Title=@_localizer["lbl_Description"] CellStyle="color:#c8cacd" />
+                                        @*<Column T="MenuItemModel" Field="Action" Title=@_localizer["lbl_Event"] HeaderStyle="width:1px;"  />*@
+                                        @*<Column T="MenuItemModel" Field="ActionValue" Title=@_localizer["lbl_Event"] IsEditable=false />*@
+
+                                        <PropertyColumn Property="i=>i.ActionValue" Style="color:#c8cacd" Class="fontContent" HeaderStyle="color:#c8cacd"  Title=@_localizer["lbl_Event"] CellStyle="color:#c8cacd">
+                                            <EditTemplate Context="ctx">
+                                                <MudLink OnClick="()=>EvevtDialog(ctx.Item)" Underline="Underline.None" Color="Color.Secondary" Class="fontContent hoverLnk">
+                                                    @ctx.Item.ActionValue
+                                                </MudLink>
+                                                @*}*@
+
+                                            </EditTemplate>
+                                            
+                                        </PropertyColumn>
+
+                                        @*<Column T="MenuItemModel" Field="ActionValue" Title=@_localizer["lbl_Event"]>*@
+                                        @*<EditTemplate Context="ctx">*@
+                                        @*<MudText>action</MudText>*@
+                                        @*<MenuEventDialog botId=@botId title=@_localizer["lbl_AddEvent"]/>*@
+                                        @*<MudButton DisableElevation="true" Variant="Variant.Text" OnClick="EvevtDialog" Size="Size.Large">aaa</MudButton>*@
+                                        @*@ctx.Item.ActionValue*@
+                                        @*</EditTemplate>*@
+                                        @*</Column>*@
+
+                                        @*<Column T="MenuItemModel" Context="gg" Title="@_localizer["lbl_Event"]" Hidden=@(!IsColHide) >
+                                    <EditTemplate>
+                                    <Events @ref="events" botId="@botId" keyses="@action"></Events>
+                                    </EditTemplate>
+                                    </Column>*@
+
+                                        <TemplateColumn T="MenuItemModel" CellStyle="color:#c8cacd">
+                                            <EditTemplate Context="ctx">
+                                                <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Delete" OnClick="()=>DeleteItem(menudetails.Items.IndexOf(ctx.Item))" Color="Color.Secondary" />
+                                                @*<MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="()=>EditItem()" />*@
+
+                                            </EditTemplate>
+                                        </TemplateColumn>
+
+                                    </Columns>
+
+                                </MudDataGrid>
+                            </MudItem>
+
+                            @*<div class="d-flex flex-row gap-2 my-5">*@
+
+                            <MudItem md="6" xs="12" sm="6" lg="2" Class="">
+                                <MudTextField Margin="Margin.Dense" Style="color:#c8cacd" @bind-Value="title" Class="fontContent" Placeholder="@_localizer["lbl_Title"]" Variant="Variant.Filled"></MudTextField>
+                            </MudItem>
+                            <MudItem md="6" xs="12" sm="6" lg="2" Class="">
+                                <MudTextField Margin="Margin.Dense" Style="color:#c8cacd" @bind-Value="desc" Class="fontContent" Placeholder="@_localizer["lbl_Description"]" Variant="Variant.Filled"></MudTextField>
+                            </MudItem>
+                            <MudItem md="11" xs="10" sm="11" lg="7" Class="">
+                                @*<MudButton DisableElevation="true" Variant="Variant.Text" Style="position:relative;top:30px" OnClick="EvevtDialog" Size="Size.Large">@_localizer["lbl_Event"]</MudButton>*@
+                                <Events @ref="events" botId="@botId" name_btns="@name_btn" keyses="@action" />
+                            </MudItem>
+
+                            <MudItem Class="save_icon" md="1" xs="1" sm="1" lg="1">
+
+                                <MudIconButton Icon="@Icons.Material.Outlined.Save" OnClick="addMenuItem" Color="Color.Primary" Style="position:relative;top:13px;" />
+
+                            </MudItem>
+
+                            @*</div>*@
+
+                            <MudItem xs="12" sm="12" md="12" lg="12">
+                                <MudText Class="fontContent" Color="Color.Error">@validateditems</MudText>
+
+                            </MudItem>
+
+                            @*<MudText>@menuItems.ActionValue</MudText>*@
+
+                        </MudGrid>
+
+                    </div>
+
+                }
+            </MudItem>
+            @*</div>*@
+
+            @*<MudButton DisableElevation="true" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Primary" Style="position:relative;top:15px" OnClick="addMenuItem">إضافة</MudButton>*@
+
+
+
+
+            @*<MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Style="position:relative;top:30px" OnClick="">@_localizer["lbl_Cancelbtn"]</MudButton>*@
+
+            @*<MudButton DisableElevation="true" Variant="Variant.Outlined" Color="Color.Primary" Class="mb-2">@_localizer["lbl_Cancelbtn"]</MudButton>*@
+            @* @if(@validateditems!=null)
+            {
+            <MudText Typo="Typo.body1">@validateditems</MudText>
+            }
+
+            <MudButton DisableElevation="true" Variant="Variant.Filled" Color="Color.Primary" Style="position:relative;top:30px" OnClick="showEvent">showEvent</MudButton>*@
+            <MudItem xs="12" sm="12" md="12" lg="12">
+                <MudButton DisableElevation="true" Class="fontContent" Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@name_btn</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+</EditForm>
+
+
+
+
+
+
+
+@code {
+    string font_Title;
+    string font_Content;
+    [Parameter]
+    public int botId { set; get; }
+    [Parameter]
+    public string headline { set; get; }
+    [Parameter]
+    public string name_btn { set; get; }
+    [Parameter]
+    public string Type { set; get; }
+    private MenuTypeModel[]? types;
+    private MenuTypeModel[]? typesInEN;
+    private MenuModel m;
+    [Parameter]
+    public MenuModel menudetails
+    {
+        set
+        {
+            _menudetails = value;
+            if (_menudetails.Items?.Count > 0)
+            {
+                //List<MenuItemModel> menuItemModels = _menudetails.Items;
+                foreach (var item1 in _menudetails.Items)
+                {
+
+                    GetActionValue(item1);
+
+
+                    //Task.Run(()=>GetActionValue(item));
+                }
+            }
+
+        }
+        get => _menudetails;
+    }
+    private MenuModel _menudetails;
+    int eventMenuId;
+    int eventTextId;
+    int eventReportG;
+    private string result;
+    private bool isVisible;
+    MenuItemModel items = new MenuItemModel();
+    private string action;
+    Events events;
+    string title;
+    string desc;
+    string actionValue = "";
+    string validateditems;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    MenuEventDialog MenuEvent;
+    private bool _readOnly;
+    private bool _isCellEditMode;
+    private List<string> _events = new();
+    private bool _editTriggerRowClick;
+    [Parameter]
+    public EventCallback OnAddOREditMenu { set; get; }
+    ResponseModel<MenuModel> MenusForEvent;
+    ResponsGeneric<ReportCollectionModel> reportGForEvent;
+    MenuItemModel menuItems = new MenuItemModel();
+    public List<TextModel> text_Q { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        Console.WriteLine($"menu 111type {Type}");
+
+
+        //editContext = new EditContext(menuItems);
+        types = await Http.HttpClient.GetFromJsonAsync<MenuTypeModel[]>("Menutype/MenuType.json");
+        typesInEN = await Http.HttpClient.GetFromJsonAsync<MenuTypeModel[]>("Menutype/MenuTypeEN.json");
+        ResponseModel<TextModel> response_txtG = await textService.GetByBotId(botId);
+        text_Q = response_txtG.Content;
+        StateHasChanged();
+    }
+    private async void menuSubmit()
+    {
+        if (menudetails.Items.Count <= 0 && menudetails.structureType == "s")
+        {
+            Console.WriteLine($" type{menudetails.structureType}");
+            validateditems = _localizer["msg_ItemsRequired"];
+        }
+        else
+        {
+            validateditems = string.Empty;
+            isVisible = true;
+            Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
+            Snackbar.Configuration.ShowCloseIcon = false;
+            await Task.Delay(1000);
+            if (name_btn == _localizer["lbl_BtnSave"])
+            {
+                //Console.WriteLine($" type 000{Type}");
+                if (Type == "s")
+                {
+                    menudetails.structureType = "s";
+                }
+                else if (Type == "Q")
+                {
+                    menudetails.structureType = "Q";
+                }
+                //Console.WriteLine($" tpye{menudetails.structureType}");
+                menudetails.botId = botId;
+                ResponsePost<MenuModel> res = await menuService.Create(menudetails);
+                result = res.Message;
+                Console.WriteLine($"code {res.Code}");
+                try
+                {
+                    if (res.Code == 0)
+                    {
+                        //Console.WriteLine("add");
+                        //menudetails.botId = botId;
+
+                        //ResponsePost<MenuModel> res = await menuService.Create(menudetails);
+                        //result = res.Message;
+
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertSaved"], Severity.Success);
+                        menudetails = new MenuModel();
+                        await OnAddOREditMenu.InvokeAsync();
+                        //menudetails.MenuName = null;
+
+                        //await menuService.GetMenuBybotId(botId);
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //menudetails = new MenuModel();
+                        StateHasChanged();
+
+
+                    }
+                    else if (res.Code == 3003)
+                    {
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertSavedandUpdate"], Severity.Success);
+                        menudetails = new MenuModel();
+                        await OnAddOREditMenu.InvokeAsync();
+                        //menudetails.MenuName = null;
+
+                        //await menuService.GetMenuBybotId(botId);
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //menudetails = new MenuModel();
+                        StateHasChanged();
+
+
+                    }
+                    else if (res.Code == 3001)
+                    {
+
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_DonotHaveSubscription"], Severity.Normal);
+                        menudetails = new MenuModel();
+                        //await OnAddOREditMenu.InvokeAsync();
+                        StateHasChanged();
+                        navigationManager.NavigateTo("/SeeMoreSubscription");
+
+                    }
+                    else if (res.Code == 4004)
+                    {
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_FSavePackageExpired"], Severity.Success);
+                        menudetails = new MenuModel();
+                        await OnAddOREditMenu.InvokeAsync();
+                        //menudetails.MenuName = null;
+
+                        //await menuService.GetMenuBybotId(botId);
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //menudetails = new MenuModel();
+                        StateHasChanged();
+
+
+                    }
+                    else{
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                        Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                        StateHasChanged();
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine($"msg {res.Message} code{res.Code}");
+                    //Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertFSaved"], Severity.Normal);
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                try
+                {
+                    menudetails.botId = botId;
+                    ResponseModel res = await menuService.UpdateMenu(menudetails);
+                    if (res.Code == 0)
+                    {
+                        result = res.Message;
+                        Console.WriteLine(res.Message);
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertModified"], Severity.Success);
+                        await OnAddOREditMenu.InvokeAsync();
+                        headline = _localizer["lbl_CreateMenu"];
+                        name_btn = _localizer["lbl_BtnSave"];
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //IsColHide = false;
+                        menudetails = new MenuModel();
+                        StateHasChanged();
+                    }
+                    else if (res.Code == 3003)
+                    {
+                        result = res.Message;
+                        Console.WriteLine(res.Message);
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertModifiedandUpdate"], Severity.Success);
+                        await OnAddOREditMenu.InvokeAsync();
+                        headline = _localizer["lbl_CreateMenu"];
+                        name_btn = _localizer["lbl_BtnSave"];
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //IsColHide = false;
+                        menudetails = new MenuModel();
+                        StateHasChanged();
+                    }
+                    else if (res.Code == 4004)
+                    {
+                        result = res.Message;
+                        Console.WriteLine(res.Message);
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_FModifiedPackageExpired"], Severity.Success);
+                        await OnAddOREditMenu.InvokeAsync();
+                        headline = _localizer["lbl_CreateMenu"];
+                        name_btn = _localizer["lbl_BtnSave"];
+                        title = null;
+                        desc = null;
+                        action = null;
+                        //IsColHide = false;
+                        menudetails = new MenuModel();
+                        StateHasChanged();
+                    }
+                    else{
+                        isVisible = false;
+                        Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                        Console.WriteLine($"status code:{res.Code},response:{res.Message}");
+                        StateHasChanged();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"{e.Message}, {e.StackTrace}");
+                    isVisible = false;
+                    Snackbar.Add(_localizer["msg_AlertFModified"], Severity.Normal);
+                    // menudetails = new MenuModel();
+                    StateHasChanged();
+                }
+            }
+        }
+        //menudetails = new MenuModel();
+        //StateHasChanged();
+    }
+    void StartedEditingItem(MenuItemModel item)
+    {
+        _events.Insert(0, $"Event = StartedEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+    void CanceledEditingItem(MenuItemModel item)
+    {
+        _events.Insert(0, $"Event = CanceledEditingItem, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+    void CommittedItemChanges(MenuItemModel item)
+    {
+        _events.Insert(0, $"Event = CommittedItemChanges, Data = {System.Text.Json.JsonSerializer.Serialize(item)}");
+    }
+
+    async Task addMenuItem()
+    {
+        Console.WriteLine($"acion is {action}");
+        action = events.getAction();
+        Console.WriteLine($"acion is {action}");
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(desc) || string.IsNullOrWhiteSpace(action))
+        {
+
+            validateditems = _localizer["msg_DataRequired"];
+        }
+        else
+        {
+
+            //Console.WriteLine(title.GetType());
+            var itemInfo = new MenuItemModel() { Title = title, Description = desc, Action = action };
+            await GetActionValue(itemInfo);
+            menudetails.Items.Add(itemInfo);
+            title = null;
+            desc = null;
+            action = null;
+
+
+            //actionFsTt = string.Empty;
+            validateditems = string.Empty;
+
+            StateHasChanged();
+        }
+    }
+    public async Task GetActionValue(MenuItemModel item)
+    {
+        Console.WriteLine($"value {item.ActionValue} action {item.Action}");
+        //separate from here to method and send action as a parameter because will use this method in update as well
+        //to perevent duplicated code twice
+        MenuItemModel menuItem = item;
+
+        if (item.Action == "S^T^Q^1000")
+        {
+            item.ActionValue = _localizer["lbl_Text"] + _localizer["lbl_balanceText"];
+        }
+        else
+        {
+            actionValue = item.Action.Substring(0, 6);
+            Console.WriteLine($" sub action {actionValue}");
+            if (actionValue == "N^M^S^")
+            {
+                eventMenuId = Convert.ToInt32(item.Action.Substring(6));
+                MenusForEvent = await menuService.GetMenuById(eventMenuId);
+                item.ActionValue = _localizer["lbl_Menu"] + MenusForEvent.Content[0].MenuName;
+            }
+            else if (actionValue == "N^M^Q^")
+            {
+                eventMenuId = Convert.ToInt32(item.Action.Substring(6));
+                MenusForEvent = await menuService.GetMenuById(eventMenuId);
+                item.ActionValue = _localizer["lbl_Menu"] + MenusForEvent.Content[0].MenuName;
+            }
+            else if (actionValue == "S^M^Q^")
+            {
+                item.ActionValue = _localizer["lbl_Media"] + _localizer["lbl_AccountStatement"];
+            }
+            else if (actionValue == "S^T^S^")
+            {
+                item.ActionValue = _localizer["lbl_Text"] + item.Action.ToString().Substring(6);
+            }
+            else if (actionValue == "S^T^Q^")
+            {
+                eventTextId = Convert.ToInt32(item.Action.Substring(6));
+                @foreach (var items_txtQ in text_Q)
+                {
+                    if (items_txtQ.id == eventTextId)
+                    {
+                        item.ActionValue = _localizer["lbl_Text"] + items_txtQ.name;
+                    }
+                }
+
+            }
+            else if (actionValue == "S^M^S^")
+            {
+                //Console.WriteLine($"aaa{action}");
+                item.ActionValue = _localizer["lbl_Media"] + "صورة";
+            }
+            else if (actionValue == "N^M^R^")
+            {
+                eventReportG = Convert.ToInt32(item.Action.Substring(6));
+                reportGForEvent = await reportCollectionServices.GetReportCollectionById(eventReportG);
+                item.ActionValue = _localizer["lbl_GroupReports"] + reportGForEvent.Content.name;
+            }
+            else
+            {
+
+            }
+
+        }
+        StateHasChanged();
+
+    }
+
+    void DeleteItem(int itemIndx)
+    {
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            menudetails.Items.RemoveAt(itemIndx);
+        }
+
+
+        else if (name_btn == _localizer["lbl_BtnEdit"])
+        {
+            Console.WriteLine($" index {itemIndx} deleted {menudetails.Items[itemIndx].isDeleted}");
+
+            menudetails.Items[itemIndx].isDeleted = true;
+            Console.WriteLine($" index {itemIndx} deleted {menudetails.Items[itemIndx].isDeleted}");
+
+        }
+
+        StateHasChanged();
+    }
+
+    public async void EvevtDialog(MenuItemModel item)
+    {
+        var options = new DialogOptions()
+            {
+                Position = DialogPosition.Center,
+                //MaxWidth = MaxWidth.Large,
+                CloseButton = false,
+                FullWidth = true
+            };
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_EditEvent"].ToString());
+        parameters.Add("botId", botId);
+        parameters.Add("eventValue", item.Action);
+        parameters.Add("name_btn", name_btn);
+        //parameters.Add("aaaction", Action);
+        //parameters.Add("MenuEvent", MenuEvent);
+        var dialog = await DialogService.ShowAsync<MenuEventDialog>(null, parameters, options);
+        var reslut = await dialog.Result;
+        Console.WriteLine($" action before editing {item.Action} ");
+        item.Action = reslut.Data.ToString();
+        await GetActionValue(item);
+        Console.WriteLine($" action after editing {item.Action} ");
+        StateHasChanged();
+    }
+
+
+}

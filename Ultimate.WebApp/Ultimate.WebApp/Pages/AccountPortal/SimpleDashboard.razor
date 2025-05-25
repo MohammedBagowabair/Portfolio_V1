@@ -1,0 +1,288 @@
+﻿@page "/dashboard"
+@inject IStringLocalizer<Resource> _localizer
+@using Ultimate.WebApp.Pages.Bot;
+@using System.Security.Claims
+@inject ILocalStorageService _localStorageService
+@inject IAutomessageService AutomessageService
+@inject IClientService ClientService
+@inject IEventsService _eventsService
+@inject IMenuService MenuService
+@inject IPackagesService PackagesService
+@inject IPeriodService PeriodService
+@inject ISubscriptionService SubscriptionService
+@inject IBotService BotService
+<style>
+    .size{
+          height: 100vh;
+        width: 100%;
+        background: #f5f5f5;
+    }
+    .fontTitle {
+    @font_Title
+    }
+    .fontContent{
+    @font_Content
+    }
+</style>
+<PageTitle>Simple Dashboard</PageTitle>
+@if (client != null&& lastPackage!=null)
+{
+    @*<div class="py-10 size">*@
+        <MudGrid Justify="Justify.Center" Class="mt-5">
+            @*<MudItem sm="2" xs="11" md="2">
+                <MudCard Elevation="25" Class="rounded-lg py-2" Style="background-image:linear-gradient(180deg, rgb(255, 255, 255) 10%, #f5f5f5 70%);">
+
+                    <MudCardContent>
+                        <MudText Align="Align.Center" Style="font-size:15px">
+                            @_localizer["lbl_SubscriptionDate"]
+                        </MudText>
+                        @{
+                            int last = @subscriptionList.FirstOrDefault();
+                        }
+                        @foreach (SubscriptionModel subscriptions in subscription.Content)
+                        {
+                            if (last == subscriptions.id)
+                            {
+                                <MudText Align="Align.Center">@subscriptions.startDate</MudText>
+
+
+                            }
+                        }
+                        @if (valuePeriod == 1)
+                        {
+                            if (typePeriod == "Monthly")
+                            {
+                                <MudText Align="Align.Center"><b>@valuePeriod @_localizer["lbl_Month"]</b></MudText>
+                            }
+                            else if (typePeriod == "Yearly")
+                            {
+                                <MudText Align="Align.Center"><b>@valuePeriod @_localizer["lbl_Year"]</b></MudText>
+                            }
+                        }
+                        else
+                        {
+                            if (typePeriod == "Monthly")
+                            {
+                                <MudText Align="Align.Center"><b>@valuePeriod @_localizer["lbl_Months"]</b></MudText>
+                            }
+                            else if (typePeriod == "Yearly")
+                            {
+                                <MudText Align="Align.Center"><b>@valuePeriod @_localizer["lbl_Years"]</b></MudText>
+                            }
+                        }
+                    </MudCardContent>
+                </MudCard>
+
+            </MudItem>*@
+            <MudItem sm="11" xs="11" md="11">
+            <MudCard Elevation="25" Class="rounded-lg py-4" Style="background-color:#424242;color:#c8cacd;box-shadow:1px 1px 10px 2px #4aa47e">
+                    <MudGrid Spacing="0">
+                        <MudItem sm="4" xs="6" md="4">
+
+                            <div class="d-flex justify-center">
+                                <MudImage Src="images/img/chat.png" Height="45" Width="45" />
+                            </div>
+                        <MudText Align="Align.Center" Typo="Typo.h6" Class="pb-3 fontContent">@_localizer["lbl_AutoMessages"]</MudText>
+                        <MudText Align="Align.Center" Class="fontContent">@automessageCount</MudText>
+                        </MudItem>
+                        <MudItem sm="2" xs="6" md="2">
+
+                            <div class="d-flex justify-center">
+                                <MudImage Src="images/img/customer.png" Height="45" Width="45" />
+                            </div>
+                            <MudText Align="Align.Center" Class="pb-3 fontContent" Typo="Typo.h6">@_localizer["lbl_EstablishedNumbers"]</MudText>
+                        <MudText Align="Align.Center" Class="fontContent">@clientList.Count()</MudText>
+                        </MudItem>
+                        <MudItem sm="4" xs="6" md="4">
+
+                            <div class="d-flex justify-center">
+                                <MudImage Src="images/img/statement.png" Height="45" Width="45" />
+                            </div>
+                        <MudText Align="Align.Center" Class="pb-3 fontContent" Typo="Typo.h6">@_localizer["lbl_AccountStatement"]</MudText>
+                        <MudText Align="Align.Center" Class="fontContent">@count</MudText>
+                        </MudItem>
+                        <MudItem sm="2" xs="6" md="2">
+
+                            <div class="d-flex justify-center">
+                                <MudImage Src="images/img/list.png" Height="45" Width="45" />
+                            </div>
+                        <MudText Align="Align.Center" Class="pb-3 fontContent" Typo="Typo.h6">@_localizer["lbl_Menus"]</MudText>
+                        <MudText Align="Align.Center" Class="fontContent">@menuCount</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </MudCard>
+            </MudItem>
+            @*<MudItem sm="2" xs="11" md="2">
+                <MudCard Elevation="25" Class="rounded-lg py-5" Style="background-image:linear-gradient(180deg, rgb(2, 199, 64) 10%, #0a732b 70%);">
+                    <MudCardContent>
+                        <MudText Align="Align.Center" Style="color:white">@_localizer["lbl_EndDate"]</MudText>
+                        @{
+                            int last = @subscriptionList.FirstOrDefault();
+                        }
+                        @foreach (SubscriptionModel subscriptions in subscription.Content)
+                        {
+                            if (last == subscriptions.id)
+                            {
+                                <MudText Align="Align.Center" Style="color:white">@subscriptions.endDate</MudText>
+                            }
+                        }
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>*@
+            <MudItem sm="11" xs="11" md="11">
+                        <MudCard Elevation="25" Class="rounded-lg pb-4" Style="background-color:#424242;" >
+                            <MudCardHeader>
+                    <MudText Style="color:#c8cacd" Class="fontContent" Typo="Typo.h6">@_localizer["lbl_Details"]</MudText>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudSimpleTable>
+                        <thead style="background-color:#343535;color:#c8cacd" class="fontContent">
+                                        <tr>
+                                            <th>@_localizer["lbl_Client"]</th>
+                                            <th>@_localizer["lbl_ClientNo"]</th>
+
+                                            <th>@_localizer["lbl_CountAuto"]</th>
+                                            <th>@_localizer["lbl_CountMenus"]</th>
+
+                                            <th>@_localizer["lbl_Admin"]</th>
+                                            <th>@_localizer["lbl_AdminNo"]</th>
+
+
+                                        </tr>
+                                    </thead>
+                        <tbody style="background-color:#343535;color:#c8cacd" class="fontContent">
+                                        @*<tr>*@
+                                        @for (var item = 0; item < client.Content.Count; item++)
+                                        {
+                                            <tr>
+                                                <td>@client.Content[item].Name</td>
+                                                <td>@client.Content[item].WhatsappNumber</td>
+
+                                                <td>@automessageList[item]</td>
+                                                <td>@menuList[item]</td>
+
+                                                <td>@client.Content[item].NameAdmin</td>
+                                                <td>@client.Content[item].PhoneAdmin</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </MudSimpleTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+        </MudGrid>
+    @*</div>*@
+}
+else
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" Class="mt-5"/>
+}
+@code {
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+
+    private string UserId;
+    List<PeriodModel> periodlist = new List<PeriodModel>();
+
+    ResponseModel<AutoMessageModel> auto;
+    AutoMessageModel autoMessageModel = new AutoMessageModel();
+
+    ResponseModel<BotModel> bot;
+    BotModel botModel = new BotModel();
+
+    ResponseModel<ClientModel> client;
+    ClientModel clientModel = new ClientModel();
+
+    ResponseModel<MenuModel> menu_s;
+    ResponseModel<MenuModel> menu_q;
+    MenuModel menuModel = new MenuModel();
+
+    ResponseModel<PackagesModel> package;
+    ResponsGeneric<PackagesModel> packageById;
+    PackagesModel packagesModel = new PackagesModel();
+
+    ResponseModel<PeriodModel> period;
+    PeriodModel periodModel = new PeriodModel();
+
+    ResponseModel<SubscriptionModel> subscription;
+    SubscriptionModel subscriptionModel = new SubscriptionModel();
+
+    List<int> botList = new List<int>();
+    List<int> clientList = new List<int>();
+    List<int> automessageList = new List<int>();
+    List<int> menuList = new List<int>();
+    List<int> subscriptionList = new List<int>();
+    int automessageCount;
+    int menuCount;
+    int subscriptionCount;
+    int lastPackage;
+    int? valuePeriod;
+    string typePeriod;
+    int count = 0;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+        JwtTokenModel token = await _localStorageService.GetItemAsync<JwtTokenModel>("accessToken");
+        ClaimsIdentity identity = new ClaimsIdentity(CustomAuthStateProvider.ParseClaimsFromJwt(token.AccessToken), "jwt");
+        UserId = identity.FindFirst("UserId").Value;
+        try{
+        client = await ClientService.GetClients();
+        foreach (ClientModel item in client.Content)
+        {
+            clientList.Add(item.Id);
+            bot = await BotService.GetBot(item.Id);
+            foreach (BotModel item2 in bot.Content)
+            {
+                botList.Add(item2.Id);
+                auto = await AutomessageService.GetById(item2.Id);
+                foreach (AutoMessageModel au in auto.Content)
+                {
+                    if (au.Actionn == "S^T^Q^1000")
+                    {
+                        count += 1;
+                    }
+                    else { }
+
+                }
+                automessageCount += auto.Content.Count();
+                automessageList.Add(auto.Content.Count());
+
+                menu_q = await MenuService.GetMenuBybotId(item2.Id,"Q");
+                menu_s = await MenuService.GetMenuBybotId(item2.Id, "s");
+                menuCount += menu_q.Content.Count() + menu_s.Content.Count();
+                menuList.Add(menu_q.Content.Count() + menu_s.Content.Count());
+            }
+        }
+        subscription = await SubscriptionService.GetAll();
+
+        foreach (SubscriptionModel item4 in subscription.Content)
+        {
+            if (item4.userId == int.Parse(UserId))
+            {
+                lastPackage = item4.packageId;
+                subscriptionList.Add(item4.id);
+            }
+        }
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        //subscriptionCount = subscriptionList.Count();
+        //packageById = await PackagesService.GetPackageById(lastPackage);
+        //int i = packageById.Content.periodId;
+        //period = await PeriodService.GetById(i);
+        //valuePeriod = period.Content[0].value;
+        //typePeriod = period.Content[0].type;
+        //period = await PeriodService.GetAll();
+    }
+}

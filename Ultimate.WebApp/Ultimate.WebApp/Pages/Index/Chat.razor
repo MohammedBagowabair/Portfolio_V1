@@ -1,0 +1,330 @@
+﻿<style>
+   
+
+    .containers {
+        max-width: 800px;
+        padding: 0;
+       box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+        height: 600px;
+      
+        margin: auto;
+    }
+
+    /* ===== MENU ===== */
+   
+
+    /* === CONVERSATIONS === */
+
+    
+
+    .online {
+        position: relative;
+        top: 30px;
+        left: 35px;
+        width: 13px;
+        height: 13px;
+        background-color: #8BC34A;
+        border-radius: 13px;
+        border: 3px solid #FAFAFA;
+    }
+
+    .desc-contact {
+        height: 43px;
+        width: 50%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .discussions .discussion .name {
+        margin: 0 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11pt;
+        color: #515151;
+    }
+
+    .discussions .discussion .message {
+        margin: 6px 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 9pt;
+        color: #515151;
+    }
+
+    .timer {
+        margin-left: 15%;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 11px;
+        padding: 3px 8px;
+        color: #BBB;
+        background-color: #FFF;
+        border: 1px solid #E5E5E5;
+        border-radius: 15px;
+    }
+
+    .chat {
+       /* width: calc(65% - 85px);*/
+    }
+
+    .header-chat {
+        background-color: #4aa47e;
+        height: 90px;
+        box-shadow: 0px 3px 2px rgba(0,0,0,0.100);
+        display: flex;
+        align-items: center;
+    }
+
+    .chat .header-chat .icon {
+        margin-left: 30px;
+        color: #515151;
+        font-size: 14pt;
+    }
+
+    .chat .header-chat .name {
+        margin: 0 0 0 20px;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13pt;
+        color: #f9f9f9;
+    }
+
+    .chat .header-chat .right {
+        position: absolute;
+        right: 40px;
+    }
+
+    .chat .messages-chat {
+        padding: 25px 35px;
+    }
+
+        .chat .messages-chat .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+            .chat .messages-chat .message .photo {
+                display: block;
+                width: 45px;
+                height: 45px;
+                background: #E6E7ED;
+                -moz-border-radius: 50px;
+                -webkit-border-radius: 50px;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+        .chat .messages-chat .text {
+            margin: 0 35px;
+            background-color: #f6f6f6;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+    .text-only {
+        margin-left: 45px;
+       
+    }
+
+    .time {
+        font-size: 10px;
+        color: lightgrey;
+        margin-bottom: 10px;
+        margin-left: 85px;
+    }
+
+    .response-time {
+        float: right;
+        margin-right: 40px !important;
+    }
+
+    .response {
+        float: right;
+        margin-right: 0px !important;
+        margin-left: auto; /* flexbox alignment rule */
+    }
+
+        .response .text {
+            background-color: #4aa47e !important;
+        }
+
+    .footer-chat {
+        width: calc(65% - 66px);
+        height: 80px;
+        display: flex;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        background-color: transparent;
+        border-top: 2px solid #EEE;
+    }
+
+    .chat .footer-chat .icon {
+        margin-left: 30px;
+        color: #C0C0C0;
+        font-size: 14pt;
+    }
+
+    .chat .footer-chat .send {
+        color: #fff;
+        background-color: #4aa47e;
+        position: absolute;
+        right: 50px;
+        padding: 12px 12px 12px 12px;
+        border-radius: 50px;
+        font-size: 14pt;
+    }
+
+    .chat .footer-chat .name {
+        margin: 0 0 0 20px;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 13pt;
+        color: #515151;
+    }
+
+    .chat .footer-chat .right {
+        position: absolute;
+        right: 40px;
+    }
+
+    .write-message {
+       
+        width: 60%;
+        height: 50px;
+        margin-left: 20px;
+        padding: 10px;
+        background-color:gainsboro;
+    }
+
+    .footer-chat *::-webkit-input-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .footer-chat input *:-moz-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .footer-chat input *::-moz-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+        margin-left: 5px;
+    }
+
+    .footer-chat input *:-ms-input-placeholder {
+        color: #C0C0C0;
+        font-size: 13pt;
+    }
+
+    .clickable {
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #4aa47e;
+        border-color: #4aa47e;
+        height: 45px;
+    }
+    .respon_text{
+        color: white;
+    }
+    
+
+
+   
+</style>
+<body style="background-color:#343535">
+    <div class="containers py-3" style="background-color:#343535">
+  
+      <section class="chat">
+        <div class="header-chat">
+          <i class="icon fa fa-user-o" aria-hidden="true"></i>
+          <p class="name">Megan Leib</p>
+          <i class="icon clickable fa fa-ellipsis-h right" aria-hidden="true"></i>
+        </div>
+        <div class="messages-chat" style="overflow-y: scroll; height:400px;">
+          <div class="message">
+                    <div class="photo" style="background-image:url('img/Robot face-cuate.png')">
+
+              
+              <div class="online"></div>
+            </div>
+            <p class="text"> اهلا كيف حالك ؟ </p>
+          </div>
+          <div class="message text-only">
+            <p class="text"> يمكنك تكوين الردود الخاصه عن طريق مراسلتي</p>
+          </div>
+          <p class="time"> 14h58</p>
+          <div class="message text-only">
+            <div class="response">
+                        <p class="text respon_text"> نعم ,و كيف يمكنني ذالك ؟ 😃</p>
+            </div>
+          </div>
+          <div class="message text-only">
+            <div class="response">
+                        <p class="text respon_text">ما علي فعله ؟</p>
+            </div>
+          </div>
+          <p class="response-time time"> 15h04</p>
+                <div class="message">
+
+                    <div class="photo" style="background-image:url('img/Robot face-cuate.png')">
+                        
+                        @*<img class="photo" src="img/robot face-cuate.png" />*@
+              <div class="online"></div>
+            </div>
+            <p class="text">بكل بساطه انشاء الرسالة والرد لتلك الرسالة</p>
+          </div>
+                <p class="time"> 15h09</p>
+                <div class="message text-only">
+                    <p class="text"> وبعد ذالك , عند ارسال العميل سوف يتم الرد عليه من قبلي </p>
+                </div>
+                <p class="time"> 14h58</p>
+                <div class="message text-only">
+                    <div class="response">
+                        <p class="text respon_text"> تمام شكرا لك 😃</p>
+                    </div>
+                </div>
+                @foreach(var item in strings)
+                {
+                    <div class="message text-only">
+                        <div class="response">
+                            <p class="text respon_text">@item</p>
+                        </div>
+                    </div>
+                }
+
+         
+         
+            </div>
+       
+      </section>
+        <hr />
+        <div>
+            @* <div class="col-lg-1">
+            <i class="icon fa fa-smile-o clickable" style="font-size:25pt;" aria-hidden="true"></i>
+            </div>*@
+           
+                <input type="text" @bind="input"  class="write-message" placeholder="Type your message here">
+        
+            <button class="btn btn-primary" @onclick="send">Send Message</button>
+
+            </div>
+
+
+        
+    </div>
+  
+</body>
+@code{
+    string input = "";
+    List<string> strings = new List<string>();
+    private void send()
+    {
+        strings.Add(input);
+    }
+}

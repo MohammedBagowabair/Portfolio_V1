@@ -1,0 +1,227 @@
+﻿@page "/SubscriptionPeriods/AddSubscriptionPeriods"
+@page "/SubscriptionPeriods/AddSubscriptionPeriods/{id:int}"
+@inject IAuthService _authService
+@*@attribute [Authorize(Roles = "admin")]*@
+@inject IStringLocalizer<Resource> _localizer
+@inject NavigationManager navigationManager
+@inject IPeriodService PeriodService
+@inject ISnackbar Snackbar
+@*@inject IDialogService DialogService*@
+@inject CustomHttp Http
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+        color: #d4d4d4;
+    @font_Content
+    }
+    .mud-application-layout-rtl .mud-input-label-filled.mud-input-label-margin-dense {
+        transform: translate(-12px,17px) scale(1);
+        color: #d4d4d4;
+    }
+
+    .mud-icon-root.mud-svg-icon {
+        fill: currentColor;
+        color: #d4d4d4;
+    }
+    .mud-input > input.mud-input-root, div.mud-input-slot.mud-input-root {
+        font: inherit;
+        color: #d4d4d4;
+        width: 100%;
+        border: 0;
+        height: 1.1876em;
+        margin: 0;
+        display: block;
+        padding: 6px 0 7px;
+        min-width: 0;
+        background: none;
+        position: relative;
+        box-sizing: content-box;
+        letter-spacing: inherit;
+        -webkit-tap-highlight-color: transparent;
+    }
+</style>
+<MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+    <MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
+</MudOverlay>
+@if (period != null)
+{
+    <EditForm Model="periodModel" OnValidSubmit="HandelSubment">
+        <DataAnnotationsValidator />
+        <MudGrid Class="mt-5 mx-5" Justify="Justify.FlexStart" Spacing="1">
+            <MudItem xs="11" sm="11" md="11">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h4">@title</MudText>
+            </MudItem>
+            <MudItem xs="11" sm="11" md="11">
+                <MudText Class="fontContent mx-3" Color="Color.Secondary"><b>@_localizer["lbl_Nameperiods"]:</b></MudText>
+            </MudItem>
+            <MudItem xs="11" sm="8" md="6">
+                <MudTextField @bind-Value="periodModel.name" Style="color:#c8cacd" Class="fontContent" For="@(() => periodModel.name)" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" InputType="InputType.Text" Placeholder="@_localizer["lbl_Nameperiods"]"></MudTextField>
+            </MudItem>
+            <MudItem xs="11" sm="11" md="11">
+                <MudText Class="fontContent mx-3" Color="Color.Secondary"><b>@_localizer["lbl_ForeignPeriodName"]:</b></MudText>
+            </MudItem>
+            <MudItem xs="11" sm="8" md="6">
+                <MudTextField @bind-Value="periodModel.foreignName" Style="color:#c8cacd" Class="fontContent" For="@(() => periodModel.foreignName)" Margin="Margin.Dense" Variant="Variant.Outlined" T="String" InputType="InputType.Text" Placeholder="@_localizer["lbl_ForeignPeriodName"]"></MudTextField>
+            </MudItem>
+            <MudItem xs="11" sm="11" md="11">
+                <MudText Class="mx-3 fontContent" Color="Color.Secondary"><b>@_localizer["lbl_Typeperiods"]:</b></MudText>
+            </MudItem>
+            <MudItem xs="11" sm="8" md="6">
+                <MudSelect Margin="Margin.Dense" Class="fontContent" Style="color:#c8cacd" Variant="Variant.Outlined" T="string" @bind-Value="periodModel.type" For="@(() => periodModel.type)" Placeholder="@_localizer["lbl_Typeperiods"]">
+                        @foreach (var item in periodType ?? Array.Empty<PeriodTypeModel>())
+                        {
+                        <MudSelectItem Style="color:#c8cacd" Class="fontContent" T="string" Value="@item.typeToAPI"><span style ="color:white" class="fontContent">@item.type</span></MudSelectItem>
+                        }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="11" sm="11" md="11">
+                <MudText Class="mx-3 fontContent" Color="Color.Secondary"><b>@_localizer["lbl_Valueperiods"]:</b></MudText>
+            </MudItem>
+            <MudItem xs="11" sm="8" md="6">
+                <MudTextField Style="color:#c8cacd" Class="fontContent" @bind-Value="periodModel.value" For="@(() => periodModel.value)" Margin="Margin.Dense" Variant="Variant.Outlined" InputType="InputType.Number" Placeholder="@_localizer["lbl_Valueperiods"]"></MudTextField>
+            </MudItem>
+            <MudItem sm="11" xs="11" md="11"></MudItem>
+            <MudItem sm="3" xs="5" md="3">
+                <div class="d-flex justify-center align-center">
+                    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled" FullWidth Class="fontContent"
+                           Size="Size.Large" Style=" font-size:18px">
+                        <b>@name_btn</b>
+                    </MudButton>
+                </div>
+            </MudItem>
+            <MudItem sm="2" xs="3" md="2">
+                <div class="d-flex justify-center align-center">
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary"  FullWidth Class="fontContent"
+                           Size="Size.Large" Style="color:#f5f5f5; font-size:18px" OnClick="HandelCancle">
+                        <b>@_localizer["lbl_Cancelbtn"]</b>
+                    </MudButton>
+                </div>
+            </MudItem>
+            <MudItem sm="7" xs="4" md="7"></MudItem>
+        </MudGrid>
+
+    </EditForm>
+}
+else
+{
+    <MudProgressCircular Class="d-flex mx-auto" Style="margin-top:25%" Color="Color.Primary" Indeterminate="true" />
+
+}
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    PeriodModel periodModel = new PeriodModel();
+    ResponseModel<PeriodModel> period;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    private PeriodTypeModel[]? periodType;
+    string title;
+    bool isVisible;
+    public string name_btn { get; set; }
+    public string msgalert { get; set; }
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            periodType = await Http.HttpClient.GetFromJsonAsync<PeriodTypeModel[]>("PeriodType/PeriodType.json");
+        }
+        else if (selectedCulture.Contains("en")) { 
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            periodType = await Http.HttpClient.GetFromJsonAsync<PeriodTypeModel[]>("PeriodType/PeriodTypeEN.json");
+
+        }
+        
+    }
+    protected override async Task OnParametersSetAsync()
+    { 
+        try{
+        period = await PeriodService.GetById(id);
+        if (period.Content.Count > 0)
+        {
+            name_btn = _localizer["lbl_BtnEdit"];
+            title = @_localizer["lbl_EditPeriod"];
+            periodModel = period.Content[0];
+        }
+        else
+        {
+            name_btn = _localizer["lbl_BtnSave"];
+            title = _localizer["lbl_AddPeriod"];
+        }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
+
+    public async void HandelSubment()
+    {
+        isVisible = true;
+        Snackbar.Configuration.PositionClass = Defaults.Classes.Position.BottomStart;
+        Snackbar.Configuration.ShowCloseIcon = false;
+        await Task.Delay(1000);
+        if (name_btn == _localizer["lbl_BtnSave"])
+        {
+            try
+            {
+                await PeriodService.Create(periodModel);
+                isVisible = false;
+                msgalert = _localizer["msg_AlertSaved"];
+                Snackbar.Add(msgalert, Severity.Success);
+                periodModel = new PeriodModel();
+                navigationManager.NavigateTo("/AdminManagement/1");
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFSaved"];
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+
+        }
+        else
+        {
+            try
+            {
+                await PeriodService.Update(periodModel);
+                isVisible = false;
+                name_btn = _localizer["lbl_BtnSave"];
+                title = _localizer["lbl_AddPeriod"];
+                msgalert = _localizer["msg_AlertModified"];
+                Snackbar.Add(msgalert, Severity.Success);
+                periodModel = new PeriodModel();
+                navigationManager.NavigateTo("/AdminManagement/1");
+                StateHasChanged();
+
+            }
+            catch (Exception e)
+            {
+                isVisible = false;
+                msgalert = _localizer["msg_AlertFModified"];
+                Snackbar.Add(msgalert, Severity.Error);
+                StateHasChanged();
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+        }
+
+
+    }
+    public void HandelCancle()
+    {
+        periodModel = new PeriodModel();
+        StateHasChanged();
+        navigationManager.NavigateTo("/AdminManagement/1");
+    }
+}

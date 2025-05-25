@@ -1,0 +1,166 @@
+﻿@page "/automessages/{botId:int}"
+@using Ultimate.Bot.Core.Model
+@inject IAutomessageService AutomessageService
+<MudGrid Spacing="0" Justify="Justify.SpaceAround">
+    <MudItem sm="11" xs="12" md="12">
+        <MudPaper Elevation="0" Class="d-flex flex-column overflow-scroll" Height="300px">
+            <MudGrid Spacing="0">
+                <MudItem sm="12" xs="12" md="12">
+                    <MudPaper Class="d-inline-flex pa-2 rounded-bl-xl" Style="margin-bottom:7px;background-color:#2F6EDB;color:white; ">
+                        <b>النظام:</b>&nbsp;
+                        مرحباً بك في بوت الأونكس من شركة الحلول النهائية
+                    </MudPaper>
+                </MudItem>
+                @if (auto != null)
+                {
+                    @foreach (AutoMessageModel item in auto.Content)
+                    {
+                        @if (item.Message != null)
+                        {
+                            <MudItem sm="12" xs="12" md="12">
+                                <MudPaper Class="d-inline-flex pa-2 rounded-bl-xl" Style="background-color:#2F6EDB;color:white;margin-bottom:7px">
+                                    <b>النظام:&nbsp;</b>
+                                    @item.Message
+                                </MudPaper>
+
+                            </MudItem>
+                        }
+                        <MudItem sm="12" xs="12" md="12" @onclick="(()=>edit(item))">
+                            <MudGrid Spacing="0" Justify="Justify.FlexEnd">
+                                <MudLink OnClick="(()=>edit(item))">
+                                  <MudPaper @onclick="(()=>edit(item))" Class="d-inline-flex pa-2 rounded-br-xl justify-start" Style="background-color:#00AF37;color:white;margin-bottom:7px">
+                                    <b>العميل:</b>&nbsp;
+                                      @item.ClientMessage
+                                   </MudPaper>
+                                </MudLink>
+                            </MudGrid>
+                        </MudItem>
+                    }
+                }
+                else
+                {
+                    <div class="mx-auto">
+                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                    </div>
+                }
+            </MudGrid>
+        </MudPaper>
+    </MudItem>
+    
+    <EditForm Model="autoMessageModel" OnInvalidSubmit="update">
+        <MudGrid Justify="Justify.Center">
+            <MudItem sm="5" xs="5" md="5">
+                <MudPaper Class="pa-2 rounded-pill" Style="color:white; margin-top:10px" Height="40px">
+                    <MudTextField Immediate="true" @bind-Value="@autoMessageModel.Message"
+                                  For="@(() => autoMessageModel.Message)" Placeholder=" اكتب رسالة النظام"
+                                  Margin="Margin.Dense" Variant="Variant.Text"
+                                  Style=" margin-top:-0px;margin-right:12px;width:86%;" />
+                </MudPaper>
+            </MudItem>
+            <MudItem sm="5" xs="5" md="5">
+                <MudPaper Class="pa-2 rounded-pill" Style="color:white; margin-top:10px" Height="40px">
+                    <MudTextField Immediate="true" @bind-Value="@autoMessageModel.ClientMessage"
+                                  For="@(() => autoMessageModel.ClientMessage)" Placeholder=" اكتب رسالة العميل"
+                                  Margin="Margin.Dense" Variant="Variant.Text"
+                                  Style=" margin-top:-0px;margin-right:12px;width:86%;" />
+                </MudPaper>
+            </MudItem>
+
+            @*////////////ACTION/////////*@
+            <MudItem sm="11" xs="11" md="11">
+                <Events @ref="_events"> </Events>
+            </MudItem>
+            @*<MudItem sm="5" xs="5" md="5"></MudItem>*@
+            @*////////////ACTION/////////*@
+            <MudItem sm="12" xs="12" md="12">
+
+                    <div class="d-flex justify-center align-center " 
+                        style="margin-top:10px;margin-right:10px;
+                        margin-left:10px;">
+
+                        <MudButton FullWidth Variant="Variant.Filled" 
+                            EndIcon="@Icons.Outlined.KeyboardArrowLeft"
+                               Size="Size.Large" Style="background-color:#00AF37;color:white" OnClick="update">
+                            @name_btn
+                        </MudButton>
+                    </div>
+                
+
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+</MudGrid>
+@code {
+    [Parameter]
+    public int botId { get; set; }
+
+    ResponseModel<AutoMessageModel> auto;
+    AutoMessageModel autoMessageModel = new AutoMessageModel();
+    Events _events;
+    public string name_btn { get; set; } = "حفظ";
+    //protected override async Task OnInitializedAsync()
+    //{
+
+    //}
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try{
+        auto = await AutomessageService.GetById(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+    }
+    async void update()
+    {
+        if (name_btn=="تعديل")
+        {
+            try
+            {
+                autoMessageModel.BotId = botId;
+                autoMessageModel.MsgType = "1";
+                autoMessageModel.Actionn = _events.getAction();
+
+
+                Console.WriteLine(autoMessageModel.Actionn);
+                await AutomessageService.Update(autoMessageModel);
+                auto = await AutomessageService.GetById(botId);
+                autoMessageModel = new AutoMessageModel();
+                //content = response.Content;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+
+        }
+        else{
+            try
+            {
+
+                autoMessageModel.BotId = botId;
+                autoMessageModel.MsgType = "1";
+                autoMessageModel.Actionn = _events.getAction();
+
+
+                Console.WriteLine(autoMessageModel.Actionn);
+                await AutomessageService.Create(autoMessageModel);
+                autoMessageModel = new AutoMessageModel();
+
+            }
+            catch (Exception e)
+            {
+                //result = "[oopj""
+                Console.WriteLine($"{e.Message}, {e.StackTrace}");
+            }
+        }
+        
+    }
+    private void edit(AutoMessageModel autoMessageModelss)
+    {
+        autoMessageModel = autoMessageModelss;
+        name_btn = "تعديل";
+    }
+}

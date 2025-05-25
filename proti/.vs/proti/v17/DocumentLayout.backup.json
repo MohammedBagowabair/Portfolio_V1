@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\proti\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{29D6B799-DE4D-48A1-8F92-D642FE868FF1}|proti\\proti.csproj|c:\\users\\user\\source\\repos\\proti\\proti\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{29D6B799-DE4D-48A1-8F92-D642FE868FF1}|proti\\proti.csproj|solutionrelative:proti\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\proti\\proti\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "proti\\Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\proti\\proti\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "proti\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-01T11:32:08.234Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

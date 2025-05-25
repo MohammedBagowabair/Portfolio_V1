@@ -1,0 +1,15 @@
+[
+  {
+    "serviceId": 1,
+    "serviceName": "عميل",
+    "serviceApi": "Client"
+
+  },
+  {
+    "serviceId": 2,
+    "serviceName": "قائمة",
+    "serviceApi": "Menu"
+
+  }
+
+]

@@ -1,0 +1,163 @@
+﻿@inject NavigationManager _navigationManager
+@inject IStringLocalizer<Resource> _localizer
+@inject IReportCollectionServices reportCollectionServices
+@inject IDialogService DialogService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<PageTitle>Report Collection</PageTitle>
+@*<div style="background-color:#393939">*@
+<MudGrid Spacing="3" Class="pb-6 px-5">
+    @if (!addBtn)
+    {
+    <MudItem xs="11" sm="11" md="11">
+
+        @*<MudIcon Icon="far fa-plus-square" Size="Size.Medium" style="color: #a1a3a5;" />*@
+            <MudIconButton Icon="far fa-plus-square" Size="Size.Medium" style=" color:#c8cacd;" OnClick="NavigateToCreat" Class="fontContent"></MudIconButton>
+        @*<i class="far fa-plus-square"></i>*@
+
+    </MudItem>
+    
+    <MudItem xs="10" sm="9" md="9">
+            @if (ReportCollections!=null)
+            {
+        <MudGrid Spacing="4" >
+                @foreach (var collection in ReportCollections.Content)
+    {
+
+        
+            
+                <MudItem xs="11" sm="6" md="6">
+                    <MudCard Elevation="3" Style="border-radius: 15px;">
+                        <MudCardContent>
+                            @*<MudIcon Icon="far fa-edit" />*@
+
+                            <div class="d-flex justify-space-between pa-2">
+                                <div class="d-flex">
+                                            <MudIcon Icon="far fa-file-alt" Size="Size.Small" style="color:#c8cacd" />
+                                    @*<i class="far fa-file-alt"></i>*@
+                                            <MudText Color="Color.Secondary" Class="fontContent">@collection.name</MudText>
+                                </div>
+                                <div class="d-flex gap-3">
+                                            <MudLink Underline="Underline.None" OnClick="()=>EditReportCollection(collection)" Class="text-white">
+                                                <MudIcon Icon="far fa-edit" Size="Size.Small" style="color:#c8cacd;" />
+                                        @*<i class="far fa-edit" style="color: #a1a3a5;"></i>                        *@
+                                    </MudLink>
+                                            <MudLink Underline="Underline.None" Class="text-white " OnClick="()=>DeleteReportCollection(collection.id)">
+                                                <MudIcon Icon="fas fa-trash-alt" Size="Size.Small" style="color:#c8cacd;"></MudIcon>
+                                            </MudLink>
+                                    @*<MudLink Underline="Underline.None" Href="#" Class="text-white">
+                                        <MudIcon Icon="fas fa-info-circle" Size="Size.Small" Color="Color.Primary"/>
+                                       
+                                    </MudLink>*@
+                                </div>
+                            </div>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            
+        
+    }
+        </MudGrid>
+            }
+            else
+            {
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            }
+    </MudItem>
+    }
+    else
+    {
+        <CreateReportCollection botId="@botId" name_btn="@name_btn" headline="@headline" Collection="@reportCollection" OnAddOREditReportCollection="@ShowAddedOREditedCollection" />
+    }
+</MudGrid>
+@*</div>*@
+@code {
+    [Parameter]
+    public int botId { set; get; } 
+    ResponseModel<ReportCollectionModel> ReportCollections;
+    ReportCollectionModel reportCollection;
+    bool addBtn=false;
+    string headline ;
+    string name_btn;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+
+        }
+        else if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+
+        }
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        }
+       catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+       }
+    }
+    void NavigateToCreat()
+    {
+        reportCollection = new ReportCollectionModel();
+        addBtn = true;
+        headline = _localizer["lbl_CreateNewCollection"];
+        name_btn = _localizer["lbl_BtnSave"];
+    }
+    void EditReportCollection(ReportCollectionModel collection)
+    {
+        reportCollection = collection;
+        headline = collection.name;
+        name_btn = _localizer["lbl_BtnEdit"];
+        addBtn = true;
+    }
+    public async Task ShowAddedOREditedCollection()
+    {
+
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+        addBtn = false;
+        headline = _localizer["lbl_CreateNewCollection"];
+        name_btn = _localizer["lbl_BtnSave"];
+        //report = new EncodingReportModel();
+    }
+    async Task DeletedReport()
+    {
+        try{
+            ReportCollections = await reportCollectionServices.GetReportCollectionBybotId(botId);
+        }
+        catch(Exception e){
+            Console.WriteLine($"{e.Message}, {e.StackTrace}");
+        }
+    }
+    void DeleteReportCollection(int collectionId)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("title", _localizer["lbl_DeleteReportCollection"].ToString());
+        parameters.Add("deleteConfirmation", _localizer["lbl_CofirmDeleteReportCollection"].ToString());
+        parameters.Add("buttonText", _localizer["lbl_Deletebtn"].ToString());
+        parameters.Add("Id", collectionId);
+        parameters.Add("OnDeleted", EventCallback.Factory.Create(this, (() => DeletedReport())));
+        //parameters.Add("menuName", name);
+        //parameters.Add("botId", botId);
+        var options = new DialogOptions { FullWidth = true };
+        DialogService.Show<Ultimate.WebApp.Pages.Menus.ConfirmationDialograzor>(null, parameters, options);
+    }
+}

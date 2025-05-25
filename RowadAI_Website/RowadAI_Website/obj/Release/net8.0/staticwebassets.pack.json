@@ -1,0 +1,145 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\obj\\Release\\net8.0\\scopedcss\\projectbundle\\RowadAI_Website.bundle.scp.css",
+      "PackagePath": "staticwebassets\\RowadAI_Website.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icon-192.png",
+      "PackagePath": "staticwebassets\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame15.png",
+      "PackagePath": "staticwebassets\\icons\\Frame15.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame16.png",
+      "PackagePath": "staticwebassets\\icons\\Frame16.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame17.png",
+      "PackagePath": "staticwebassets\\icons\\Frame17.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame220.png",
+      "PackagePath": "staticwebassets\\icons\\Frame220.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame230.png",
+      "PackagePath": "staticwebassets\\icons\\Frame230.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame240.png",
+      "PackagePath": "staticwebassets\\icons\\Frame240.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame250.png",
+      "PackagePath": "staticwebassets\\icons\\Frame250.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame260.png",
+      "PackagePath": "staticwebassets\\icons\\Frame260.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame823.png",
+      "PackagePath": "staticwebassets\\icons\\Frame823.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Frame855.png",
+      "PackagePath": "staticwebassets\\icons\\Frame855.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\QuRight.png",
+      "PackagePath": "staticwebassets\\icons\\QuRight.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\Shadowing.png",
+      "PackagePath": "staticwebassets\\icons\\Shadowing.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\favicon.ico",
+      "PackagePath": "staticwebassets\\icons\\favicon.ico"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\icons\\quLeft.png",
+      "PackagePath": "staticwebassets\\icons\\quLeft.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\AIMANPicture.png",
+      "PackagePath": "staticwebassets\\img\\AIMANPicture.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\CARDRIGHTDOWN.png",
+      "PackagePath": "staticwebassets\\img\\CARDRIGHTDOWN.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\Carddown.png",
+      "PackagePath": "staticwebassets\\img\\Carddown.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\Doc.png",
+      "PackagePath": "staticwebassets\\img\\Doc.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\Group5843(2).png",
+      "PackagePath": "staticwebassets\\img\\Group5843(2).png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\aiComponent.png",
+      "PackagePath": "staticwebassets\\img\\aiComponent.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\calender.png",
+      "PackagePath": "staticwebassets\\img\\calender.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\contac.png",
+      "PackagePath": "staticwebassets\\img\\contac.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\img\\rightWrongIcon.png",
+      "PackagePath": "staticwebassets\\img\\rightWrongIcon.png"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\js\\site.js",
+      "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "C:\\Users\\user\\source\\repos\\RowadAI_Website\\RowadAI_Website\\wwwroot\\sample-data\\weather.json",
+      "PackagePath": "staticwebassets\\sample-data\\weather.json"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.RowadAI_Website.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.build.RowadAI_Website.props",
+      "PackagePath": "build\\RowadAI_Website.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.RowadAI_Website.props",
+      "PackagePath": "buildMultiTargeting\\RowadAI_Website.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0\\staticwebassets\\msbuild.buildTransitive.RowadAI_Website.props",
+      "PackagePath": "buildTransitive\\RowadAI_Website.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

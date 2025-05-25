@@ -1,0 +1,14 @@
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\bin\Debug\net8.0\FirstRecuuringCharacter.exe
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\bin\Debug\net8.0\FirstRecuuringCharacter.deps.json
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\bin\Debug\net8.0\FirstRecuuringCharacter.runtimeconfig.json
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\bin\Debug\net8.0\FirstRecuuringCharacter.dll
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\bin\Debug\net8.0\FirstRecuuringCharacter.pdb
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.AssemblyInfo.cs
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.dll
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\refint\FirstRecuuringCharacter.dll
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.pdb
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\FirstRecuuringCharacter.genruntimeconfig.cache
+C:\Users\user\source\repos\FirstRecuuringCharacter\FirstRecuuringCharacter\obj\Debug\net8.0\ref\FirstRecuuringCharacter.dll

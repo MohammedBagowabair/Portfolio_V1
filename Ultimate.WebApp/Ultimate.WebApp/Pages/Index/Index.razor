@@ -1,0 +1,48 @@
+﻿@page "/"
+@inject IStringLocalizer<Resource> _localizer
+<style>
+    .step-wizard {
+        height: 100vh;
+        width: 100%;
+    }
+</style>
+
+<HeaderIndex font_Content="@font_Content" font_Title="@font_Title" />
+<ServicesPage font_Content="@font_Content" font_Title="@font_Title" />
+<TextIndex font_Content="@font_Content" font_Title="@font_Title" />
+@*<h1>@_localizer["lbl_home"]</h1>
+<AuthorizeView>
+	<Authorized>
+		<h1>Authorized as @context.User.Identity.Name</h1>
+    </Authorized>
+</AuthorizeView>*@
+@*/////////////////////////SERVICE/////////////////////////*@
+<ServiceIndex font_Content="@font_Content" font_Title="@font_Title" />
+<AboutBotIndex font_Content="@font_Content" font_Title="@font_Title" />
+<Subscription font_Content="@font_Content" font_Title="@font_Title" />
+@*<VideosAboutUBot font_Content="@font_Content" font_Title="@font_Title" />*@
+@*<Chat />*@
+@*/////////////////////////ABOUT BOT/////////////////////////*@
+
+@*/////////////////////////IMAGE ABOUT WEBBOT/////////////////////////*@
+@*<ImageAboutIndex />*@
+@*/////////////////////////FOOTER/////////////////////////*@
+<FooterIndex font_Content="@font_Content" />
+@code{
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("en"))
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+        }
+        else
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+        }
+    }
+}

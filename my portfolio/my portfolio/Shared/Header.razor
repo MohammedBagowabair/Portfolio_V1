@@ -1,0 +1,308 @@
+﻿<h1 id="log"></h1>
+<div class="header">
+    <!-- Logo on the left with adjusted vertical alignment -->
+    <a href="#log" class="logo">
+        <img src="images/profile/logoface.png" style="max-width: 100px; height: 60px;" />
+    </a>
+
+    <!-- Centered Navigation Menu for Web -->
+    <nav class="nav-menu web-nav">
+        <a href="#about-me" @onclick='() => NavigateToSection("about-me")'>About</a>
+        <a href="#skills" @onclick='() => NavigateToSection("skills")'>Skills</a>
+        <a href="#projects" @onclick='() => NavigateToSection("projects")'>Projects</a>
+        <a href="#services" @onclick='() => NavigateToSection("services")'>Services</a>
+        <a href="#education" @onclick='() => NavigateToSection("education")'>Education 🏆 Certifications</a>
+        <a href="#resume" @onclick='() => NavigateToSection("resume")'>Resume</a>
+    </nav>
+
+    <!-- Right side elements with adjusted vertical alignment -->
+    <div class="header-right">
+        <!-- Hire Me Button -->
+        <a herf="#ContactUs"  class="custom-hire-button" @onclick='() => NavigateToSection("ContactUs")'>Hire Me! 🚀</a>
+        
+        <!-- Hamburger Menu for Mobile -->
+        <button class="hamburger" @onclick="ToggleMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+    <!-- Navigation Menu for Mobile -->
+    <nav class="nav-menu mobile-nav" style="@(isMenuOpen ? "display: flex;" : "display: none;")">
+        <a href="#about-me" @onclick='() => { CloseMenu(); NavigateToSection("about-me"); }'>About</a>
+        <a href="#skills" @onclick='() => { CloseMenu(); NavigateToSection("skills"); }'>Skills</a>
+        <a href="#projects" @onclick='() => { CloseMenu(); NavigateToSection("projects"); }'>Projects</a>
+        <a href="#services" @onclick='() => { CloseMenu(); NavigateToSection("services"); }'>Services</a>
+        <a href="#education" @onclick='() => { CloseMenu(); NavigateToSection("education"); }'>Education 🏆 Certifications</a>
+        <a href="#resume" @onclick='() => NavigateToSection("resume")'>Resume</a>
+        <a herf="#ContactUs" class="custom-hire-button" @onclick='() => NavigateToSection("ContactUs")'>Hire Me! 🚀</a>
+    </nav>
+
+    <style>
+        /* Header Styles */
+        .header {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: flex-start; /* Changed from center to flex-start */
+            padding: 0.5rem 1.5rem;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+        }
+
+        .logo {
+            margin-right: auto;
+            padding-top: 0px; /* Added to push logo up */
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            padding-top: 10px; /* Added to maintain nav alignment */
+        }
+
+        .web-nav {
+            justify-self: center;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: flex-start; /* Changed from center to flex-start */
+            gap: 1rem;
+            margin-left: auto;
+            padding-top: 5px; /* Added to push button up */
+        }
+
+        /* Updated Hire Me Button with Animation */
+        .custom-hire-button {
+            background-color: #6C63FF !important;
+            border: none !important;
+            color: #fff !important;
+            font-weight: bold;
+            border-radius: 30px;
+            padding: 6px 14px; /* Smaller size */
+            font-size: 0.85rem; /* Smaller text */
+            box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            animation: float 3s ease-in-out infinite;
+            text-decoration: none; /* 👈 Removes underline */
+            margin-top:7px;
+        }
+
+            .custom-hire-button:hover {
+                animation: none; /* Stop float animation on hover */
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 12px 25px rgba(108, 99, 255, 0.45);
+            }
+
+        /* Bouncy float animation */
+        @@keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Sparkle effect on hover */
+        .custom-hire-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .custom-hire-button:hover::after {
+            opacity: 1;
+            animation: sparkle 1s linear;
+        }
+
+        @@keyframes sparkle {
+            0% {
+                transform: scale(0) rotate(0deg);
+            }
+
+            100% {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+
+        /* Fun emoji surprise */
+        .custom-hire-button::before {
+            content: '👇';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            font-size: 20px;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+
+        .custom-hire-button:hover::before {
+            opacity: 1;
+            transform: translateX(-50%) scale(1) rotate(10deg);
+            animation: wiggle 0.5s ease-in-out infinite alternate;
+        }
+
+        @@keyframes wiggle {
+            0% {
+                transform: translateX(-50%) rotate(-10deg);
+            }
+
+            100% {
+                transform: translateX(-50%) rotate(10deg);
+            }
+        }
+
+        /* For mobile version */
+        .mobile-hire-button {
+            animation: pulse 2s infinite;
+        }
+
+        @@keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Navigation Link Styles */
+        .nav-menu a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.3rem 0.8rem;
+            transition: color 0.3s, background-color 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .nav-menu a:hover {
+            color: #555;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding-top: 5px; /* Align with logo and button */
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            transition: transform 0.3s ease;
+        }
+
+        /* Mobile Responsive Styles */
+        @@media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .web-nav {
+                display: none;
+            }
+
+            .header-right .custom-hire-button {
+                display: none;
+            }
+
+            .mobile-hire-button {
+                display: block;
+            }
+
+            .mobile-nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+            }
+
+            .mobile-nav a {
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        @@media (min-width: 769px) {
+            .mobile-nav {
+                display: none;
+            }
+
+            .web-nav {
+                display: flex;
+            }
+        }
+    </style>
+</div>
+@code {
+    private bool isMenuOpen = false;
+    private DotNetObjectReference<Header>? dotNetRef;
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private void ToggleMenu() => isMenuOpen = !isMenuOpen;
+    private void CloseMenu() => isMenuOpen = false;
+
+    private async Task NavigateToSection(string sectionId)
+    {
+        CloseMenu();
+        Navigation.NavigateTo($"#{sectionId}");
+        await Task.Delay(100); // Small delay to ensure DOM is updated
+        await JSRuntime.InvokeVoidAsync("scrollToElement", sectionId);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            dotNetRef = DotNetObjectReference.Create(this);
+            await JSRuntime.InvokeVoidAsync("registerResizeCallback", dotNetRef);
+        }
+    }
+
+    [JSInvokable]
+    public void OnResize()
+    {
+        isMenuOpen = false;
+        StateHasChanged();
+    }
+
+    public void Dispose() => dotNetRef?.Dispose();
+}

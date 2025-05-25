@@ -1,0 +1,44 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<style>
+    .fontTitle {
+        @font_Title
+    }
+    .fontContent{
+        @font_Content
+    }
+</style>
+<div style="background-color:#343535">
+@*<hr style="background-color:#4aa47e;" />*@
+
+    <MudGrid Justify="Justify.FlexStart">
+        <MudItem xs="11" md="1" sm="1">
+        </MudItem>
+        <MudItem xs="11" md="4" sm="5" style="margin-top:50px">
+            @*<img class="rebot" src="img/chatbot.gif" />*@
+            <MudText Class="fontTitle" Style="font-size:40px; color:white">@_localizer["lbl_why"] 
+                <span style="color:#4aa47e; font-family:Forte;font-size:30px">Maly</span><span style="font-family:Forte;font-size:40px; color:white">Bot</span>
+                </MudText>
+            <hr />
+            <MudText Class="fontContent" Style="font-size:20px;font-weight:300;color:white"><spna style="font-family:Forte;color:#4aa47e; font-size:30px">* </spna> @_localizer["lbl_AboutBot"]</MudText>
+            <MudText Class="fontContent" Style="font-size:20px;font-weight:300;color:white"><spna style="font-family:Forte;color:#4aa47e; font-size:30px">* </spna> @_localizer["lbl_AboutBotTitle"]</MudText>
+
+            @*   <img class="rebot" src="img/chat bot (2).gif" />*@
+        </MudItem>
+        <MudItem xs="11" md="1" sm="1">
+        </MudItem>
+        <MudItem xs="11" md="6" sm="5" style="margin-top:50px;">
+            <MudImage Src="img/Chat bot (12).gif" Fluid />
+        </MudItem>
+        @*<div class="col-lg-1">
+        </div>*@
+    </MudGrid>
+@*<hr style="background-color:#4aa47e;" />*@
+</div>
+
+@code{
+    [Parameter]
+    public string font_Title { set; get; }
+    [Parameter]
+    public string font_Content { set; get; }
+
+}

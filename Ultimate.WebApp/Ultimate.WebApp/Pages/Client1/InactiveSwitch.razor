@@ -1,0 +1,22 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+<MudSwitch @bind-Checked=@Value Label=@_localizer["lbl_NotActive"] Color="Color.Primary"></MudSwitch>
+
+@code {
+    [Parameter]
+    public EventCallback<bool> ValueChanged{ set; get; }
+    private bool _value;
+    [Parameter]
+    public bool Value
+    {
+        get { return _value; }
+        set 
+        { 
+            if(_value!=value)
+            {
+                _value = value;
+                ValueChanged.InvokeAsync(_value);
+            }
+             
+        }
+    }
+}

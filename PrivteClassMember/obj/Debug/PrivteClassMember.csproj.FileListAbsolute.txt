@@ -1,0 +1,7 @@
+C:\Users\user\source\repos\PrivteClassMember\bin\Debug\PrivteClassMember.exe.config
+C:\Users\user\source\repos\PrivteClassMember\bin\Debug\PrivteClassMember.exe
+C:\Users\user\source\repos\PrivteClassMember\bin\Debug\PrivteClassMember.pdb
+C:\Users\user\source\repos\PrivteClassMember\obj\Debug\PrivteClassMember.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\PrivteClassMember\obj\Debug\PrivteClassMember.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\PrivteClassMember\obj\Debug\PrivteClassMember.exe
+C:\Users\user\source\repos\PrivteClassMember\obj\Debug\PrivteClassMember.pdb

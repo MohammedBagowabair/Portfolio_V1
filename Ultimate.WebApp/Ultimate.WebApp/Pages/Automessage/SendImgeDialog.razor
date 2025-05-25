@@ -1,0 +1,245 @@
+﻿@inject IStringLocalizer<Resource> _localizer
+@using Ultimate.WebApp.Pages.Bot
+@inject IBotService BotService
+<style>
+    .fontTitle {
+    @font_Title
+    }
+
+    .fontContent {
+    @font_Content
+    }
+</style>
+<MudRTLProvider RightToLeft=@IsRTL>
+    <MudDialog Style="background-color:#424242;box-shadow:0px 0px 100px -19px #4aa47e">
+        <TitleContent>
+            <div dir="@direction">
+                <MudText Class="fontContent" Color="Color.Secondary" Typo="Typo.h6">@_localizer["lbl_attachImage"]</MudText>
+            </div>
+        </TitleContent>
+        <DialogContent>
+            <MudOverlay Visible="isVisible" DarkBackground="true" ZIndex="9999">
+                <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+            </MudOverlay>
+            <MudPaper Style="width:100%;height:280px;background-color:#424242;" Class="d-flex flex-column overflow-scroll" Elevation="0">
+                @if (files == null)
+                {
+                    <MudPaper Style="width:100%;height:250px;color:#434548;background-color:#424242;" Class="d-flex flex-column overflow-scroll border-2 border-dashed pa-1" Elevation="0">
+                    @if (idImage != null)
+                    {
+                        if (responsGenericImage != null)
+                        {
+                            <MudText Color="Color.Secondary" Align="Align.Center">
+                                <img src="data:@responsGenericImage.Content.fileDescription;base64,@responsGenericImage.Content.fileContent" style="width:200px;height:200px" />
+
+
+                                    <MudText Color="Color.Secondary" Align="Align.Center" Class="fontContent">
+                                    @responsGenericImage.Content.fileName
+                                </MudText>
+                            </MudText>
+                        }
+                        else
+                        {
+                            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                        }
+                    }
+                    else
+                    {
+                        <div Style="width:100%;height:250px" Class="pa-1">
+                            <MudText Align="Align.Center" Class="pa-3">
+                                <MudIcon Color="Color.Primary" Icon="@Icons.Material.Filled.CloudUpload" Style="height:130px;width:130px" />
+                                @*<MudImage Src="images/uplo.png" Width="100" Height="100" />*@
+                                    <MudText Color="Color.Secondary" Class="fontContent">@_localizer["lbl_attachImage"]</MudText>
+                            </MudText>
+                        </div>
+                    }
+                    </MudPaper>
+
+                }
+                else
+                {
+
+                    <MudPaper Style="width:100%;height:250px;background-color:#424242;" Class="d-flex flex-column overflow-scroll border-2 border-dashed pa-1" Elevation="0">
+
+                        @foreach (var item in filesBase64)
+                        {
+                            <MudText Align="Align.Center">
+                                <img src="data:@item.fileDescription;base64,@item.fileContent" style="width:200px;height:200px" />
+
+
+                                <MudText Class="fontContent" Align="Align.Center" Color="Color.Secondary">
+                                    @item.fileName
+                                </MudText>
+                            </MudText>
+                        }
+                    </MudPaper>
+
+                }
+
+                <div class="custom-file pt-5">
+                    <label class="btn custom-file-input custom-file-label fontContent" style="background-color:#c8cacd;color:#434548;margin-left:40%;margin-right:40%" for="inputFile">
+                        @_localizer["lbl_attachImage"]
+                    </label>
+                    <InputFile class="custom-file-input" style="background-color:#eeeeee;visibility:hidden" OnChange="OnChange" accept="image/png, image/jpeg, image/gif" id="inputFile" />
+                </div>
+            </MudPaper>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Variant="Variant.Filled" Class="fontContent" Color="Color.Primary" OnClick="selectImage">@name_btns</MudButton>
+            <MudButton Variant="Variant.Filled" Class="fontContent" Color="Color.Secondary" OnClick="Close">@_localizer["lbl_Cancelbtn"]</MudButton>
+        </DialogActions>
+    </MudDialog>
+</MudRTLProvider>
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    BotFileModel botFileModel = new BotFileModel();
+    [Parameter] public string idImage { set; get; }
+    [Parameter] public string name_btns { set; get; }
+    [Parameter] public int botId { set; get; }
+    List<BotFileModel> filesBase64 = new List<BotFileModel>();
+    IReadOnlyList<IBrowserFile> files;
+    ResponsGeneric<BotFileModel> responsGenericImage;
+    string selectedCulture = System.Globalization.CultureInfo.CurrentCulture.TextInfo.CultureName;
+    string font_Title;
+    string font_Content;
+    string direction;
+    string id;
+    bool IsRTL;
+    private bool isVisible;
+    protected override async Task OnInitializedAsync()
+    {
+        if (selectedCulture.Contains("ar"))
+        {
+            font_Content = "font-family:Noto Kufi Arabic;";
+            font_Title = "font-family:Noto Kufi Arabic;";
+            direction = "rtl";
+            IsRTL = true;
+        }
+        else
+        {
+            font_Content = "font-family:DROID;";
+            font_Title = "font-family:Forte;";
+            direction = "ltr";
+            IsRTL = false;
+        }
+        if (idImage != null)
+        {
+            try{
+            responsGenericImage = await BotService.GetFileById(int.Parse(idImage));
+            name_btns = _localizer["lbl_BtnEdit"];
+            }
+        catch(Exception e){
+            Console.WriteLine(e.Message);
+        }
+        }
+        else
+        {
+            name_btns = _localizer["lbl_Select"];
+        }
+    }
+    private long maxFileSize = 15728640;
+    async Task OnChange(InputFileChangeEventArgs e)
+    {
+        files = e.GetMultipleFiles(); // get the files selected by the users
+        foreach (var file in files)
+        {
+            filesBase64.Clear();
+            var format = file.ContentType;
+            var imageInfo = new BotFileModel();
+            Stream stream1 = file.OpenReadStream(maxFileSize);
+            MemoryStream ms = new MemoryStream();
+            await stream1.CopyToAsync(ms);
+            stream1.Close();
+            var base64 = Convert.ToBase64String(ms.ToArray());
+            filesBase64.Add(new BotFileModel
+                {
+                    botId = botId,
+                    fileContent = base64,
+                    fileDescription = format,
+                    fileName = file.Name
+                }); // convert to a base64 string!!
+
+        }
+    }
+
+    async void selectImage()
+    {
+        isVisible = true;
+        await Task.Delay(1000);
+        if (name_btns == _localizer["lbl_BtnEdit"])
+        {
+            try
+            {
+                botFileModel.id = int.Parse(idImage);
+                botFileModel.fileName = filesBase64[0].fileName;
+                botFileModel.fileContent = filesBase64[0].fileContent;
+                botFileModel.fileDescription = filesBase64[0].fileDescription;
+                botFileModel.botId = filesBase64[0].botId;
+                Console.WriteLine("botFileModel.fileName: " + botFileModel.fileName);
+                Console.WriteLine("botFileModel.fileContent: " + botFileModel.fileContent);
+                Console.WriteLine("botFileModel.fileDescription: " + botFileModel.fileDescription);
+                var model = await BotService.UpdateImage(int.Parse(idImage), botFileModel);
+                id = (model.Content).ToString() + "^" + filesBase64[0].fileName;
+                Console.WriteLine("id image: " + id);
+                filesBase64.Clear();
+                isVisible = false;
+                MudDialog.Close(DialogResult.Ok(id));
+                botFileModel = new BotFileModel();
+                StateHasChanged();
+
+
+            }
+            catch (Exception x)
+            {
+                filesBase64.Clear();
+                isVisible = false;
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+        else
+        {
+            try
+            {
+                botFileModel.fileName = filesBase64[0].fileName;
+                botFileModel.fileContent = filesBase64[0].fileContent;
+                botFileModel.fileDescription = filesBase64[0].fileDescription;
+                botFileModel.botId = filesBase64[0].botId;
+                Console.WriteLine("botFileModel.fileName: " + botFileModel.fileName);
+                Console.WriteLine("botFileModel.fileContent: " + botFileModel.fileContent);
+                Console.WriteLine("botFileModel.fileDescription: " + botFileModel.fileDescription);
+                var model = await BotService.UploadImage(botFileModel);
+                id = (model.Content).ToString() + "^" + filesBase64[0].fileName;
+                Console.WriteLine("id image: " + id);
+                filesBase64.Clear();
+                isVisible = false;
+                MudDialog.Close(DialogResult.Ok(id));
+                botFileModel = new BotFileModel();
+                StateHasChanged();
+
+
+            }
+            catch (Exception x)
+            {
+                filesBase64.Clear();
+                isVisible = false;
+                StateHasChanged();
+                Console.WriteLine($"{x.Message}, {x.StackTrace}");
+            }
+        }
+    }
+    void Close()
+    {
+        if (name_btns == _localizer["lbl_BtnEdit"])
+        {
+            id = responsGenericImage.Content.id.ToString() + "^" + responsGenericImage.Content.fileName;
+            MudDialog.Close(DialogResult.Ok(id));
+        }
+        else
+        {
+            MudDialog.Close(DialogResult.Ok(true));
+        }
+
+    }
+
+}
