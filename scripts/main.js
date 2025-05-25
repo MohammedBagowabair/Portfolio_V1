@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
 function portfolioApp() {
     return {
         // State
-        darkMode: localStorage.getItem('darkMode') === 'true' || false,
+        darkMode: localStorage.getItem('darkMode') !== null
+            ? localStorage.getItem('darkMode') === 'true'
+            : true,
         mobileMenuOpen: false,
         scrolled: false,
         activeSection: 'home',
