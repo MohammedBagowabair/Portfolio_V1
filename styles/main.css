@@ -2835,3 +2835,66 @@ a {
         transition-duration: .01ms !important;
     }
 }
+
+/* ============== MOBILE ONLY FIXES ============== */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    body {
+        position: relative;
+    }
+
+    /* Fix any element wider than screen */
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Fix overflowing columns */
+    [class*="col-"] {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Ensure all images stay within screen */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Fix skill tags and tech tags wrapping */
+    .skill-tags, .tech-tags {
+        flex-wrap: wrap;
+    }
+
+        .skill-tags span, .tech-tags span {
+            white-space: normal;
+            word-break: break-word;
+            font-size: 0.75rem;
+        }
+
+    /* Fix navbar on mobile */
+    .navbar-collapse {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Hide overflow from animated blobs */
+    .hero-bg {
+        overflow: hidden;
+    }
+
+    /* Fix hero text */
+    .hero-title {
+        padding: 0 10px;
+        word-break: break-word;
+    }
+}
