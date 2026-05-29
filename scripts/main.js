@@ -449,84 +449,56 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    // ── AOS Animations ──────────────────────────────────────
+    // ── AOS ─────────────────────────────────────────────────
     AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
 
-    // ── Footer Year ─────────────────────────────────────────
+    // ── Footer Year ──────────────────────────────────────────
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // ── Navbar: scrolled state + Back-to-top ────────────────
+    // ── Refs ─────────────────────────────────────────────────
     const nav = document.getElementById('mainNav');
     const btt = document.getElementById('backToTop');
+    const collapseEl = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('#mainNav .nav-link');
+    const sections = document.querySelectorAll('section[id], header[id]');
 
+    // ── Scroll state ─────────────────────────────────────────
     const onScroll = () => {
-        if (window.scrollY > 30) nav.classList.add('scrolled');
-        else nav.classList.remove('scrolled');
-
-        if (btt) {
-            if (window.scrollY > 600) btt.classList.add('show');
-            else btt.classList.remove('show');
-        }
+        const y = window.scrollY;
+        nav.classList.toggle('scrolled', y > 30);
+        if (btt) btt.classList.toggle('show', y > 600);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // ── Smooth scroll for anchors + close mobile menu ───────
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            const id = a.getAttribute('href');
-            if (id.length > 1) {
-                const target = document.querySelector(id);
-                if (target) {
-                    e.preventDefault();
-                    const offset = nav ? nav.offsetHeight + 12 : 80;
-                    const top = target.getBoundingClientRect().top + window.scrollY - offset;
-                    window.scrollTo({ top, behavior: 'smooth' });
-
-                    const collapseEl = document.getElementById('navMenu');
-                    if (collapseEl && collapseEl.classList.contains('show')) {
-                        bootstrap.Collapse.getInstance(collapseEl)?.hide();
-                    }
-                }
-            }
-        });
-    });
-
-    // ── Animated counters ────────────────────────────────────
-    const counters = document.querySelectorAll('.counter');
+    // ── Counter animation ────────────────────────────────────
     const animateCounter = (el) => {
-        const target = +el.dataset.target;
-        const duration = 1400;
-        const start = performance.now();
+        const target = +el.dataset.target, dur = 1400, t0 = performance.now();
         const tick = (now) => {
-            const p = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - p, 3);
-            el.textContent = Math.floor(target * eased);
-            if (p < 1) requestAnimationFrame(tick);
-            else el.textContent = target;
+            const p = Math.min(1, (now - t0) / dur);
+            el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3)));
+            if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
         };
         requestAnimationFrame(tick);
     };
 
-    // ── Progress bar animation ───────────────────────────────
+    // ── Progress bars ────────────────────────────────────────
     const bars = document.querySelectorAll('.progress-bar[data-target]');
-    const animateBar = (el) => { el.style.width = el.dataset.target + '%'; };
 
-    // ── IntersectionObserver for counters + bars ─────────────
+    // ── Intersection observer (counters + bars) ──────────────
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
             if (!e.isIntersecting) return;
             if (e.target.classList.contains('counter')) animateCounter(e.target);
-            if (e.target.classList.contains('progress-bar')) animateBar(e.target);
+            if (e.target.classList.contains('progress-bar')) e.target.style.width = e.target.dataset.target + '%';
             obs.unobserve(e.target);
         });
     }, { threshold: 0.5 });
-
-    counters.forEach(c => obs.observe(c));
+    document.querySelectorAll('.counter').forEach(c => obs.observe(c));
     bars.forEach(b => obs.observe(b));
 
-    // ── Certificate Modal ────────────────────────────────────
+    // ── Certificate modal ────────────────────────────────────
     const certModalEl = document.getElementById('certModal');
     if (certModalEl) {
         const certModal = new bootstrap.Modal(certModalEl);
@@ -536,52 +508,38 @@ document.addEventListener('DOMContentLoaded', function () {
         const certIssuer = document.getElementById('certModalIssuer');
         const certOpen = document.getElementById('certModalOpen');
 
-        const openCertModal = (el, e) => {
+        const openCert = (el, e) => {
             if (e) e.preventDefault();
-            const src = el.getAttribute('data-cert-image');
-            const title = el.getAttribute('data-cert-title') || 'Certificate';
-            const issuer = el.getAttribute('data-cert-issuer') || '';
-
+            const src = el.dataset.certImage;
+            const title = el.dataset.certTitle || 'Certificate';
+            const issuer = el.dataset.certIssuer || '';
             certTitle.textContent = title;
             certIssuer.textContent = issuer;
             if (certOpen) certOpen.href = src;
             certImg.alt = title + ' certificate';
             certImg.classList.remove('loaded');
-
-            // Reset loader
             certLoader.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading…</span></div>';
             certLoader.style.display = 'flex';
-
             certImg.src = src;
-            certImg.onload = () => {
-                certLoader.style.display = 'none';
-                certImg.classList.add('loaded');
-            };
-            certImg.onerror = () => {
-                certLoader.innerHTML = '<div class="text-muted small"><i class="bi bi-exclamation-triangle"></i> Could not load certificate image.</div>';
-            };
-
+            certImg.onload = () => { certLoader.style.display = 'none'; certImg.classList.add('loaded'); };
+            certImg.onerror = () => { certLoader.innerHTML = '<div class="text-muted small"><i class="bi bi-exclamation-triangle"></i> Could not load image.</div>'; };
             certModal.show();
         };
 
         document.querySelectorAll('.view-cert-btn').forEach(el => {
-            el.addEventListener('click', (e) => openCertModal(el, e));
-            if (el.getAttribute('role') === 'button') {
-                el.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') openCertModal(el, e);
-                });
-            }
+            el.addEventListener('click', (e) => openCert(el, e));
+            if (el.getAttribute('role') === 'button')
+                el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') openCert(el, e); });
         });
 
         certModalEl.addEventListener('hidden.bs.modal', () => {
-            certImg.src = '';
-            certImg.classList.remove('loaded');
+            certImg.src = ''; certImg.classList.remove('loaded');
             certLoader.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading…</span></div>';
             certLoader.style.display = 'flex';
         });
     }
 
-    // ── Contact Form (Formspree) ─────────────────────────────
+    // ── Contact form (Formspree) ─────────────────────────────
     const form = document.getElementById('contact-form');
     const successMsg = document.getElementById('form-success');
     const submitBtn = document.getElementById('submit-btn');
@@ -590,57 +548,118 @@ document.addEventListener('DOMContentLoaded', function () {
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Loading state
             btnText.innerHTML = '<i class="bi bi-arrow-repeat me-2" style="animation:spin .8s linear infinite;display:inline-block"></i> Sending…';
             submitBtn.disabled = true;
-
             try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    body: new FormData(form),
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                if (response.ok) {
-                    if (successMsg) {
-                        successMsg.classList.remove('d-none');
-                        setTimeout(() => successMsg.classList.add('d-none'), 5000);
-                    }
+                const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                if (res.ok) {
+                    if (successMsg) { successMsg.classList.remove('d-none'); setTimeout(() => successMsg.classList.add('d-none'), 5000); }
                     form.reset();
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            } catch (err) {
-                alert('There was a problem sending your message. Please try again later.');
-                console.error('Contact form error:', err);
-            } finally {
-                btnText.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send Message';
-                submitBtn.disabled = false;
-            }
+                } else throw new Error();
+            } catch { alert('There was a problem sending your message. Please try again later.'); }
+            finally { btnText.innerHTML = '<i class="bi bi-send-fill me-2"></i> Send Message'; submitBtn.disabled = false; }
         });
     }
 
-    // ── Active nav-link highlighting on scroll ───────────────
-    const sections = document.querySelectorAll('section[id], header[id]');
-    const navLinks = document.querySelectorAll('#mainNav .nav-link');
+    // ════════════════════════════════════════════════════════
+    //  NAV HIGHLIGHT  — robust version
+    // ════════════════════════════════════════════════════════
 
-    const highlightNav = () => {
-        let current = '';
-        const offset = nav ? nav.offsetHeight + 40 : 100;
-        sections.forEach(sec => {
-            if (window.scrollY >= sec.offsetTop - offset) {
-                current = sec.getAttribute('id');
-            }
-        });
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
+    // forcedId: when set, ONLY this id is shown as active.
+    // It is cleared once the scroll truly lands on that section.
+    let forcedId = null;
+    let forceTimer = null;
+
+    const setActive = (id) => {
+        navLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
         });
     };
-    window.addEventListener('scroll', highlightNav, { passive: true });
-    highlightNav();
 
+    // Which section is at the current scroll position?
+    const sectionAtScroll = () => {
+        const y = window.scrollY;
+        const offset = (nav ? nav.offsetHeight : 80) + 30;
+
+        if (y < (nav ? nav.offsetHeight : 80) + 50) return 'home';
+        if (y + window.innerHeight >= document.body.scrollHeight - 50) {
+            // find last section with an id
+            const ids = [...sections].map(s => s.id).filter(Boolean);
+            return ids[ids.length - 1] || 'contact';
+        }
+
+        for (const s of sections) {
+            if (y + offset >= s.offsetTop && y + offset < s.offsetTop + s.offsetHeight)
+                return s.id;
+        }
+        return null;
+    };
+
+    // Called on every scroll tick
+    const highlightNav = () => {
+        if (forcedId) {
+            // Keep showing forcedId — but also check if we've actually
+            // arrived there so we can release the lock early.
+            if (sectionAtScroll() === forcedId) {
+                clearTimeout(forceTimer);
+                forcedId = null;
+                setActive(forcedId || sectionAtScroll());
+            }
+            return; // don't override while lock is active
+        }
+        const id = sectionAtScroll();
+        if (id) setActive(id);
+    };
+
+    // ── Smooth scroll + mobile-menu close ───────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+
+            const sectionId = href.slice(1);
+
+            // 1. Immediately set correct highlight
+            setActive(sectionId);
+            forcedId = sectionId;
+            clearTimeout(forceTimer);
+
+            // 2. Close mobile menu if open
+            const isOpen = collapseEl && collapseEl.classList.contains('show');
+            if (isOpen) {
+                const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
+                if (bsCollapse) bsCollapse.hide();
+            }
+
+            // 3. Scroll — wait for menu to collapse first on mobile
+            //    Bootstrap collapse takes ~350 ms; we wait then scroll.
+            const doScroll = () => {
+                const navH = nav ? nav.offsetHeight : 80;
+                const top = target.getBoundingClientRect().top + window.scrollY - navH;
+                window.scrollTo({ top, behavior: 'smooth' });
+            };
+
+            if (isOpen) {
+                // Let the collapse animation finish before scrolling
+                setTimeout(doScroll, 380);
+            } else {
+                doScroll();
+            }
+
+            // 4. Release force-lock after scroll animation is done
+            //    (smooth scroll ~600 ms + collapse 380 ms buffer = 1100 ms)
+            forceTimer = setTimeout(() => {
+                forcedId = null;
+                const id = sectionAtScroll();
+                if (id) setActive(id);
+            }, isOpen ? 1100 : 900);
+        });
+    });
+
+    window.addEventListener('scroll', highlightNav, { passive: true });
+    window.addEventListener('resize', () => { forcedId = null; highlightNav(); });
+    highlightNav();
 });
